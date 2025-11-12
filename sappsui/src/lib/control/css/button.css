@@ -1,0 +1,311 @@
+@layer components {
+	.btn {
+		@apply aria-invalid:border-error inline-flex items-center justify-center gap-2 w-fit relative;
+		@apply whitespace-nowrap focus-visible:ring-2;
+		@apply rounded-control text-sm font-medium outline-none disabled:pointer-events-none;
+		@apply disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50;
+		@apply transition-all duration-200 active:scale-[0.97] cursor-pointer select-none;
+
+		.btn-loading {
+			@apply absolute inset-0 flex items-center justify-center;
+
+			.loading-icon {
+				@apply h-7 w-auto;
+			}
+		}
+
+		&.btn-wide {
+			@apply w-full;
+		}
+
+		&.btn-solid {
+			&.btn-primary {
+				@apply bg-primary text-on-primary hover:bg-primary/90;
+				&.is-hovered {
+					@apply bg-primary/90;
+				}
+			}
+			&.btn-secondary {
+				@apply bg-secondary text-on-secondary hover:bg-secondary/90;
+				&.is-hovered {
+					@apply bg-secondary/90;
+				}
+			}
+			&.btn-accent {
+				@apply bg-accent text-on-accent hover:bg-accent/90;
+				&.is-hovered {
+					@apply bg-accent/90;
+				}
+			}
+			&.btn-muted {
+				@apply bg-muted text-on-muted hover:bg-muted/90;
+				&.is-hovered {
+					@apply bg-muted/90;
+				}
+			}
+			&.btn-success {
+				@apply bg-success text-on-success hover:bg-success/90;
+				&.is-hovered {
+					@apply bg-success/90;
+				}
+			}
+			&.btn-warning {
+				@apply bg-warning text-on-warning hover:bg-warning/90;
+				&.is-hovered {
+					@apply bg-warning/90;
+				}
+			}
+			&.btn-error {
+				@apply bg-error text-on-error hover:bg-error/90;
+				&.is-hovered {
+					@apply bg-error/90;
+				}
+			}
+			&.btn-info {
+				@apply bg-info text-on-info hover:bg-info/90;
+				&.is-hovered {
+					@apply bg-info/90;
+				}
+			}
+		}
+
+		&.btn-soft {
+			&.btn-primary {
+				@apply bg-primary/20 text-primary hover:bg-primary/50;
+				&.is-hovered {
+					@apply bg-primary/50;
+				}
+			}
+			&.btn-secondary {
+				@apply bg-secondary/20 text-secondary hover:bg-secondary/50;
+				&.is-hovered {
+					@apply bg-secondary/50;
+				}
+			}
+			&.btn-accent {
+				@apply bg-accent/20 text-accent hover:bg-accent/50;
+				&.is-hovered {
+					@apply bg-accent/50;
+				}
+			}
+			&.btn-muted {
+				@apply bg-muted/20 text-muted hover:bg-muted/50;
+				&.is-hovered {
+					@apply bg-muted/50;
+				}
+			}
+			&.btn-success {
+				@apply bg-success/20 text-success hover:bg-success/50;
+				&.is-hovered {
+					@apply bg-success/50;
+				}
+			}
+			&.btn-warning {
+				@apply bg-warning/20 text-warning hover:bg-warning/50;
+				&.is-hovered {
+					@apply bg-warning/50;
+				}
+			}
+			&.btn-error {
+				@apply bg-error/20 text-error hover:bg-error/50;
+				&.is-hovered {
+					@apply bg-error/50;
+				}
+			}
+			&.btn-info {
+				@apply bg-info/20 text-info hover:bg-info/50;
+				&.is-hovered {
+					@apply bg-info/50;
+				}
+			}
+		}
+
+		&.btn-outline {
+			@apply border;
+
+			&.btn-primary {
+				@apply text-primary border-primary hover:bg-primary hover:text-on-primary;
+				&.is-hovered {
+					@apply bg-primary text-on-primary;
+				}
+			}
+			&.btn-secondary {
+				@apply text-secondary border-secondary hover:bg-secondary hover:text-on-secondary;
+				&.is-hovered {
+					@apply bg-secondary text-on-secondary;
+				}
+			}
+			&.btn-accent {
+				@apply text-accent border-accent hover:bg-accent hover:text-on-accent;
+				&.is-hovered {
+					@apply bg-accent text-on-accent;
+				}
+			}
+			&.btn-muted {
+				@apply text-muted border-muted hover:bg-muted hover:text-on-muted;
+				&.is-hovered {
+					@apply bg-muted text-on-muted;
+				}
+			}
+			&.btn-success {
+				@apply text-success border-success hover:bg-success hover:text-on-success;
+				&.is-hovered {
+					@apply bg-success text-on-success;
+				}
+			}
+			&.btn-warning {
+				@apply text-warning border-warning hover:bg-warning hover:text-on-warning;
+				&.is-hovered {
+					@apply bg-warning text-on-warning;
+				}
+			}
+			&.btn-error {
+				@apply text-error border-error hover:bg-error hover:text-on-error;
+				&.is-hovered {
+					@apply bg-error text-on-error;
+				}
+			}
+			&.btn-info {
+				@apply text-info border-info hover:bg-info hover:text-on-info;
+				&.is-hovered {
+					@apply bg-info text-on-info;
+				}
+			}
+		}
+
+		&.btn-ghost {
+			&.btn-primary {
+				@apply text-primary hover:bg-primary hover:text-on-primary;
+				&.is-hovered {
+					@apply bg-primary text-on-primary;
+				}
+			}
+			&.btn-secondary {
+				@apply text-secondary hover:bg-secondary hover:text-on-secondary;
+				&.is-hovered {
+					@apply bg-secondary text-on-secondary;
+				}
+			}
+			&.btn-accent {
+				@apply text-accent hover:bg-accent hover:text-on-accent;
+				&.is-hovered {
+					@apply bg-accent text-on-accent;
+				}
+			}
+			&.btn-muted {
+				@apply text-muted hover:bg-muted hover:text-on-muted;
+				&.is-hovered {
+					@apply bg-muted text-on-muted;
+				}
+			}
+			&.btn-success {
+				@apply text-success hover:bg-success hover:text-on-success;
+				&.is-hovered {
+					@apply bg-success text-on-success;
+				}
+			}
+			&.btn-warning {
+				@apply text-warning hover:bg-warning hover:text-on-warning;
+				&.is-hovered {
+					@apply bg-warning text-on-warning;
+				}
+			}
+			&.btn-error {
+				@apply text-error hover:bg-error hover:text-on-error;
+				&.is-hovered {
+					@apply bg-error text-on-error;
+				}
+			}
+			&.btn-info {
+				@apply text-info hover:bg-info hover:text-on-info;
+				&.is-hovered {
+					@apply bg-info text-on-info;
+				}
+			}
+		}
+
+		&.btn-link {
+			@apply underline-offset-4 hover:underline;
+			&.is-active {
+				@apply underline;
+			}
+
+			&.btn-primary {
+				@apply text-primary hover:text-primary/90;
+				&.is-hovered {
+					@apply text-primary/90;
+				}
+			}
+			&.btn-secondary {
+				@apply text-secondary hover:text-secondary/90;
+				&.is-hovered {
+					@apply text-secondary/90;
+				}
+			}
+			&.btn-accent {
+				@apply text-accent hover:text-accent/90;
+				&.is-hovered {
+					@apply text-accent/90;
+				}
+			}
+			&.btn-muted {
+				@apply text-muted hover:text-muted/90;
+				&.is-hovered {
+					@apply text-muted/90;
+				}
+			}
+			&.btn-success {
+				@apply text-success hover:text-success/90;
+				&.is-hovered {
+					@apply text-success/90;
+				}
+			}
+			&.btn-warning {
+				@apply text-warning hover:text-warning/90;
+				&.is-hovered {
+					@apply text-warning/90;
+				}
+			}
+			&.btn-error {
+				@apply text-error hover:text-error/90;
+				&.is-hovered {
+					@apply text-error/90;
+				}
+			}
+			&.btn-info {
+				@apply text-info hover:text-info/90;
+				&.is-hovered {
+					@apply text-info/90;
+				}
+			}
+		}
+
+		&.btn-tiny {
+			@apply h-7 gap-1 px-3 has-[>.btn-icon]:p-1 has-[>.btn-icon]:w-7;
+			.btn-icon {
+				@apply h-full w-auto;
+			}
+		}
+
+		&.btn-small {
+			@apply h-9 gap-1.5 px-3 has-[>.btn-icon]:p-1.5 has-[>.btn-icon]:w-9;
+			.btn-icon {
+				@apply h-full w-auto;
+			}
+		}
+
+		&.btn-medium {
+			@apply h-10 px-4 has-[>.btn-icon]:p-1.5 has-[>.btn-icon]:w-10;
+			.btn-icon {
+				@apply h-full w-auto;
+			}
+		}
+
+		&.btn-large {
+			@apply h-12 px-6 text-lg has-[>.btn-icon]:p-2 has-[>.btn-icon]:w-12;
+			.btn-icon {
+				@apply h-full w-auto;
+			}
+		}
+	}
+}

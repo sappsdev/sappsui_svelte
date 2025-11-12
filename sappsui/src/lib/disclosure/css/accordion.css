@@ -1,0 +1,23 @@
+@layer components {
+	.accordion {
+		@apply flex flex-col;
+		.accordion-item {
+			@apply border-b last:border-b-0 border-outline;
+
+			.accordion-trigger {
+				@apply flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-base font-medium outline-none transition-all focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50;
+
+				.accordion-icon {
+					@apply pointer-events-none size-4 shrink-0 translate-y-0.5 transition-transform duration-200;
+					&.is-open {
+						@apply rotate-90;
+					}
+				}
+			}
+
+			.accordion-content {
+				@apply overflow-hidden text-base pt-1 pb-2;
+			}
+		}
+	}
+}

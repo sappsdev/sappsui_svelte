@@ -1,0 +1,25 @@
+@layer components {
+	.code {
+		@apply relative inline-block w-full;
+
+		.code-content {
+			@apply size-full overflow-auto rounded-md;
+			background-color: inherit;
+		}
+
+		.code-info {
+			@apply absolute top-2 right-2 flex justify-end items-center gap-2;
+			.code-lang {
+				@apply flex justify-end items-center gap-2;
+				@apply text-xs  text-muted dark:text-muted h-6 px-2 rounded-md;
+			}
+			.code-icon {
+				@apply h-6 w-auto;
+			}
+		}
+	}
+	.shiki {
+		@apply p-3 rounded-card;
+		min-width: fit-content;
+	}
+}

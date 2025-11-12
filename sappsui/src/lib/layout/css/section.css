@@ -1,0 +1,178 @@
+@layer components {
+	.section {
+		@apply w-full flex flex-col;
+
+		&.section-solid {
+			&.section-default {
+				@apply bg-background text-on-background;
+				&.is-hovered {
+					@apply bg-background/70;
+				}
+			}
+			&.section-surface {
+				@apply bg-surface text-on-surface;
+				&.is-hovered {
+					@apply bg-surface/70;
+				}
+			}
+			&.section-primary {
+				@apply bg-primary text-on-primary;
+				&.is-hovered {
+					@apply bg-primary/70;
+				}
+			}
+			&.section-secondary {
+				@apply bg-secondary text-on-secondary;
+				&.is-hovered {
+					@apply bg-secondary/70;
+				}
+			}
+			&.section-accent {
+				@apply bg-accent text-on-accent;
+				&.is-hovered {
+					@apply bg-accent/70;
+				}
+			}
+			&.section-muted {
+				@apply bg-muted text-on-muted;
+				&.is-hovered {
+					@apply bg-muted/70;
+				}
+			}
+		}
+
+		&.section-soft {
+			&.section-default {
+				@apply bg-background/30 text-background;
+				&.is-hovered {
+					@apply bg-background/50;
+				}
+			}
+			&.section-surface {
+				@apply bg-surface/30 text-surface;
+				&.is-hovered {
+					@apply bg-surface/50;
+				}
+			}
+			&.section-primary {
+				@apply bg-primary/30 text-primary;
+				&.is-hovered {
+					@apply bg-primary/50;
+				}
+			}
+			&.section-secondary {
+				@apply bg-secondary/30 text-secondary;
+				&.is-hovered {
+					@apply bg-secondary/50;
+				}
+			}
+			&.section-accent {
+				@apply bg-accent/30 text-accent;
+				&.is-hovered {
+					@apply bg-accent/50;
+				}
+			}
+			&.section-muted {
+				@apply bg-muted/30 text-muted;
+				&.is-hovered {
+					@apply bg-muted/50;
+				}
+			}
+		}
+
+		&.section-outline {
+			@apply border border-outline;
+			&.section-default {
+				@apply text-on-background;
+				&.is-hovered {
+					@apply bg-background/30 text-background;
+				}
+			}
+			&.section-surface {
+				@apply text-on-surface;
+				&.is-hovered {
+					@apply bg-surface/30 text-surface;
+				}
+			}
+			&.section-primary {
+				@apply text-on-primary;
+				&.is-hovered {
+					@apply bg-primary/30 text-primary;
+				}
+			}
+			&.section-secondary {
+				@apply text-on-secondary;
+				&.is-hovered {
+					@apply bg-secondary/30 text-secondary;
+				}
+			}
+			&.section-accent {
+				@apply text-on-accent;
+				&.is-hovered {
+					@apply bg-accent/30 text-accent;
+				}
+			}
+			&.section-muted {
+				@apply text-on-muted;
+				&.is-hovered {
+					@apply bg-muted/30 text-muted;
+				}
+			}
+		}
+
+		&.section-ghost {
+			&.section-default {
+				@apply text-on-background;
+				&.is-hovered {
+					@apply bg-background/30 text-background;
+				}
+			}
+			&.section-surface {
+				@apply text-on-surface;
+				&.is-hovered {
+					@apply bg-surface/30 text-surface;
+				}
+			}
+			&.section-primary {
+				@apply text-on-primary;
+				&.is-hovered {
+					@apply bg-primary/30 text-primary;
+				}
+			}
+			&.section-secondary {
+				@apply text-on-secondary;
+				&.is-hovered {
+					@apply bg-secondary/30 text-secondary;
+				}
+			}
+			&.section-accent {
+				@apply text-on-accent;
+				&.is-hovered {
+					@apply bg-accent/30 text-accent;
+				}
+			}
+			&.section-muted {
+				@apply text-on-muted;
+				&.is-hovered {
+					@apply bg-muted/30 text-muted;
+				}
+			}
+		}
+
+		&:has(> .section-cover) {
+			@apply overflow-hidden !bg-transparent !text-white z-0;
+		}
+
+		.section-cover {
+			@apply absolute inset-0 object-cover size-full -z-10;
+		}
+
+		.section-overlay {
+			@apply absolute inset-0 bg-overlay size-full -z-10;
+		}
+
+		.section-content {
+			@apply w-full flex flex-col;
+		}
+	}
+}

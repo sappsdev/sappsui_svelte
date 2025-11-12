@@ -1,0 +1,72 @@
+@utility scrollbar-hide {
+	scrollbar-width: none;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+
+@utility boxed {
+	@apply container mx-auto;
+}
+
+@utility row {
+	@apply flex flex-row;
+}
+
+@utility wrap {
+	@apply flex flex-wrap;
+}
+
+@utility column {
+	@apply flex flex-col;
+}
+
+@utility center {
+	@apply items-center justify-center;
+}
+
+@utility vh-8 {
+	height: calc(100vh - 2rem);
+}
+@utility vh-10 {
+	height: calc(100vh - 2.5rem);
+}
+@utility vh-12 {
+	height: calc(100vh - 3rem);
+}
+@utility vh-14 {
+	height: calc(100vh - 3.5rem);
+}
+@utility vh-16 {
+	height: calc(100vh - 4rem);
+}
+@utility vh-18 {
+	height: calc(100vh - 4.5rem);
+}
+@utility vh-20 {
+	height: calc(100vh - 5rem);
+}
+@utility vh-24 {
+	height: calc(100vh - 6rem);
+}
+@utility vh-28 {
+	height: calc(100vh - 7rem);
+}
+@utility vh-32 {
+	height: calc(100vh - 8rem);
+}
+@utility vh-36 {
+	height: calc(100vh - 9rem);
+}
+@utility vh-40 {
+	height: calc(100vh - 10rem);
+}
+@utility vh-48 {
+	height: calc(100vh - 12rem);
+}
+@utility vh-56 {
+	height: calc(100vh - 14rem);
+}
+@utility vh-64 {
+	height: calc(100vh - 16rem);
+}

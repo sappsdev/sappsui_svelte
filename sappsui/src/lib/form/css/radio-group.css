@@ -1,0 +1,63 @@
+@layer components {
+	.radio-group {
+		@apply flex flex-wrap gap-4 justify-start;
+
+		.radio-item {
+			@apply flex justify-start items-center;
+
+			.radio {
+				@apply relative appearance-none border-2 border-outline rounded-full cursor-pointer;
+				@apply checked:border-primary focus:outline-none;
+				@apply transition-colors duration-200;
+
+				&.radio-primary {
+					@apply checked:border-primary;
+					&:checked {
+						@apply after:bg-primary;
+					}
+				}
+				&.radio-secondary {
+					@apply checked:border-secondary;
+					&:checked {
+						@apply after:bg-secondary;
+					}
+				}
+				&.radio-accent {
+					@apply checked:border-accent;
+					&:checked {
+						@apply after:bg-accent;
+					}
+				}
+				&.radio-muted {
+					@apply checked:border-muted;
+					&:checked {
+						@apply after:bg-muted;
+					}
+				}
+
+				&.radio-small {
+					@apply w-4 h-4;
+					&:checked {
+						@apply after:w-2 after:h-2;
+					}
+				}
+				&.radio-medium {
+					@apply w-5 h-5;
+					&:checked {
+						@apply after:w-3 after:h-3;
+					}
+				}
+				&.radio-large {
+					@apply w-6 h-6;
+					&:checked {
+						@apply after:w-3.5 after:h-3.5;
+					}
+				}
+			}
+			.radio:checked {
+				@apply after:content-[''] after:absolute after:rounded-full after:bg-primary;
+				@apply after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2;
+			}
+		}
+	}
+}

@@ -1,0 +1,127 @@
+@layer components {
+	.sidenav {
+		@apply flex w-full min-w-0 flex-col gap-0.5 text-on-muted;
+		.sidenav-divider {
+			@apply my-1 h-px w-full bg-outline;
+		}
+
+		.sidenav-header {
+			@apply pt-4 pb-1 font-semibold text-base;
+		}
+
+		.sidenav-header,
+		.sidenav-item {
+			@apply flex justify-between items-center gap-1;
+
+			.sidenav-start {
+				@apply flex justify-start items-center;
+				.sidenav-icon {
+					@apply h-5 w-auto;
+				}
+			}
+			.sidenav-end {
+				@apply flex justify-start items-center gap-2;
+			}
+
+			.sidenav-center {
+				@apply flex-1 flex flex-col;
+				.sidenav-label {
+					@apply font-medium;
+				}
+				.sidenav-description {
+					@apply flex text-start text-xs text-on-muted;
+				}
+			}
+			.sidenav-btn {
+				@apply absolute right-3 top-1/2 -translate-y-1/2;
+
+				.sidenav-arrow {
+					@apply size-4 transition-transform duration-200;
+					&.is-active {
+						@apply rotate-90;
+					}
+				}
+			}
+		}
+		.sidenav-item {
+			@apply flex items-center gap-2 rounded-item ml-1 px-2 py-1 text-sm font-extralight select-none;
+			@apply outline-hidden hover:bg-muted hover:text-on-muted;
+			@apply flex w-fit items-center gap-2 text-left;
+
+			&.sidenav-primary.is-active {
+				@apply bg-primary/30 text-primary;
+			}
+			&.sidenav-secondary.is-active {
+				@apply bg-secondary/30 text-secondary;
+			}
+			&.sidenav-accent.is-active {
+				@apply bg-accent/30 text-accent;
+			}
+		}
+		.sidenav-submenus {
+			@apply flex flex-col w-full pt-4 pb-1;
+
+			.sidenav-submenu {
+				@apply flex justify-between items-center gap-1 relative;
+
+				.sidenav-start {
+					@apply flex justify-start items-center;
+					.sidenav-icon {
+						@apply h-5 w-auto;
+					}
+				}
+				.sidenav-end {
+					@apply flex justify-start items-center gap-2;
+				}
+
+				.sidenav-center {
+					@apply flex-1 flex flex-col;
+					.sidenav-label {
+						@apply font-medium;
+					}
+					.sidenav-description {
+						@apply flex text-start text-xs text-on-muted;
+					}
+				}
+				.sidenav-btn {
+					@apply absolute right-0 top-1/2 -translate-y-1/2;
+
+					.sidenav-arrow {
+						@apply size-4 transition-transform duration-200;
+						&.is-active {
+							@apply rotate-90;
+						}
+					}
+				}
+			}
+
+			.sidenav-subitems {
+				@apply flex flex-col gap-1 mt-2 pl-1 ml-2 border-l border-outline;
+
+				.sidenav-subitem {
+					@apply flex justify-between items-center gap-1 relative;
+
+					.sidenav-start {
+						@apply flex justify-start items-center;
+						.sidenav-icon {
+							@apply h-5 w-auto;
+						}
+					}
+					.sidenav-end {
+						@apply flex justify-start items-center gap-2;
+					}
+
+					.sidenav-center {
+						@apply flex-1 flex flex-col;
+						.sidenav-label {
+							@apply font-medium;
+						}
+						.sidenav-description {
+							@apply flex text-start text-xs text-on-muted;
+						}
+					}
+				}
+			}
+		}
+	}
+}

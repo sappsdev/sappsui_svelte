@@ -1,0 +1,125 @@
+@layer components {
+	.table-container {
+		@apply relative w-full overflow-x-auto;
+
+		.table {
+			@apply relative w-full text-left rtl:text-right;
+
+			.table-header {
+				@apply bg-muted whitespace-nowrap text-sm font-semibold rounded-card;
+				th {
+					&:first-child {
+						@apply rounded-l-item;
+					}
+
+					&:last-child {
+						@apply rounded-r-item;
+					}
+				}
+
+				.table-head {
+					@apply py-3 pr-3 pl-4 text-left text-sm font-semibold text-on-muted sm:pl-6;
+				}
+			}
+			.table-body {
+				@apply divide-y divide-outline/40;
+				td {
+					@apply px-3 py-4 text-sm whitespace-nowrap;
+				}
+			}
+		}
+	}
+
+	.table-striped {
+		tbody {
+			tr {
+				&:nth-child(even) {
+					@apply bg-muted rounded-lg;
+
+					td {
+						&:first-child {
+							@apply rounded-l-lg;
+						}
+
+						&:last-child {
+							@apply rounded-r-lg;
+						}
+					}
+
+					&.table-pin-cols th {
+						@apply bg-muted;
+					}
+				}
+
+				&.row-hover {
+					&,
+					&:nth-child(even) {
+						@apply hover:bg-muted;
+					}
+				}
+			}
+		}
+	}
+
+	.table-small {
+		:not(thead, tfoot) tr {
+			@apply text-xs;
+		}
+
+		:where(th, td) {
+			@apply px-3 py-2;
+		}
+	}
+
+	.table-medium {
+		:not(thead, tfoot) tr {
+			@apply text-sm;
+		}
+
+		:where(th, td) {
+			@apply px-4 py-3;
+		}
+	}
+
+	.table-large {
+		:not(thead, tfoot) tr {
+			@apply text-lg;
+		}
+
+		:where(th, td) {
+			@apply px-5 py-4;
+		}
+	}
+
+	.table-wrapper {
+		@apply flex flex-col gap-4;
+	}
+
+	.pagination-container {
+		@apply flex w-full py-2;
+	}
+
+	.pagination {
+		@apply flex items-center gap-1;
+	}
+
+	.pagination-btn {
+		@apply flex items-center justify-center min-w-9 h-9 px-2 rounded-md border border-transparent bg-transparent text-sm font-medium cursor-pointer transition-all duration-150;
+
+		&:hover:not(:disabled):not(.active) {
+			@apply bg-muted;
+		}
+
+		&.active {
+			@apply bg-primary text-on-primary;
+		}
+
+		&:disabled {
+			@apply opacity-50 cursor-not-allowed;
+		}
+	}
+
+	.pagination-ellipsis {
+		@apply flex items-center justify-center min-w-9 h-9 text-sm opacity-60;
+	}
+}

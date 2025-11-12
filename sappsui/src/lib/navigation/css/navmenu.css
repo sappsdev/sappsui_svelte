@@ -1,0 +1,19 @@
+@layer components {
+	.navmenu {
+		@apply relative flex flex-row flex-nowrap items-center gap-4 h-full;
+
+		.navmenu-item {
+			@apply relative whitespace-nowrap list-none;
+
+			.navmenu-btn {
+				@apply hover:text-accent focus:text-accent disabled:pointer-events-none disabled:opacity-50;
+				@apply inline-flex items-center justify-center rounded-control text-base;
+				@apply outline-none transition-[color,box-shadow] focus-visible:ring-2;
+
+				&.active {
+					@apply text-accent font-semibold;
+				}
+			}
+		}
+	}
+}

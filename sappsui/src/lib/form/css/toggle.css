@@ -1,0 +1,30 @@
+@layer components {
+	.toggle {
+		@apply flex justify-start items-center w-fit gap-2 cursor-pointer;
+
+		.toggle-input {
+			@apply relative appearance-none w-10 h-6 rounded-full;
+			@apply bg-outline transition-colors duration-200 ease-in-out;
+			@apply focus:outline-none;
+			@apply before:content-[''] before:absolute before:h-4 before:w-4 before:left-1 before:top-1;
+			@apply before:bg-white before:rounded-full before:shadow;
+			@apply before:transition-transform before:duration-200 before:ease-in-out;
+			@apply checked:before:translate-x-4;
+		}
+
+		.toggle-input:checked {
+			&.toggle-primary {
+				@apply bg-primary;
+			}
+			&.toggle-secondary {
+				@apply bg-secondary;
+			}
+			&.toggle-accent {
+				@apply bg-accent;
+			}
+			&.toggle-muted {
+				@apply bg-muted;
+			}
+		}
+	}
+}

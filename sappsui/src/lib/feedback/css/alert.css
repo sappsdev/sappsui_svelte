@@ -1,0 +1,44 @@
+@layer components {
+	.alert {
+		@apply flex rounded-card text-sm w-full p-2 gap-2;
+
+		&.alert-solid {
+			&.alert-success {
+				@apply bg-success text-on-success;
+			}
+			&.alert-error {
+				@apply bg-error text-on-error;
+			}
+			&.alert-warning {
+				@apply bg-warning text-on-warning;
+			}
+			&.alert-info {
+				@apply bg-info text-on-info;
+			}
+		}
+		&.alert-soft {
+			&.alert-success {
+				@apply bg-success/30 text-success;
+			}
+			&.alert-error {
+				@apply bg-error/30 text-error;
+			}
+			&.alert-warning {
+				@apply bg-warning/30 text-warning;
+			}
+			&.alert-info {
+				@apply bg-info/30 text-info;
+			}
+		}
+		.alert-start {
+			@apply flex items-center justify-start;
+
+			.alert-icon {
+				@apply h-6 md:h-8 w-auto;
+			}
+		}
+		.alert-body {
+			@apply flex-1 flex items-center justify-start;
+		}
+	}
+}

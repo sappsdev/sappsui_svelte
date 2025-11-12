@@ -1,0 +1,123 @@
+@layer components {
+	.chip {
+		@apply inline-flex items-center justify-center gap-2 w-fit;
+		@apply whitespace-nowrap;
+		@apply rounded-control text-xs font-medium outline-none disabled:pointer-events-none;
+		@apply disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50;
+
+		&.chip-wide {
+			@apply w-full;
+		}
+
+		&.chip-solid {
+			&.chip-primary {
+				@apply bg-primary text-on-primary;
+			}
+			&.chip-secondary {
+				@apply bg-secondary text-on-secondary;
+			}
+			&.chip-accent {
+				@apply bg-accent text-on-accent;
+			}
+			&.chip-muted {
+				@apply bg-muted text-on-muted;
+			}
+			&.chip-success {
+				@apply bg-success text-on-success;
+			}
+			&.chip-warning {
+				@apply bg-warning text-on-warning;
+			}
+			&.chip-error {
+				@apply bg-error text-on-error;
+			}
+			&.chip-info {
+				@apply bg-info text-on-info;
+			}
+		}
+
+		&.chip-soft {
+			&.chip-primary {
+				@apply bg-primary/30 text-primary;
+			}
+			&.chip-secondary {
+				@apply bg-secondary/30 text-secondary;
+			}
+			&.chip-accent {
+				@apply bg-accent/30 text-accent;
+			}
+			&.chip-muted {
+				@apply bg-muted/30 text-muted;
+			}
+			&.chip-success {
+				@apply bg-success/30 text-success;
+			}
+			&.chip-warning {
+				@apply bg-warning/30 text-warning;
+			}
+			&.chip-error {
+				@apply bg-error/30 text-error;
+			}
+			&.chip-info {
+				@apply bg-info/30 text-info;
+			}
+		}
+
+		&.chip-outline {
+			@apply border;
+
+			&.chip-primary {
+				@apply text-primary border-primary;
+			}
+			&.chip-secondary {
+				@apply text-secondary border-secondary;
+			}
+			&.chip-accent {
+				@apply text-accent border-accent;
+			}
+			&.chip-muted {
+				@apply text-muted border-muted;
+			}
+			&.chip-success {
+				@apply text-success border-success;
+			}
+			&.chip-warning {
+				@apply text-warning border-warning;
+			}
+			&.chip-error {
+				@apply text-error border-error;
+			}
+			&.chip-info {
+				@apply text-info border-info;
+			}
+		}
+
+		&.chip-tiny {
+			@apply h-5 gap-1 px-1.5;
+			.chip-icon {
+				@apply h-4 w-auto;
+			}
+		}
+
+		&.chip-small {
+			@apply h-7 gap-1.5 px-3;
+			.chip-icon {
+				@apply h-5 w-auto;
+			}
+		}
+
+		&.chip-medium {
+			@apply h-9 px-4;
+			.chip-icon {
+				@apply h-6 w-auto;
+			}
+		}
+
+		&.chip-large {
+			@apply h-10 px-6 text-lg;
+			.chip-icon {
+				@apply h-8 w-auto;
+			}
+		}
+	}
+}

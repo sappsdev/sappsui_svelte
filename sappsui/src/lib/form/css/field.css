@@ -1,0 +1,363 @@
+@layer components {
+	.field {
+		@apply flex flex-col gap-2 w-full;
+
+		.label-inside {
+			@apply text-sm font-medium leading-none;
+		}
+
+		.pin-wrapper {
+			@apply flex items-center justify-center gap-2;
+		}
+
+		.field-control {
+			@apply relative selection:bg-primary selection:text-on-primary;
+			@apply flex items-center w-full min-w-0 px-3 py-1 gap-2 outline-none;
+			@apply transition-[color,box-shadow] disabled:cursor-not-allowed disabled:opacity-50;
+
+			&.is-error {
+				@apply border !border-error;
+			}
+
+			&:has(.label-inside) {
+				padding-top: 1rem !important;
+			}
+
+			&.field-solid {
+				@apply rounded-field;
+				&.field-primary {
+					@apply bg-primary text-on-primary hover:bg-primary/90 focus:bg-primary/90;
+
+					.field-input {
+						@apply placeholder:text-on-primary/30;
+					}
+				}
+				&.field-secondary {
+					@apply bg-secondary text-on-secondary hover:bg-secondary/90 focus:bg-secondary/90;
+					.field-input {
+						@apply placeholder:text-on-secondary/30;
+					}
+				}
+				&.field-accent {
+					@apply bg-accent text-on-accent hover:bg-accent/90 focus:bg-accent/90;
+					.field-input {
+						@apply placeholder:text-on-accent/30;
+					}
+				}
+				&.field-muted {
+					@apply bg-muted text-on-muted hover:bg-muted/90 focus:bg-muted/90;
+					.field-input {
+						@apply placeholder:text-on-muted/30;
+					}
+				}
+			}
+
+			&.field-soft {
+				@apply rounded-field;
+
+				&.field-primary {
+					@apply bg-primary/30 text-primary hover:bg-primary/40 focus:bg-primary/40;
+					.field-input {
+						@apply placeholder:text-primary/70;
+					}
+				}
+				&.field-secondary {
+					@apply bg-secondary/30 text-secondary hover:bg-secondary/40 focus:bg-secondary/40;
+					.field-input {
+						@apply placeholder:text-secondary/70;
+					}
+				}
+				&.field-accent {
+					@apply bg-accent/30 text-accent hover:bg-accent/40 focus:bg-accent/40;
+					.field-input {
+						@apply placeholder:text-accent/70;
+					}
+				}
+				&.field-muted {
+					@apply bg-muted/30 text-on-muted hover:bg-muted/40 focus:bg-muted/40;
+					.field-input {
+						@apply placeholder:text-on-muted/70;
+					}
+				}
+			}
+
+			&.field-outline {
+				@apply ring focus-within:ring-2 rounded-field hover:ring-2 focus:ring-2;
+
+				&.field-primary {
+					@apply text-primary ring-primary;
+					.field-input {
+						@apply placeholder:text-primary/40;
+					}
+				}
+				&.field-secondary {
+					@apply text-secondary ring-secondary;
+					.field-input {
+						@apply placeholder:text-secondary/40;
+					}
+				}
+				&.field-accent {
+					@apply text-accent ring-accent;
+					.field-input {
+						@apply placeholder:text-accent/40;
+					}
+				}
+				&.field-muted {
+					@apply text-on-muted ring-on-muted;
+					.field-input {
+						@apply placeholder:text-on-muted/40;
+					}
+				}
+			}
+
+			&.field-line {
+				@apply border-b !px-0 focus-within:border-b-2 hover:border-b-2 focus:border-b-2;
+
+				.label-inside {
+					@apply !left-0 !px-0;
+				}
+
+				&.field-primary {
+					@apply text-primary border-primary;
+					.field-input {
+						@apply placeholder:text-primary/40;
+					}
+				}
+				&.field-secondary {
+					@apply text-secondary border-secondary;
+					.field-input {
+						@apply placeholder:text-secondary/40;
+					}
+				}
+				&.field-accent {
+					@apply text-accent border-accent;
+					.field-input {
+						@apply placeholder:text-accent/40;
+					}
+				}
+				&.field-muted {
+					@apply text-on-muted border-on-muted;
+					.field-input {
+						@apply placeholder:text-on-muted/40;
+					}
+				}
+			}
+
+			&.field-small {
+				@apply h-8 py-0.5;
+
+				.field-input,
+				.field-select,
+				.label-inside {
+					@apply text-sm;
+				}
+
+				&:has(.label-inside) {
+					@apply h-10;
+				}
+
+				&:has(.field-textarea) {
+					@apply min-h-12;
+				}
+
+				.field-icon {
+					@apply h-5 w-auto;
+				}
+			}
+
+			&.field-medium {
+				@apply h-10 py-1 text-lg;
+
+				.field-input,
+				.field-select,
+				.label-inside {
+					@apply text-lg;
+				}
+
+				&:has(.label-inside) {
+					@apply h-12;
+				}
+
+				&:has(.field-textarea) {
+					@apply min-h-16;
+				}
+
+				.field-icon {
+					@apply h-6 w-auto;
+				}
+			}
+
+			&.field-large {
+				@apply h-12 py-2 text-2xl;
+
+				.field-input,
+				.field-select,
+				.label-inside {
+					@apply text-2xl;
+				}
+
+				.label-inside {
+					&.is-active {
+						@apply !text-sm;
+					}
+				}
+
+				&:has(.label-inside) {
+					@apply h-14;
+					padding-top: 1.5rem !important;
+				}
+
+				&:has(.field-textarea) {
+					@apply min-h-20;
+				}
+
+				.field-icon {
+					@apply h-7 w-auto;
+				}
+			}
+
+			.label-inside {
+				@apply absolute left-3 top-1/2 -translate-y-1/2 px-1 pointer-events-none transition-all duration-200 z-10;
+				.field:has(.field-textarea) & {
+					@apply top-3 -translate-y-0;
+				}
+				&.is-active {
+					@apply text-xs left-2 top-1.5 -translate-y-0.5;
+				}
+			}
+
+			.field-start {
+				@apply flex items-center justify-start gap-1;
+			}
+
+			.field-end {
+				@apply flex items-center justify-end gap-1;
+			}
+
+			.field-input {
+				@apply appearance-none w-full bg-transparent border-none outline-none p-0 m-0;
+				@apply placeholder:transition-opacity placeholder:duration-200;
+
+				&::-webkit-outer-spin-button,
+				&::-webkit-inner-spin-button {
+					-webkit-appearance: none;
+					margin: 0;
+				}
+
+				&[type='number'] {
+					appearance: textfield;
+					-moz-appearance: textfield;
+				}
+
+				&:-webkit-autofill,
+				&:-webkit-autofill:hover,
+				&:-webkit-autofill:focus,
+				&:-webkit-autofill:active {
+					-webkit-box-shadow: 0 0 0 30px transparent inset !important;
+					-webkit-text-fill-color: inherit !important;
+					background-color: transparent !important;
+					background-image: none !important;
+					color: inherit !important;
+					transition: background-color 5000000s ease-in-out 0s !important;
+				}
+
+				&:-moz-autofill {
+					background-color: transparent !important;
+					color: inherit !important;
+				}
+			}
+
+			.field-pin {
+				@apply appearance-none w-full bg-transparent border-none outline-none p-0 m-0 text-center;
+				@apply placeholder:text-on-muted placeholder:transition-opacity placeholder:duration-200;
+
+				&::-webkit-outer-spin-button,
+				&::-webkit-inner-spin-button {
+					-webkit-appearance: none;
+					margin: 0;
+				}
+
+				&[type='number'] {
+					appearance: textfield;
+					-moz-appearance: textfield;
+				}
+
+				&:-webkit-autofill,
+				&:-webkit-autofill:hover,
+				&:-webkit-autofill:focus,
+				&:-webkit-autofill:active {
+					-webkit-box-shadow: 0 0 0 30px transparent inset !important;
+					-webkit-text-fill-color: inherit !important;
+					background-color: transparent !important;
+					background-image: none !important;
+					color: inherit !important;
+					transition: background-color 5000000s ease-in-out 0s !important;
+				}
+
+				&:-moz-autofill {
+					background-color: transparent !important;
+					color: inherit !important;
+				}
+			}
+
+			.field-textarea {
+				@apply appearance-none w-full bg-transparent border-none outline-none p-0 m-0;
+				@apply appearance-none field-sizing-content pb-2;
+				@apply placeholder:text-on-muted placeholder:transition-opacity placeholder:duration-200;
+
+				&:-webkit-autofill,
+				&:-webkit-autofill:hover,
+				&:-webkit-autofill:focus,
+				&:-webkit-autofill:active {
+					-webkit-box-shadow: 0 0 0 30px transparent inset !important;
+					-webkit-text-fill-color: inherit !important;
+					background-color: transparent !important;
+					background-image: none !important;
+					color: inherit !important;
+					transition: background-color 500000s ease-in-out 0s !important;
+				}
+
+				&:-moz-autofill {
+					background-color: transparent !important;
+					color: inherit !important;
+				}
+			}
+
+			.field-select {
+				@apply flex items-center gap-0.5 rounded-field w-full mr-3 cursor-pointer;
+				.select-start {
+					@apply flex items-center cursor-pointer;
+				}
+				.select-content {
+					@apply flex flex-1 flex-col items-start justify-start w-full;
+				}
+			}
+
+			.field-btn {
+				@apply absolute right-3 top-1/2 -translate-y-1/2;
+
+				.field-arrow {
+					@apply size-4 transition-transform duration-200;
+					&.is-active {
+						@apply rotate-90;
+					}
+				}
+				.field-eye {
+					@apply size-6 transition-transform duration-200;
+				}
+			}
+		}
+
+		.field-help {
+			@apply text-xs text-on-muted -mt-1.5;
+
+			&.is-error {
+				@apply text-error;
+			}
+
+			&.is-strength {
+				@apply font-medium;
+			}
+		}
+	}
+}

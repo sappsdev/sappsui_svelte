@@ -1,0 +1,73 @@
+@layer components {
+	.drawer-panel {
+		@apply fixed inset-0 z-50;
+		@apply flex flex-col justify-center items-center;
+
+		.drawer-overlay {
+			@apply absolute inset-0 bg-overlay;
+		}
+		.drawer {
+			@apply absolute bg-surface flex flex-col;
+			@apply transition-all duration-300 ease-in-out;
+
+			&.drawer-start {
+				@apply inset-y-0 left-0 right-auto rounded-r-popover;
+				@apply transform -translate-x-full;
+			}
+
+			&.drawer-end {
+				@apply inset-y-0 right-0 left-auto rounded-l-popover;
+				@apply transform translate-x-full;
+			}
+
+			&.drawer-top {
+				@apply inset-x-0 top-0 bottom-auto rounded-b-popover;
+				@apply transform -translate-y-full;
+			}
+
+			&.drawer-bottom {
+				@apply inset-x-0 bottom-0 top-auto rounded-t-popover;
+				@apply transform translate-y-full;
+			}
+
+			&.drawer-open {
+				@apply transform !translate-x-0 !translate-y-0;
+			}
+
+			&.drawer-default {
+				@apply bg-background text-on-background;
+			}
+			&.drawer-surface {
+				@apply bg-surface text-on-surface;
+			}
+			&.drawer-primary {
+				@apply bg-primary text-on-primary;
+			}
+			&.drawer-secondary {
+				@apply bg-secondary text-on-secondary;
+			}
+			&.drawer-accent {
+				@apply bg-accent text-on-accent;
+			}
+			&.drawer-muted {
+				@apply bg-muted text-on-muted;
+			}
+
+			.drawer-header {
+				@apply flex flex-col gap-2 p-2;
+			}
+
+			.drawer-footer {
+				@apply flex flex-col gap-2 p-2;
+			}
+
+			.drawer-content {
+				@apply flex min-h-0 flex-1 flex-col gap-2 overflow-auto;
+			}
+		}
+
+		.drawer-btn-close {
+			@apply absolute top-1 right-1 float-right z-50 size-6 p-1 hover:bg-muted rounded-full flex items-center justify-center text-on-muted hover:text-error cursor-pointer;
+		}
+	}
+}

@@ -1,0 +1,89 @@
+@layer components {
+	.select-popover {
+		@apply max-h-56 flex flex-col gap-2 p-2 my-1;
+		@apply bg-background text-on-background rounded-popover;
+		@apply invisible opacity-0 transition-opacity duration-300 ease-in-out;
+		position: fixed;
+		z-index: 9999;
+		box-shadow: 0 0 3px 0 var(--color-outline);
+
+		&.is-open {
+			@apply visible opacity-100;
+		}
+
+		.select-search {
+			@apply flex-shrink-0 px-3 py-2 mb-1 bg-surface text-on-surface rounded-field;
+			@apply border border-outline;
+
+			input {
+				@apply w-full p-0 m-0;
+				@apply outline-hidden placeholder:text-on-muted/50;
+
+				&::placeholder {
+					@apply text-on-muted/50;
+				}
+			}
+		}
+
+		.select-options {
+			@apply flex flex-1 w-full min-w-0 flex-col gap-1 overflow-y-auto scrollbar-hide;
+			.select-divider {
+				@apply my-1 h-px w-full bg-outline;
+			}
+			.select-header {
+				@apply text-sm font-medium text-on-muted;
+			}
+			.select-item {
+				@apply flex items-center gap-2 rounded-item px-2 py-1 text-base select-none;
+				@apply outline-hidden  disabled:pointer-events-none disabled:opacity-50;
+				@apply flex w-full items-center gap-2 overflow-hidden rounded-item text-left;
+				@apply transition-[width,height,padding] focus-visible:ring-2 focus-visible:ring-outline;
+
+				&.field-primary {
+					@apply hover:bg-primary/30 hover:text-primary;
+					&[data-focused='1'],
+					&.is-active {
+						@apply bg-primary/30 text-primary;
+					}
+				}
+				&.field-secondary {
+					@apply hover:bg-secondary/30 hover:text-secondary;
+					&[data-focused='1'],
+					&.is-active {
+						@apply bg-secondary/30 text-secondary;
+					}
+				}
+				&.field-accent {
+					@apply hover:bg-accent/30 hover:text-accent;
+					&[data-focused='1'],
+					&.is-active {
+						@apply bg-accent/30 text-accent;
+					}
+				}
+				&.field-muted {
+					@apply hover:bg-muted/30 hover:text-muted;
+					&[data-focused='1'],
+					&.is-active {
+						@apply bg-muted/30 text-muted;
+					}
+				}
+
+				.select-start {
+					@apply flex items-center justify-start;
+				}
+				.select-center {
+					@apply flex flex-1 flex-col items-start justify-center;
+					.select-label {
+						@apply font-medium;
+					}
+					.select-description {
+						@apply flex text-start text-xs -mt-1;
+					}
+				}
+				.select-check {
+					@apply ml-2 flex h-5 w-5 items-center justify-center;
+				}
+			}
+		}
+	}
+}
