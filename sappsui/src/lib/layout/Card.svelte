@@ -9,8 +9,10 @@
 		class?: string;
 		cover?: string;
 		overlay?: boolean;
-		variant?: 'solid' | 'outline' | 'soft' | 'ghost';
-		color?: 'default' | 'surface' | 'primary' | 'secondary' | 'accent' | 'muted';
+		divider?: boolean;
+		hover?: boolean;
+		shadow?: boolean;
+		variant?: 'primary' | 'secondary' | 'surface' | 'outline' | 'soft' | 'ghost';
 		headerClass?: string;
 		footerClass?: string;
 		bodyClass?: string;
@@ -25,32 +27,19 @@
 		class: className,
 		cover,
 		overlay,
+		divider,
+		hover,
+		shadow,
 		variant = 'outline',
-		color = 'default',
 		headerClass,
 		bodyClass,
 		footerClass,
 		coverClass,
 		overlayClass
 	}: Props = $props();
-
-	const variants = {
-		solid: 'card-solid',
-		outline: 'card-outline',
-		soft: 'card-soft',
-		ghost: 'card-ghost'
-	};
-	const colors = {
-		default: 'card-default',
-		surface: 'card-surface',
-		primary: 'card-primary',
-		secondary: 'card-secondary',
-		accent: 'card-accent',
-		muted: 'card-muted'
-	};
 </script>
 
-<div class={cn('card', variants[variant], colors[color], className)}>
+<div class={cn('card', variant, divider && 'divider', shadow && 'shadow', className)}>
 	{#if cover}
 		<img src={cover} alt="cover" class={cn('card-cover', coverClass)} />
 	{/if}

@@ -1,0 +1,13 @@
+@layer components {
+	.dropzone {
+		@apply relative w-full flex flex-col;
+
+		.dropzone-input {
+			@apply flex justify-center items-center border-2 border-dashed h-48 w-full;
+			@apply border-outline p-6 transition-all rounded-field;
+		}
+		.dropzone-files {
+			@apply mt-4 flex flex-col gap-2;
+		}
+	}
+}

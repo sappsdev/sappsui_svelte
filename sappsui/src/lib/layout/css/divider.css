@@ -24,6 +24,14 @@
 
 	.divider-horizontal,
 	.divider-vertical {
+		&.divider-default,
+		&.divider-surface {
+			&:before,
+			&:after {
+				@apply bg-outline;
+			}
+		}
+
 		&.divider-primary {
 			&:before,
 			&:after {
@@ -36,10 +44,10 @@
 				@apply bg-secondary;
 			}
 		}
-		&.divider-accent {
+		&.divider-muted {
 			&:before,
 			&:after {
-				@apply bg-accent;
+				@apply bg-on-muted;
 			}
 		}
 	}

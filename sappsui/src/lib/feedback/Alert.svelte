@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { IconName } from '$lib/assets/icons/index.js';
 	import { Icon } from '$lib/index.js';
 	import { cn } from '$lib/utils/class-names.js';
 	import type { Snippet } from 'svelte';
@@ -6,7 +7,7 @@
 	type Props = {
 		title?: string;
 		description?: string;
-		icon?: string;
+		icon?: IconName;
 		children?: Snippet;
 		showIcon?: boolean;
 		status?: 'info' | 'success' | 'warning' | 'error';
@@ -46,7 +47,7 @@
 <div class={cn('alert', variants[variant], colors[status])}>
 	{#if showIcon}
 		<div class="alert-start">
-			<Icon icon={icon ? icon : statusIcons[status]} class="alert-icon" />
+			<Icon name={icon ? icon : (statusIcons[status] as IconName)} class="alert-icon" />
 		</div>
 	{/if}
 	<div class="alert-body">

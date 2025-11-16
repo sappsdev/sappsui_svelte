@@ -1,30 +1,32 @@
-<script lang="ts" generics="T">
+<script lang="ts">
+	import type { IconName } from '$lib/assets/icons/index.js';
 	import { Avatar, Icon } from '$lib/index.js';
 	import { cn } from '$lib/utils/class-names.js';
 	import { onMount } from 'svelte';
 
+	type Option = {
+		id: string | number;
+		label: string;
+		description?: string;
+		icon?: IconName;
+		src?: string;
+	};
+
 	type Props = {
-		options: T[];
+		options: Option[];
 		value?: unknown;
-		selected?: T;
+		selected?: Option;
 		placeholder?: string;
 		onchange?: (value: unknown) => void;
-		variant?: 'solid' | 'outline' | 'soft' | 'line';
-		color?: 'primary' | 'secondary' | 'accent' | 'muted';
-		size?: 'small' | 'medium' | 'large';
+		variant?: 'primary' | 'secondary' | 'soft' | 'line';
+		size?: 'sm' | 'md' | 'lg';
 		name: string;
 		class?: string;
 		label?: string;
-		labelOutside?: boolean;
 		labelActive?: boolean;
 		helpText?: string;
 		errorText?: string;
-		idKey?: keyof T;
-		labelKey?: keyof T;
-		descriptionKey?: keyof T;
-		iconKey?: keyof T;
-		srcKey?: keyof T;
-		arrowIcon?: string;
+		floatLabel?: boolean;
 	};
 
 	let {
@@ -34,47 +36,15 @@
 		selected = $bindable(),
 		placeholder = 'Select an option',
 		onchange,
-		variant = 'soft',
-		color = 'primary',
-		size = 'medium',
+		variant = 'primary',
+		size = 'md',
 		name,
 		label,
-		labelOutside,
 		labelActive,
 		helpText,
 		errorText,
-		arrowIcon = 'fluent:arrow-sort-down-24-regular',
-		idKey = 'id' as keyof T,
-		labelKey = 'label' as keyof T,
-		descriptionKey = 'description' as keyof T,
-		iconKey = 'icon' as keyof T,
-		srcKey = 'src' as keyof T
+		floatLabel
 	}: Props = $props();
-
-	const variants = {
-		solid: 'field-solid',
-		outline: 'field-outline',
-		soft: 'field-soft',
-		line: 'field-line'
-	};
-	const colors = {
-		primary: 'field-primary',
-		secondary: 'field-secondary',
-		accent: 'field-accent',
-		muted: 'field-muted'
-	};
-
-	const sizes = {
-		small: 'field-small',
-		medium: 'field-medium',
-		large: 'field-large'
-	};
-
-	const avatarSizes = {
-		small: 'tiny',
-		medium: 'small',
-		large: 'medium'
-	} as const;
 
 	let isOpen = $state(false);
 	let controlElement = $state<HTMLElement>();
@@ -89,13 +59,17 @@
 		width: 0,
 		isBottomHalf: false
 	});
+
+	let isActive = $state(false);
+	let isFocused = $state(false);
+
 	const style = $derived(
 		`top: ${position.top}px; left: ${position.left}px; width: ${position.width}px; transform-origin: ${position.isBottomHalf ? 'bottom' : 'top'} center;`
 	);
 
-	const getItems = () => contentEl?.querySelectorAll('.select-item') ?? [];
+	const getItems = () => contentEl?.querySelectorAll('select__option') ?? [];
 
-	const updatePosition = () => {
+	const updatePosition = async () => {
 		if (!controlElement || !contentEl) return;
 
 		const rect = controlElement.getBoundingClientRect();
@@ -203,15 +177,15 @@
 		}
 	};
 
-	const initializeFocusedIndex = () => {
+	const initializeFocusedIndex = async () => {
 		setTimeout(() => {
 			const items = getItems();
 			focusedIndex = Array.from(items).findIndex((i) => i.classList.contains('is-active'));
 			if (focusedIndex === -1 && items.length) focusedIndex = 0;
-		}, 20);
+		}, 50);
 	};
 
-	const scrollToSelectedItem = () => {
+	const scrollToSelectedItem = async () => {
 		setTimeout(() => {
 			const selectedItem = optionsEl?.querySelector('.is-active') as HTMLElement;
 			if (selectedItem) {
@@ -222,7 +196,7 @@
 		}, 50);
 	};
 
-	const toggleDropdown = () => {
+	const toggleDropdown = async () => {
 		if (!isOpen) {
 			startEventListeners();
 			initializeFocusedIndex();
@@ -236,9 +210,9 @@
 		}
 	};
 
-	const handleSelect = (item: T) => {
+	const handleSelect = (item: Option) => {
 		selected = item;
-		value = item[idKey] as string | number;
+		value = item.id;
 		onchange?.(value);
 		stopEventListeners();
 		removeFocusedItemVisuals();
@@ -271,10 +245,11 @@
 
 	onMount(() => {
 		if (value && !selected) {
-			selected = options.find((opt) => opt[idKey] === value);
+			selected = options.find((opt) => opt.id === value);
 		} else if (selected) {
-			value = selected[idKey] as string | number;
+			value = selected.id;
 		}
+		updatePosition();
 		return () => stopEventListeners();
 	});
 
@@ -285,85 +260,83 @@
 	});
 </script>
 
-<div class={cn('field', className)}>
+<div
+	class={cn(
+		'field',
+		(isActive || isFocused || value !== '') && 'select--label-active',
+		(isActive || isFocused) && 'select--control-active',
+		floatLabel && 'select--float',
+		className
+	)}
+>
 	<input type="text" {name} bind:value hidden />
 
-	{#if labelOutside && label}
-		<div class="label">{label}</div>
+	{#if !floatLabel && label}
+		<div class="field-label">{label}</div>
 	{/if}
 
 	<button
 		type="button"
 		bind:this={controlElement}
-		class={cn('field-control', variants[variant], colors[color], sizes[size])}
+		class={cn('control', variant, size, floatLabel && 'float', (isActive || isFocused) && 'active')}
 		class:is-error={errorText}
 		onclick={toggleDropdown}
+		onmouseenter={() => (isActive = true)}
+		onmouseleave={() => (isActive = false)}
 	>
-		{#if !labelOutside && label}
-			<div class:is-active={isOpen || value || labelActive} class="label-inside">
+		{#if floatLabel && label}
+			<span class={cn('control-label', (isActive || isFocused || value !== '') && 'active')}>
 				{label}
-			</div>
+			</span>
 		{/if}
 
-		{#if (srcKey && selected?.[srcKey]) || (iconKey && selected?.[iconKey])}
-			<div class="field-start">
-				<Avatar
-					src={selected?.[srcKey] as string}
-					name={selected?.[labelKey] as string}
-					icon={selected?.[iconKey] as string}
-					size={avatarSizes[size]}
-				/>
-			</div>
+		{#if selected?.src || selected?.icon}
+			<Avatar src={selected.src} name={selected.label} icon={selected.icon} size="sm" />
 		{/if}
 
-		<div class="field-select" class:invisible={!selected && !isOpen}>
-			<div class="select-content">
-				{selected?.[labelKey] ?? placeholder}
-			</div>
+		<div class="control-selected" class:invisible={!selected && !isOpen}>
+			{selected?.label ?? placeholder}
 		</div>
 
-		<div class="field-btn">
-			<Icon icon={arrowIcon} class={cn('field-arrow', isOpen && 'is-active')} />
+		<div class="control-btn">
+			<Icon
+				name="fluent:arrow-sort-down-24-regular"
+				class={cn('control-arrow', isOpen && 'active')}
+			/>
 		</div>
 	</button>
 
 	{#if errorText || helpText}
-		<div class={cn('field-help', errorText && 'is-error')}>{errorText || helpText}</div>
+		<div class={cn('field-help', errorText && 'danger')}>{errorText || helpText}</div>
 	{/if}
 
-	<div class:is-open={isOpen} class="select-popover" bind:this={contentEl} {style}>
-		<ul class="select-options" bind:this={optionsEl}>
+	<div class:active={isOpen} class="select-popover" bind:this={contentEl} {style}>
+		<ul class="listbox-items" bind:this={optionsEl}>
 			{#each options as item}
 				<li>
 					<button
 						type="button"
-						class={cn('select-item', colors[color])}
-						class:is-active={value === item[idKey]}
+						class={cn('listbox-item')}
+						class:is-active={value === item.id}
 						onclick={() => handleSelect(item)}
 					>
-						{#if (srcKey && item[srcKey]) || (iconKey && item[iconKey])}
-							<div class="select-start">
-								<Avatar
-									src={item[srcKey] as string}
-									name={item[labelKey] as string}
-									icon={item[iconKey] as string}
-								/>
-							</div>
+						{#if item.src || item.icon}
+							<Avatar src={item.src} name={item.label} icon={item.icon} />
 						{/if}
 
-						<div class="select-center">
-							<div class="select-label">
-								{item[labelKey]}
+						<div class="listbox-item-body">
+							<div class="listbox-item-label">
+								{item.label}
 							</div>
-							{#if descriptionKey && item[descriptionKey]}
-								<div class="select-description">
-									{item[descriptionKey]}
+							{#if item.description}
+								<div class="listbox-item-description">
+									{item.description}
 								</div>
 							{/if}
 						</div>
 
-						{#if value === item[idKey]}
-							<Icon icon="fluent:checkmark-24-regular" class="select-check" />
+						{#if value === item.id}
+							<Icon name="fluent:checkmark-24-regular" class="listbox-item-check" />
 						{/if}
 					</button>
 				</li>

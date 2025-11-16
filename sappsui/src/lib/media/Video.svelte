@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Icon } from '$lib/index.js';
+	import { Icon, Slider } from '$lib/index.js';
 	import { cn } from '$lib/utils/class-names.js';
 	import Hls from 'hls.js';
 
@@ -151,7 +151,7 @@
 				<button class="video-btn" onclick={togglePlay}>
 					<Icon
 						class="video-btn-icon"
-						icon={videoParams.paused ? 'solar:play-linear' : 'solar:pause-linear'}
+						name={videoParams.paused ? 'fluent:play-24-regular' : 'fluent:pause-24-regular'}
 					/>
 				</button>
 				<div class="video-btn">
@@ -169,41 +169,45 @@
 				>
 					{#if !videoParams.muted && showVolume}
 						<div class="video-volume">
-							<input
+							<Slider
 								bind:value={videoParams.volume}
-								onchange={(e) => {
-									localStorage.setItem('video-volume', (e.target as HTMLInputElement).value);
+								onchange={(value) => {
+									localStorage.setItem('video-volume', String(value));
 								}}
-								type="range"
-								min="0"
-								max="1"
-								step="0.1"
-								class="slider small primary"
+								min={0}
+								max={1}
+								step={0.1}
+								size="small"
+								name="video-volume"
+								hideLabel
 							/>
 						</div>
 					{/if}
 					<button class="video-btn" onclick={toggleMute}>
 						<Icon
 							class="video-btn-icon"
-							icon={videoParams.muted ? 'solar:volume-cross-linear' : 'solar:volume-loud-linear'}
+							name={videoParams.muted
+								? 'fluent:speaker-2-24-regular'
+								: 'fluent:speaker-mute-24-regular'}
 						/>
 					</button>
 				</div>
 				<button class="video-btn" onclick={handleTogglePip}>
-					<Icon class="video-btn-icon" icon={'solar:pip-linear'} />
+					<Icon class="video-btn-icon" name="fluent:picture-in-picture-24-regular" />
 				</button>
 				<button class="video-btn" onclick={handleToggleMaximize}>
-					<Icon class="video-btn-icon" icon={'solar:maximize-square-linear'} />
+					<Icon class="video-btn-icon" name={'fluent:arrow-maximize-24-regular'} />
 				</button>
 			</div>
 		</div>
 		<div class={cn('video-control-progress', showControls ? 'visible' : 'invisible')}>
-			<input
-				type="range"
-				min="0"
-				class="slider small primary"
+			<Slider
+				min={0}
+				size="small"
 				max={videoParams.duration}
 				bind:value={videoParams.time}
+				name="video-time"
+				hideLabel
 			/>
 		</div>
 	</div>

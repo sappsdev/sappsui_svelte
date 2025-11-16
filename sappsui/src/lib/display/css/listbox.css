@@ -1,35 +1,24 @@
 @layer components {
 	.listbox {
-		@apply flex w-full min-w-0 flex-col gap-1;
-		.listbox-divider {
-			@apply my-1 h-px w-full bg-outline;
-		}
-		.listbox-header {
-			@apply text-sm font-medium text-on-muted;
-		}
-		.listbox-item {
-			@apply flex items-center gap-2 rounded-field px-2 py-1 text-base select-none;
-			@apply outline-hidden hover:bg-muted hover:text-on-muted disabled:pointer-events-none disabled:opacity-50;
-			@apply flex w-fit items-center gap-2 overflow-hidden rounded-md text-left;
-			@apply transition-[width,height,padding] focus-visible:ring-2 focus-visible:ring-outline;
-			&.active {
-				@apply bg-accent text-on-accent;
-			}
-			.listbox-avatar {
-				@apply flex items-center justify-center h-8 w-auto;
-			}
-			.listbox-content {
-				@apply flex flex-1 flex-col items-start justify-start;
-				.listbox-label {
-					@apply font-medium;
-				}
-				.listbox-description {
-					@apply flex text-start text-sm text-on-muted;
-				}
-			}
-			.listbox-status {
-				@apply ml-2 flex h-5 w-5 items-center justify-center rounded-full bg-muted text-xs font-medium text-on-muted;
-			}
-		}
+		@apply flex w-full flex-col gap-2;
+	}
+	.listbox-items {
+		@apply flex flex-1 w-full min-w-0 flex-col gap-1 overflow-y-auto scrollbar-hide;
+	}
+	.listbox-item {
+		@apply flex items-center gap-2 px-2 py-1 text-base select-none;
+		@apply outline-hidden overflow-hidden rounded-ui text-left w-full;
+	}
+	.listbox-item-body {
+		@apply flex flex-col w-full;
+	}
+	.listbox-item-label {
+		@apply text-sm;
+	}
+	.listbox-item-description {
+		@apply text-xs;
+	}
+	.listbox-item-check {
+		@apply ml-auto h-4 w-4;
 	}
 }

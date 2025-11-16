@@ -12,7 +12,7 @@
 		tabs: Tab[];
 		position?: 'top' | 'bottom' | 'start' | 'end';
 		variant?: 'solid' | 'pill' | 'outline' | 'underlined' | 'ghost';
-		color?: 'primary' | 'secondary' | 'accent';
+		color?: 'primary' | 'secondary';
 		class?: string;
 		tabListClass?: string;
 		tabClass?: string;
@@ -48,8 +48,7 @@
 	};
 	const colors = {
 		primary: 'tabs-primary',
-		secondary: 'tabs-secondary',
-		accent: 'tabs-accent'
+		secondary: 'tabs-secondary'
 	};
 
 	const positions = {

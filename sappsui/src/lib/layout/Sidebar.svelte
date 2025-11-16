@@ -29,7 +29,7 @@
 			{@render header()}
 		</div>
 	{/if}
-	<div class={cn('sidebar-content', contentClass)}>
+	<div class={cn('sidebar-body', contentClass)}>
 		{@render children()}
 	</div>
 	{#if footer}

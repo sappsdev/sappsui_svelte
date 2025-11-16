@@ -1,9 +1,0 @@
-@layer components {
-	.chat {
-		.chat-list {
-			.chat-message {
-				@apply flex;
-			}
-		}
-	}
-}

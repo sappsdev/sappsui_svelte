@@ -4,19 +4,19 @@
 
 	type Props = {
 		class?: string;
-		contentClass?: string;
+		bodyClass?: string;
 		coverClass?: string;
 		overlayClass?: string;
 		children: Snippet;
 		cover?: string;
 		overlay?: boolean;
-		variant?: 'solid' | 'outline' | 'soft' | 'ghost';
-		color?: 'default' | 'surface' | 'primary' | 'secondary' | 'accent' | 'muted';
+		variant?: 'solid' | 'soft';
+		color?: 'default' | 'surface' | 'primary' | 'secondary' | 'muted';
 	};
 
 	const {
 		class: className,
-		contentClass,
+		bodyClass,
 		coverClass,
 		overlayClass,
 		cover,
@@ -28,16 +28,13 @@
 
 	const variants = {
 		solid: 'section-solid',
-		outline: 'section-outline',
-		soft: 'section-soft',
-		ghost: 'section-ghost'
+		soft: 'section-soft'
 	};
 	const colors = {
 		default: 'section-default',
 		surface: 'section-surface',
 		primary: 'section-primary',
 		secondary: 'section-secondary',
-		accent: 'section-accent',
 		muted: 'section-muted'
 	};
 </script>
@@ -49,7 +46,7 @@
 	{#if overlay}
 		<div class={cn('section-overlay', overlayClass)}></div>
 	{/if}
-	<div class={cn('section-content', contentClass)}>
+	<div class={cn('section-body', bodyClass)}>
 		{@render children()}
 	</div>
 </div>

@@ -1,23 +1,28 @@
 <script lang="ts">
-	import { Card, Checkbox, Code, Section, Divider, Select, Alert } from 'sappsui';
-	const colorOptions = [
+	import DocCode from '$lib/components/DocCode.svelte';
+	import DocHeader from '$lib/components/DocHeader.svelte';
+	import DocOptions from '$lib/components/DocOptions.svelte';
+	import DocPreview from '$lib/components/DocPreview.svelte';
+	import DocProps from '$lib/components/DocProps.svelte';
+	import { Button, Checkbox, Select, TextField } from 'sappsui';
+
+	const variantOptions = [
 		{ id: 'primary', label: 'Primary' },
 		{ id: 'secondary', label: 'Secondary' },
-		{ id: 'accent', label: 'Accent' },
-		{ id: 'muted', label: 'Muted' }
+		{ id: 'soft', label: 'Soft' },
+		{ id: 'line', label: 'Line' }
 	];
 
 	const sizeOptions = [
-		{ id: 'small', label: 'Small' },
-		{ id: 'medium', label: 'Medium' },
-		{ id: 'large', label: 'Large' }
+		{ id: 'sm', label: 'sm' },
+		{ id: 'md', label: 'md' },
+		{ id: 'lg', label: 'lg' }
 	];
 
-	const variantOptions = [
-		{ id: 'solid', label: 'Solid' },
-		{ id: 'soft', label: 'Soft' },
-		{ id: 'outline', label: 'Outline' },
-		{ id: 'line', label: 'Line' }
+	const typeOptions = [
+		{ id: 'text', label: 'Text' },
+		{ id: 'password', label: 'Password' },
+		{ id: 'number', label: 'Number' }
 	];
 
 	const selectOptions = [
@@ -25,24 +30,26 @@
 		{ id: '2', src: '/avatar-2.jpeg', label: 'Jane Smith', description: 'Developer' },
 		{ id: '3', src: '/avatar-3.jpeg', label: 'Mike Johnson', description: 'Manager' },
 		{ id: '4', src: '/avatar-4.jpeg', label: 'Emily Davis', description: 'Intern' },
-		{ id: '5', src: '/avatar-5.jpeg', label: 'David Wilson', description: 'CEO' }
+		{ id: '5', src: '/avatar-5.jpeg', label: 'David Wilson', description: 'CEO' },
+		{ id: '6', src: '/avatar-1.jpeg', label: 'Jonh Doe', description: 'Designer' },
+		{ id: '7', src: '/avatar-2.jpeg', label: 'Jane Smith', description: 'Developer' },
+		{ id: '8', src: '/avatar-3.jpeg', label: 'Mike Johnson', description: 'Manager' },
+		{ id: '9', src: '/avatar-4.jpeg', label: 'Emily Davis', description: 'Intern' },
+		{ id: '10', src: '/avatar-5.jpeg', label: 'David Wilson', description: 'CEO' }
 	];
 
-	let selectedVariant: any = $state('soft');
-	let selectedColor: any = $state('primary');
-	let selectedSize: any = $state('medium');
+	let variant: any = $state('primary');
+	let size: any = $state('md');
+	let type: any = $state('text');
 
-	let isLabelOutside = $state(false);
-	let isLabelActive = $state(false);
+	let startIcon = $state('');
+	let endIcon = $state('');
 
-	let showHelpText = $state(false);
-	let showErrorText = $state(false);
-
+	let floatLabel = $state(false);
+	let disabled = $state(false);
+	let shadow = $state(false);
 	let withDescription = $state(false);
 	let withAvatar = $state(false);
-
-	let hasBinding = $state(false);
-	let hasEvents = $state(false);
 
 	let buildOptions: any = $derived.by(() => {
 		if (withDescription && !withAvatar) {
@@ -67,115 +74,108 @@
 			}));
 		}
 	});
+
+	let hasProps = $derived(
+		[variant !== 'primary', size !== 'md', startIcon, endIcon, floatLabel, disabled, shadow].some(
+			Boolean
+		)
+	);
+
+	let code = $derived(() => {
+		const scriptLines = [
+			`<script lang="ts">`,
+			`\timport { Button } from 'sappsui';`,
+			`<\/script>`
+		].filter(Boolean);
+
+		const componentLines = [
+			hasProps && `<Button`,
+			variant !== 'primary' && `\tvariant="${variant}"`,
+			type !== 'button' && `\ttype="${type}"`,
+			startIcon && `\tstartIcon="fluent:search-24-regular"`,
+			endIcon && `\tendIcon="fluent:camera-sparkles-24-regular"`,
+			hasProps && `\tlabel="Label"`,
+			disabled && `\tdisabled`,
+			shadow && `\tshadow`,
+			hasProps && `/>`,
+			!hasProps && `<Button label="Label" onclick={handleClick} />`
+		].filter(Boolean);
+
+		return [...scriptLines, ...componentLines].join('\n');
+	});
+
+	const props = [
+		{ prop: 'label', type: 'string', initial: '', required: true },
+		{ prop: 'onclick', type: '() => void', initial: '' },
+		{ prop: 'type', type: "'button' | 'submit' | 'reset'", initial: 'button' },
+		{ prop: 'href', type: 'string', initial: '' },
+		{
+			prop: 'variant',
+			type: "'primary' | 'secondary' | 'outline' | 'soft' | 'ghost'",
+			initial: 'primary'
+		},
+		{ prop: 'size', type: "'sm' | 'md' | 'lg'", initial: 'md' },
+		{ prop: 'class', type: 'string', initial: '' },
+		{ prop: 'startIcon', type: 'IconName', initial: '' },
+		{ prop: 'endIcon', type: 'IconName', initial: '' },
+		{ prop: 'loading', type: 'boolean', initial: 'false' },
+		{ prop: 'loadingIcon', type: 'IconName', initial: '' },
+		{ prop: 'wide', type: 'boolean', initial: 'false' },
+		{ prop: 'disabled', type: 'boolean', initial: 'false' },
+		{ prop: 'shadow', type: 'boolean', initial: 'false' }
+	];
 </script>
 
-<Section contentClass="gap-4 p-3">
-	<div class="prose">
-		<h1>Select</h1>
-		<p>Select is a form component that allows users to choose an option from a dropdown list.</p>
-	</div>
-	<Alert showIcon>
-		<strong>Note:</strong> Use bind:value only if you're not using useForm, since useForm manages the
-		value via the field name.
-	</Alert>
-	<Card bodyClass="column gap-4">
-		<div class="column lg:row w-full gap-4">
-			<div class="column w-full">
-				<h4>Preview</h4>
-				<div class="column center gap-4 flex-1 p-4">
-					<Select
-						label="Label"
-						name="form_select"
-						color={selectedColor}
-						size={selectedSize}
-						variant={selectedVariant}
-						labelOutside={isLabelOutside}
-						labelActive={isLabelActive}
-						options={buildOptions}
-						helpText={showHelpText ? 'Help text' : ''}
-						errorText={showErrorText ? 'Form validation error' : ''}
-					/>
-				</div>
-			</div>
-			<Divider class="invisible lg:visible" vertical />
-			<Divider class="lg:hidden" />
-			<div class="column gap-3 min-w-64">
-				<h4>Builder</h4>
-				<Select
-					label="Variant"
-					name="variant"
-					size="small"
-					options={variantOptions}
-					bind:value={selectedVariant}
-				/>
-				<Select
-					label="Color"
-					name="color"
-					size="small"
-					options={colorOptions}
-					bind:value={selectedColor}
-				/>
-				<Select
-					label="Size"
-					name="size"
-					size="small"
-					options={sizeOptions}
-					bind:value={selectedSize}
-				/>
-				<h6>Option</h6>
-				<div class="grid grid-cols-2 gap-2">
-					<Checkbox bind:checked={withDescription} name="description" label="Description" />
-					<Checkbox bind:checked={withAvatar} name="avatar" label="Avatar" />
-				</div>
-				<h6>Decorations</h6>
-				<div class="grid grid-cols-2 gap-2">
-					<Checkbox bind:checked={isLabelOutside} name="labelOutside" label="labelOutside" />
-					<Checkbox bind:checked={isLabelActive} name="labelActive" label="labelActive" />
-				</div>
-				<h6>Feedback Messages</h6>
-				<div class="grid grid-cols-2 gap-2">
-					<Checkbox bind:checked={showHelpText} name="help-text" label="Help Text" />
-					<Checkbox bind:checked={showErrorText} name="error-text" label="Error Text" />
-				</div>
-				<h6>Data & Events</h6>
-				<div class="grid grid-cols-2 gap-2">
-					<Checkbox bind:checked={hasBinding} name="help-text" label="Binding" />
-					<Checkbox bind:checked={hasEvents} name="has-events" label="Events" />
-				</div>
-			</div>
-		</div>
+{#snippet preview()}
+	<Select
+		label="Label"
+		name="form_select"
+		class="max-w-md"
+		options={buildOptions}
+		{size}
+		{variant}
+		{floatLabel}
+	/>
+{/snippet}
 
-		{#snippet footer()}
-			<Code
-				lang="svelte"
-				code={`<script lang="ts">
-  import { Select } from 'sappsui';
-  const selectOptions = [
-	{
-	  id: '1',
-	  ${withAvatar ? "src: '/avatar-1.jpeg'," : ''}
-	  label: 'Jonh Doe',
-	  ${withDescription ? "description: '/Designer'," : ''}
-	},
-  ];
-  ${hasBinding ? '\n  let selectedValue = $state("1")' : ''}
-<\/script>
-<Select
-  label="Label"
-  name="form_select"
-  placeholder="Select an option"
-  options={selectOptions}
-  ${selectedVariant !== 'soft' ? `variant="${selectedVariant}"` : ''}
-  ${selectedColor !== 'primary' ? `color="${selectedColor}"` : ''}
-  ${selectedSize !== 'medium' ? `size="${selectedSize}"` : ''}
-  ${showHelpText ? 'helpText="Help text"' : ''}
-  ${showErrorText ? 'errorText={formState.errors.form_name}' : ''}
-  ${hasBinding ? '\n  bind:value={selectedValue}' : ''}
-  ${hasEvents ? '\n  onchange={(v) => console.log(v)}' : ''}
-  ${isLabelOutside ? '\n  labelOutside' : ''}
-  ${isLabelActive ? '\n  labelActive' : ''}
-/>`.replace(/^\s*\n/gm, '')}
-			/>
-		{/snippet}
-	</Card>
-</Section>
+{#snippet builder()}
+	<Select label="Variant" name="variant" size="sm" options={variantOptions} bind:value={variant} />
+	<Select label="Size" name="size" size="sm" options={sizeOptions} bind:value={size} />
+	<Select label="Type" name="type" size="sm" options={typeOptions} bind:value={type} />
+
+	<DocOptions title="Props">
+		<Checkbox
+			onchange={(v) => (v ? (startIcon = 'fluent:search-24-regular') : (startIcon = ''))}
+			name="start-icon"
+			label="startIcon"
+		/>
+		<Checkbox
+			onchange={(v) => (v ? (endIcon = 'fluent:camera-sparkles-24-regular') : (endIcon = ''))}
+			name="start-icon"
+			label="startIcon"
+		/>
+	</DocOptions>
+
+	<DocOptions title="States">
+		<Checkbox bind:checked={floatLabel} name="float_label" label="floatLabel" />
+		<Checkbox bind:checked={disabled} name="disabled" label="Disabled" />
+		<Checkbox bind:checked={shadow} name="shadow" label="Shadow" />
+	</DocOptions>
+
+	<DocOptions title="Option">
+		<Checkbox bind:checked={withAvatar} name="avatar" label="Avatar" />
+		<Checkbox bind:checked={withDescription} name="description" label="Description" />
+	</DocOptions>
+{/snippet}
+
+<DocHeader title="Select">
+	Select is a form component that allows users to choose an option from a dropdown list. For large
+	datasets or searchable options, consider using
+	<a href="/docs/form/combobox" class="link">Combobox</a> instead.
+</DocHeader>
+
+<DocPreview {preview} {builder} />
+
+<DocCode code={code()} />
+
+<DocProps {props} />

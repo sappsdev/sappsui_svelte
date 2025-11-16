@@ -6,7 +6,7 @@
 		values?: string[];
 		class?: string;
 		variant?: 'solid' | 'outline' | 'soft' | 'line';
-		color?: 'primary' | 'secondary' | 'accent' | 'muted';
+		color?: 'primary' | 'secondary' | 'muted';
 		inputSize?: 'small' | 'medium' | 'large';
 		type?: 'text' | 'password' | 'number';
 		name: string;
@@ -40,7 +40,6 @@
 	const colors = {
 		primary: 'field-primary',
 		secondary: 'field-secondary',
-		accent: 'field-accent',
 		muted: 'field-muted'
 	};
 

@@ -3,7 +3,7 @@
 		@apply flex flex-wrap gap-4 justify-start;
 
 		.radio-item {
-			@apply flex justify-start items-center;
+			@apply flex justify-start items-center gap-3;
 
 			.radio {
 				@apply relative appearance-none border-2 border-outline rounded-full cursor-pointer;
@@ -20,12 +20,6 @@
 					@apply checked:border-secondary;
 					&:checked {
 						@apply after:bg-secondary;
-					}
-				}
-				&.radio-accent {
-					@apply checked:border-accent;
-					&:checked {
-						@apply after:bg-accent;
 					}
 				}
 				&.radio-muted {

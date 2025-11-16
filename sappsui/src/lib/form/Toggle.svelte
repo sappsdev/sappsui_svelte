@@ -9,7 +9,7 @@
 		class?: string;
 		label?: string;
 		name: string;
-		color?: 'primary' | 'secondary' | 'accent' | 'muted';
+		color?: 'primary' | 'secondary' | 'muted';
 	};
 	let {
 		checked = $bindable(),
@@ -25,7 +25,6 @@
 	const colors = {
 		primary: 'toggle-primary',
 		secondary: 'toggle-secondary',
-		accent: 'toggle-accent',
 		muted: 'toggle-muted'
 	};
 </script>

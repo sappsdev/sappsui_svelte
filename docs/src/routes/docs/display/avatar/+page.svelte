@@ -12,11 +12,11 @@
 	];
 
 	const sizeOptions = [
-		{ id: 'tiny', label: 'Tiny' },
-		{ id: 'small', label: 'Small' },
-		{ id: 'medium', label: 'Medium' },
-		{ id: 'large', label: 'Large' },
-		{ id: 'extra', label: 'Extra' }
+		{ id: 'xs', label: 'xs' },
+		{ id: 'sm', label: 'sm' },
+		{ id: 'md', label: 'md' },
+		{ id: 'lg', label: 'lg' },
+		{ id: 'xl', label: 'xl' }
 	];
 
 	const sourceOptions = [
@@ -26,13 +26,13 @@
 	];
 
 	let selectedColor: any = $state('primary');
-	let selectedSize: any = $state('large');
+	let selectedSize: any = $state('lg');
 	let selectedSource: any = $state('image');
 
 	let isOutline: any = $state(false);
 </script>
 
-<Section contentClass="gap-4 p-3">
+<Section>
 	<div class="prose">
 		<h1>Avatar</h1>
 		<p>Avatar component is used to display user profile pictures or initials.</p>
@@ -58,21 +58,21 @@
 				<Select
 					label="Source"
 					name="source"
-					size="small"
+					size="sm"
 					options={sourceOptions}
 					bind:value={selectedSource}
 				/>
 				<Select
 					label="Color"
 					name="color"
-					size="small"
+					size="sm"
 					options={colorOptions}
 					bind:value={selectedColor}
 				/>
 				<Select
 					label="Size"
 					name="size"
-					size="small"
+					size="sm"
 					options={sizeOptions}
 					bind:value={selectedSize}
 				/>

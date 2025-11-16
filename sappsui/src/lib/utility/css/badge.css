@@ -1,0 +1,47 @@
+@layer components {
+	.badge {
+		@apply relative w-fit;
+	}
+	.badge__content {
+		@apply absolute flex items-center justify-center rounded-ui;
+		@apply inset-ring inset-ring-outline;
+		@apply h-5 min-w-5 px-1;
+	}
+	.badge__content-text {
+		@apply text-xs leading-none;
+	}
+	.badge--top-left .badge__content {
+		@apply top-0 left-0 translate-x-[-50%] translate-y-[-50%];
+	}
+	.badge--top-right .badge__content {
+		@apply top-0 right-0 translate-x-[50%] translate-y-[-50%];
+	}
+	.badge--bottom-left .badge__content {
+		@apply bottom-0 left-0 translate-x-[-50%] translate-y-[50%];
+	}
+	.badge--bottom-right .badge__content {
+		@apply bottom-0 right-0 translate-x-[50%] translate-y-[50%];
+	}
+
+	.badge--primary .badge__content {
+		@apply bg-primary text-on-primary;
+	}
+	.badge--secondary .badge__content {
+		@apply bg-secondary text-on-secondary;
+	}
+	.badge--muted .badge__content {
+		@apply bg-muted text-on-muted;
+	}
+	.badge--success .badge__content {
+		@apply bg-success text-on-success;
+	}
+	.badge--warning .badge__content {
+		@apply bg-warning text-on-warning;
+	}
+	.badge--danger .badge__content {
+		@apply bg-danger text-on-danger;
+	}
+	.badge--info .badge__content {
+		@apply bg-info text-on-info;
+	}
+}

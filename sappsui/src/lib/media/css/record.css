@@ -1,0 +1,164 @@
+@layer components {
+	.recorder {
+		@apply relative flex items-center gap-3 rounded-card;
+		@apply transition-colors duration-300 ease-in-out;
+		@apply p-3 max-w-md select-none;
+
+		.recorder-waveform {
+			@apply flex-1 h-10 flex items-center;
+
+			.recorder-bars {
+				@apply flex items-center gap-0.5 w-full h-full;
+
+				.recorder-bar {
+					@apply flex-1 rounded-sm transition-all duration-100;
+					@apply min-h-1;
+
+					&.recorder-bar-recording {
+						@apply animate-pulse;
+					}
+				}
+			}
+		}
+
+		.recorder-time {
+			@apply shrink-0 text-sm font-medium min-w-10 text-right;
+		}
+
+		&.recorder-solid {
+			&.recorder-default {
+				@apply bg-background text-on-background;
+
+				.recorder-bar {
+					@apply bg-outline;
+					&.recorder-bar-recording {
+						@apply bg-danger;
+					}
+				}
+			}
+
+			&.recorder-surface {
+				@apply bg-surface text-on-surface;
+
+				.recorder-bar {
+					@apply bg-outline;
+					&.recorder-bar-recording {
+						@apply bg-danger;
+					}
+				}
+			}
+
+			&.recorder-primary {
+				@apply bg-primary text-on-primary;
+
+				.recorder-bar {
+					@apply bg-on-primary/30;
+					&.recorder-bar-recording {
+						@apply bg-on-primary;
+					}
+				}
+			}
+
+			&.recorder-secondary {
+				@apply bg-secondary text-on-secondary;
+
+				.recorder-bar {
+					@apply bg-on-secondary/30;
+					&.recorder-bar-recording {
+						@apply bg-on-secondary;
+					}
+				}
+			}
+
+			&.recorder-error {
+				@apply bg-danger text-on-danger;
+
+				.recorder-bar {
+					@apply bg-on-danger/30;
+					&.recorder-bar-recording {
+						@apply bg-on-danger;
+					}
+				}
+			}
+
+			&.recorder-muted {
+				@apply bg-muted text-on-muted;
+
+				.recorder-bar {
+					@apply bg-on-muted/30;
+					&.recorder-bar-recording {
+						@apply bg-on-muted;
+					}
+				}
+			}
+		}
+
+		&.recorder-soft {
+			&.recorder-default {
+				@apply bg-background text-on-background;
+
+				.recorder-bar {
+					@apply bg-outline;
+					&.recorder-bar-recording {
+						@apply bg-danger;
+					}
+				}
+			}
+
+			&.recorder-surface {
+				@apply bg-surface text-on-surface;
+
+				.recorder-bar {
+					@apply bg-outline;
+					&.recorder-bar-recording {
+						@apply bg-danger;
+					}
+				}
+			}
+
+			&.recorder-primary {
+				@apply bg-on-primary text-primary;
+
+				.recorder-bar {
+					@apply bg-primary/20;
+					&.recorder-bar-recording {
+						@apply bg-primary;
+					}
+				}
+			}
+
+			&.recorder-secondary {
+				@apply bg-on-secondary text-secondary;
+
+				.recorder-bar {
+					@apply bg-secondary/20;
+					&.recorder-bar-recording {
+						@apply bg-secondary;
+					}
+				}
+			}
+
+			&.recorder-error {
+				@apply bg-danger/10 text-danger;
+
+				.recorder-bar {
+					@apply bg-danger/20;
+					&.recorder-bar-recording {
+						@apply bg-danger;
+					}
+				}
+			}
+
+			&.recorder-muted {
+				@apply bg-muted text-on-muted;
+
+				.recorder-bar {
+					@apply bg-on-muted/20;
+					&.recorder-bar-recording {
+						@apply bg-on-muted;
+					}
+				}
+			}
+		}
+	}
+}

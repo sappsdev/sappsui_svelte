@@ -1,85 +1,79 @@
 <script lang="ts">
+	import type { IconName } from '$lib/assets/icons/index.js';
 	import { Icon } from '$lib/index.js';
 	import { cn } from '$lib/utils/class-names.js';
-	import type { Snippet } from 'svelte';
-	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 
 	type Props = {
-		children: Snippet;
-		class?: string;
+		label: string;
+		onclick?: () => void;
 		href?: string;
-		variant?: 'solid' | 'outline' | 'soft' | 'ghost' | 'link';
-		color?: 'primary' | 'secondary' | 'accent' | 'muted' | 'success' | 'warning' | 'error' | 'info';
-		size?: 'tiny' | 'small' | 'medium' | 'large';
 		type?: 'button' | 'submit' | 'reset';
+		variant?:
+			| 'primary'
+			| 'secondary'
+			| 'soft'
+			| 'ghost'
+			| 'success'
+			| 'info'
+			| 'danger'
+			| 'warning';
+		size?: 'sm' | 'md' | 'lg';
+		class?: string;
+		startIcon?: IconName;
+		endIcon?: IconName;
+		loadingIcon?: IconName;
 		loading?: boolean;
-		loadingIcon?: string;
 		wide?: boolean;
-	} & HTMLButtonAttributes &
-		HTMLAnchorAttributes;
+		disabled?: boolean;
+		shadow?: boolean;
+	};
 
 	const {
-		children,
-		class: className,
+		label,
+		onclick,
 		href,
-		variant = 'solid',
-		color = 'primary',
-		size = 'medium',
 		type = 'button',
-		loading = false,
+		variant = 'primary',
+		size = 'md',
+		class: className,
+		startIcon,
+		endIcon,
 		loadingIcon = 'svg-spinners:3-dots-move',
-		wide,
-		...rest
+		loading = false,
+		wide = false,
+		disabled,
+		shadow
 	}: Props = $props();
 
-	const variants = {
-		solid: 'btn-solid',
-		outline: 'btn-outline',
-		soft: 'btn-soft',
-		ghost: 'btn-ghost',
-		link: 'btn-link'
-	};
-	const colors = {
-		primary: 'btn-primary',
-		secondary: 'btn-secondary',
-		accent: 'btn-accent',
-		muted: 'btn-muted',
-		success: 'btn-success',
-		warning: 'btn-warning',
-		error: 'btn-error',
-		info: 'btn-info'
-	};
-
-	const sizes = {
-		tiny: 'btn-tiny',
-		small: 'btn-small',
-		medium: 'btn-medium',
-		large: 'btn-large'
-	};
+	let baseClasses = $derived(
+		cn('btn', variant, size, wide && 'wide', shadow && 'shadow', className)
+	);
+	let btnClasses = $derived(cn('btn-icon', loading && 'invisible'));
 </script>
 
 {#if href}
-	<a
-		class={cn('btn', variants[variant], colors[color], sizes[size], wide && 'btn-wide', className)}
-		{href}
-		{...rest}
-	>
-		{@render children()}
+	<a class={baseClasses} {href}>
+		{#if startIcon}
+			<Icon class="btn-icon" name={startIcon} />
+		{/if}
+		<span>{label}</span>
+		{#if endIcon}
+			<Icon class="btn-icon" name={endIcon} />
+		{/if}
 	</a>
 {:else}
-	<button
-		{type}
-		tabindex="0"
-		class={cn('btn', variants[variant], colors[color], sizes[size], wide && 'btn-wide', className)}
-		{...rest}
-	>
+	<button {type} {onclick} disabled={disabled || loading} class={baseClasses} aria-busy={loading}>
 		{#if loading}
 			<span class="btn-loading">
-				<Icon icon={loadingIcon} class="loading-icon" />
+				<Icon name={loadingIcon} class="loading-icon" />
 			</span>
 		{/if}
-		<span class:invisible={loading}>
-			{@render children()}
-		</span>
+		{#if startIcon}
+			<Icon class={btnClasses} name={startIcon} />
+		{/if}
+		<span class:invisible={loading}>{label}</span>
+		{#if endIcon}
+			<Icon class={btnClasses} name={endIcon} />
+		{/if}
 	</button>
 {/if}

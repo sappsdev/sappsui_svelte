@@ -1,71 +1,134 @@
 @layer base {
+	body {
+		font-family: 'Montserrat Variable', sans-serif;
+		@apply h-dvh flex flex-col;
+		@apply bg-background text-on-background;
+	}
+
+	body:has(#popover) {
+		overflow: hidden !important;
+	}
+
+	body:has(#popover).had-scroll {
+		padding-right: var(--scrollbar-size, 6px) !important;
+	}
+
+	::-webkit-scrollbar {
+		width: var(--scrollbar-size, 6px);
+		height: var(--scrollbar-size, 6px);
+	}
+
+	::-webkit-scrollbar-track {
+		background: color-mix(in oklch, currentColor 20%, transparent);
+		box-sizing: border-box;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: color-mix(in oklch, currentColor 80%, transparent);
+		border-radius: 15px;
+	}
+
+	@supports not selector(::-webkit-scrollbar) {
+		* {
+			scrollbar-width: thin;
+			scrollbar-color: color-mix(in oklch, currentColor 80%, transparent)
+				color-mix(in oklch, currentColor 20%, transparent);
+		}
+
+		body {
+			scrollbar-color: color-mix(in oklch, currentColor 80%, transparent)
+				color-mix(in oklch, currentColor 20%, transparent);
+		}
+	}
+
 	h1 {
-		@apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl;
+		@apply text-4xl font-extrabold lg:text-5xl;
 	}
+
 	h2 {
-		@apply scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0;
+		@apply text-3xl font-semibold;
 	}
+
 	h3 {
-		@apply scroll-m-20 text-2xl font-semibold tracking-tight;
+		@apply text-2xl font-semibold;
 	}
+
 	h4 {
-		@apply scroll-m-20 text-xl font-semibold tracking-tight;
+		@apply text-xl font-semibold;
 	}
+
 	h5 {
-		@apply scroll-m-20 text-lg font-semibold tracking-tight;
+		@apply text-lg font-semibold;
 	}
+
 	h6 {
-		@apply scroll-m-20 text-base font-semibold tracking-tight;
+		@apply text-base font-semibold;
 	}
+
 	strong {
 		@apply font-semibold;
 	}
+
 	.link {
 		@apply hover:text-primary underline underline-offset-4;
 	}
+
 	.tiny {
 		@apply text-xs font-medium leading-none;
 	}
+
 	.lead {
 		@apply text-lg;
 	}
+
 	.label {
 		@apply text-sm select-none font-medium;
 	}
+
 	blockquote {
 		@apply mt-2 border-l-2 pl-6 italic;
 	}
+
 	.prose {
 		h1 {
 			@apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl;
 		}
+
 		h2 {
 			@apply scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0;
 		}
+
 		h3 {
 			@apply scroll-m-20 text-2xl font-semibold tracking-tight;
 		}
+
 		h4 {
 			@apply scroll-m-20 text-xl font-semibold tracking-tight;
 		}
+
 		h5 {
 			@apply scroll-m-20 text-lg font-semibold tracking-tight;
 		}
+
 		h6 {
 			@apply scroll-m-20 text-base font-semibold tracking-tight;
 		}
+
 		p {
 			@apply leading-7 text-on-muted;
 			&:not(:first-child) {
-				@apply mt-3;
+				@apply mt-2 md:mt-3;
 			}
 		}
+
 		ul {
 			@apply my-6 ml-6 list-disc space-y-2;
 		}
+
 		ol {
 			@apply my-6 ml-6 list-decimal space-y-2;
 		}
+
 		li {
 			@apply leading-7;
 			> ul,
@@ -73,24 +136,30 @@
 				@apply my-2;
 			}
 		}
+
 		a {
 			@apply font-medium text-primary underline underline-offset-4 hover:text-primary/80 transition-colors;
 		}
+
 		code {
-			@apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
+			@apply relative rounded bg-muted text-on-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
 		}
+
 		pre {
-			@apply my-6 overflow-x-auto rounded-lg bg-muted p-4;
+			@apply my-6 overflow-x-auto rounded-lg bg-muted text-on-muted p-4;
 			code {
 				@apply bg-transparent p-0;
 			}
 		}
+
 		blockquote {
 			@apply my-6 border-l-4 border-outline pl-6 italic text-on-muted;
 		}
+
 		table {
 			@apply my-6 w-full border-collapse;
 		}
+
 		thead {
 			@apply border-b;
 			tr {
@@ -100,6 +169,7 @@
 				@apply h-12 px-4 text-left align-middle font-medium;
 			}
 		}
+
 		tbody {
 			tr {
 				@apply border-b transition-colors hover:bg-muted/50;
@@ -108,51 +178,21 @@
 				@apply p-4 align-middle;
 			}
 		}
+
 		hr {
 			@apply my-8 border-outline;
 		}
 
 		img {
-			@apply my-6 rounded-lg;
+			@apply my-6 rounded-ui;
 		}
+
 		strong {
 			@apply font-semibold;
 		}
+
 		em {
 			@apply italic;
-		}
-	}
-	body {
-		@apply h-dvh flex flex-col;
-		@apply bg-background text-on-background;
-	}
-	body:has(#popover) {
-		overflow: hidden !important;
-	}
-	body:has(#popover).had-scroll {
-		padding-right: var(--scrollbar-size, 6px) !important;
-	}
-	::-webkit-scrollbar {
-		width: var(--scrollbar-size, 6px);
-		height: var(--scrollbar-size, 6px);
-	}
-	::-webkit-scrollbar-track {
-		background: color-mix(in oklch, currentColor 20%, transparent);
-		box-sizing: border-box;
-	}
-	::-webkit-scrollbar-thumb {
-		background: color-mix(in oklch, currentColor 80%, transparent);
-		border-radius: 15px;
-	}
-	@supports not selector(::-webkit-scrollbar) {
-		* {
-			scrollbar-width: thin;
-			scrollbar-color: color-mix(in oklch, currentColor 80%, transparent)
-				color-mix(in oklch, currentColor 20%, transparent);
-		}
-		body {
-			scrollbar-color: color-mix(in oklch, currentColor 80%, transparent)
-				color-mix(in oklch, currentColor 20%, transparent);
 		}
 	}
 }

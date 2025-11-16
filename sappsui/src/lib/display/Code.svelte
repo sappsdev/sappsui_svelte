@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { codeToHtml } from 'shiki';
-	import Icon from '@iconify/svelte';
 	import { useClipboard } from '$lib/hooks/use-clipboard.svelte.js';
-	import { IconButton } from '$lib/index.js';
+	import { Chip, IconButton } from '$lib/index.js';
 
 	type Props = {
 		code: string;
@@ -38,11 +37,12 @@
 <div class="code">
 	{#if open}
 		<div class="code-info">
-			<div class="chip chip-solid chip-small chip-primary">{lang}</div>
+			<Chip label={lang} type="soft" size="md" />
 			<IconButton
 				onclick={handleCopy}
 				icon={clipboard.copied ? 'fluent:checkmark-24-regular' : 'fluent:copy-24-regular'}
-				size="tiny"
+				variant="soft"
+				size="sm"
 			/>
 		</div>
 

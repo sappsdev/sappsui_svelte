@@ -3,6 +3,7 @@
 	import { popover } from '$lib/utils/popover.js';
 	import type { Snippet } from 'svelte';
 	import { fade } from 'svelte/transition';
+	import { afterNavigate } from '$app/navigation';
 
 	type Props = {
 		open: boolean;
@@ -15,10 +16,10 @@
 		headerClass?: string;
 		footerClass?: string;
 		contentClass?: string;
-		color?: 'default' | 'surface' | 'primary' | 'secondary' | 'accent' | 'muted';
+		color?: 'default' | 'surface' | 'primary' | 'secondary' | 'muted';
 	};
 
-	const {
+	let {
 		open = $bindable(),
 		onclose,
 		position = 'start',
@@ -44,12 +45,19 @@
 		surface: 'modal-surface',
 		primary: 'modal-primary',
 		secondary: 'modal-secondary',
-		accent: 'modal-accent',
 		muted: 'modal-muted'
 	};
 
 	let openDrawer = $state(false);
 	let openContent = $state(false);
+
+	$effect(() => {
+		afterNavigate(() => {
+			if (open) {
+				open = false;
+			}
+		});
+	});
 
 	$effect(() => {
 		if (open) {
@@ -80,7 +88,7 @@
 					{@render header()}
 				</div>
 			{/if}
-			<div class={cn('drawer-content', contentClass)}>
+			<div class={cn('drawer-body', contentClass)}>
 				{@render children()}
 			</div>
 			{#if footer}

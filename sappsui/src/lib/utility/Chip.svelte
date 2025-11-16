@@ -1,50 +1,70 @@
 <script lang="ts">
+	import type { IconName } from '$lib/assets/icons/index.js';
+	import { Icon } from '$lib/index.js';
 	import { cn } from '$lib/utils/class-names.js';
 
 	type Props = {
+		label: string;
+		onclose?: () => void;
+		type?: 'solid' | 'soft';
+		variant?: 'primary' | 'secondary' | 'muted' | 'success' | 'info' | 'danger' | 'warning';
+		size?: 'sm' | 'md' | 'lg';
 		class?: string;
-		variant?: 'solid' | 'outline' | 'soft';
-		color?: 'primary' | 'secondary' | 'accent' | 'muted' | 'success' | 'warning' | 'error' | 'info';
-		size?: 'tiny' | 'small' | 'medium' | 'large';
-		label?: string;
-		wide?: boolean;
+		startIcon?: IconName;
+		endIcon?: IconName;
+		shadow?: boolean;
 	};
 
 	const {
-		class: className,
-		variant = 'solid',
-		color = 'primary',
-		size = 'medium',
 		label,
-		wide
+		onclose,
+		type = 'solid',
+		variant = 'primary',
+		size = 'sm',
+		class: className,
+		startIcon,
+		endIcon,
+		shadow
 	}: Props = $props();
 
-	const variants = {
-		solid: 'chip-solid',
-		outline: 'chip-outline',
-		soft: 'chip-soft'
+	const types = {
+		solid: 'chip--solid',
+		soft: 'chip--soft'
 	};
-	const colors = {
-		primary: 'chip-primary',
-		secondary: 'chip-secondary',
-		accent: 'chip-accent',
-		muted: 'chip-muted',
-		success: 'chip-success',
-		warning: 'chip-warning',
-		error: 'chip-error',
-		info: 'chip-info'
+
+	const variants = {
+		primary: 'chip--primary',
+		secondary: 'chip--secondary',
+		muted: 'chip--muted',
+		success: 'chip--success',
+		info: 'chip--info',
+		warning: 'chip--warning',
+		danger: 'chip--danger'
 	};
 
 	const sizes = {
-		tiny: 'chip-tiny',
-		small: 'chip-small',
-		medium: 'chip-medium',
-		large: 'chip-large'
+		sm: 'chip--sm',
+		md: 'chip--md',
+		lg: 'chip--lg'
 	};
 </script>
 
-<div
-	class={cn('chip', variants[variant], colors[color], sizes[size], wide && 'chip-wide', className)}
+<button
+	onclick={() => onclose?.()}
+	class={cn(
+		'chip',
+		types[type],
+		variants[variant],
+		sizes[size],
+		shadow && 'chip--shadow',
+		className
+	)}
 >
-	{label}
-</div>
+	{#if startIcon}
+		<Icon class="chip__icon" name={startIcon} />
+	{/if}
+	<span>{label}</span>
+	{#if endIcon}
+		<Icon class="chip__icon" name={endIcon} />
+	{/if}
+</button>

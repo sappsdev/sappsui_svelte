@@ -31,7 +31,7 @@
 			{#if srcKey && item[srcKey]}
 				<img src={item[srcKey] as string} alt={item[labelKey] as string} />
 			{:else if iconKey && item[iconKey]}
-				<Icon icon={item[iconKey] as string} class="listbox-icon" />
+				<Icon name={item[iconKey] as string} class="listbox-icon" />
 			{/if}
 		</div>
 	{/if}

@@ -1,0 +1,13 @@
+<script lang="ts">
+	import { Code, Section } from 'sappsui';
+
+	type Props = {
+		code: string;
+	};
+
+	let { code }: Props = $props();
+</script>
+
+<Section>
+	<Code lang="svelte" {code} />
+</Section>

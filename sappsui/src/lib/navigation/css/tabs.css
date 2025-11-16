@@ -72,14 +72,6 @@
 						@apply text-on-secondary;
 					}
 				}
-				&.tabs-accent {
-					.tabs-indicator {
-						@apply bg-accent;
-					}
-					.tab.is-active {
-						@apply text-on-accent;
-					}
-				}
 			}
 			&.tabs-pill {
 				@apply bg-muted text-on-muted rounded-full py-1;
@@ -103,14 +95,6 @@
 					}
 					.tab.is-active {
 						@apply text-on-secondary;
-					}
-				}
-				&.tabs-accent {
-					.tabs-indicator {
-						@apply bg-accent;
-					}
-					.tab.is-active {
-						@apply text-on-accent;
 					}
 				}
 			}
@@ -138,14 +122,6 @@
 					}
 					.tab.is-active {
 						@apply text-on-secondary;
-					}
-				}
-				&.tabs-accent {
-					.tabs-indicator {
-						@apply bg-accent;
-					}
-					.tab.is-active {
-						@apply text-on-accent;
 					}
 				}
 			}
@@ -176,14 +152,6 @@
 						@apply text-secondary;
 					}
 				}
-				&.tabs-accent {
-					.tabs-indicator {
-						@apply border-accent;
-					}
-					.tab.is-active {
-						@apply text-accent;
-					}
-				}
 			}
 			&.tabs-ghost {
 				.tabs-indicator {
@@ -200,11 +168,6 @@
 				&.tabs-secondary {
 					.tab.is-active {
 						@apply text-secondary;
-					}
-				}
-				&.tabs-accent {
-					.tab.is-active {
-						@apply text-accent;
 					}
 				}
 			}

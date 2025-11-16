@@ -1,11 +1,6 @@
 <script lang="ts">
 	import { cn } from '$lib/utils/class-names.js';
 
-	type mark = {
-		value: number;
-		label: string;
-	};
-
 	type Props = {
 		min?: number;
 		max?: number;
@@ -14,8 +9,9 @@
 		onchange?: (value: number) => void;
 		size?: 'small' | 'medium' | 'large';
 		label?: string;
-		color?: 'primary' | 'secondary' | 'accent' | 'muted';
+		color?: 'primary' | 'secondary' | 'muted';
 		name: string;
+		hideLabel?: boolean;
 	};
 	let {
 		value = $bindable(),
@@ -26,7 +22,8 @@
 		onchange,
 		size = 'medium',
 		color = 'primary',
-		name
+		name,
+		hideLabel
 	}: Props = $props();
 
 	let progressPercentage = $derived(((value! - min) / (max - min)) * 100);
@@ -34,7 +31,6 @@
 	const colors = {
 		primary: 'slider-primary',
 		secondary: 'slider-secondary',
-		accent: 'slider-accent',
 		muted: 'slider-muted'
 	};
 
@@ -46,7 +42,7 @@
 </script>
 
 <div class="slider-wrapper">
-	<div class="slider-info">
+	<div class="slider-info" hidden={hideLabel}>
 		<span>{label}</span>
 		<span>{value}</span>
 	</div>

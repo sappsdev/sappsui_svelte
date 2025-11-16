@@ -1,81 +1,76 @@
 <script lang="ts">
+	import type { IconName } from '$lib/assets/icons/index.js';
 	import { Icon } from '$lib/index.js';
 	import { cn } from '$lib/utils/class-names.js';
-	import { onMount } from 'svelte';
 	import type { HTMLInputAttributes } from 'svelte/elements';
 
 	type Props = {
-		value?: string;
+		el?: HTMLInputElement;
+		value?: string | number;
 		defaultValue?: string;
 		placeholder?: string;
-		autocomplete?: HTMLInputAttributes['autocomplete'];
 		type?: 'text' | 'password' | 'email' | 'number' | 'tel' | 'url';
 		class?: string;
-		startIcon?: string;
-		endIcon?: string;
+		controlClass?: string;
+		startIcon?: IconName;
+		endIcon?: IconName;
 		startText?: string;
 		endText?: string;
-		inputClass?: string;
-		onchange?: (value: string | number | undefined) => void;
-		oninput?: (value: string | number | undefined) => void;
-		variant?: 'solid' | 'outline' | 'soft' | 'line';
-		color?: 'primary' | 'secondary' | 'accent' | 'muted';
-		size?: 'small' | 'medium' | 'large';
+		onchange?: (value: unknown) => void;
+		oninput?: (value: unknown) => void;
+		variant?: 'primary' | 'secondary' | 'soft' | 'line';
+		size?: 'sm' | 'md' | 'lg';
 		name: string;
 		label?: string;
-		labelOutside?: boolean;
+		labelInside?: boolean;
 		labelActive?: boolean;
 		helpText?: string;
 		errorText?: string;
+		autocomplete?: HTMLInputAttributes['autocomplete'];
+		min?: HTMLInputAttributes['min'];
+		max?: HTMLInputAttributes['max'];
+		maxlength?: HTMLInputAttributes['maxlength'];
+		floatLabel?: boolean;
 	};
 
 	let {
-		value = $bindable(),
+		el = $bindable(),
+		value = $bindable(''),
 		defaultValue,
 		placeholder,
 		autocomplete,
 		type = 'text',
 		class: className,
+		controlClass,
 		startText,
 		endText,
 		startIcon,
 		endIcon,
-		inputClass,
 		onchange,
 		oninput,
-		variant = 'soft',
-		color = 'primary',
-		size = 'medium',
+		variant = 'primary',
+		size = 'md',
 		name,
 		label,
-		labelOutside,
+		floatLabel,
 		labelActive,
 		helpText,
-		errorText
+		errorText,
+		min,
+		max
 	}: Props = $props();
-
-	const variants = {
-		solid: 'field-solid',
-		outline: 'field-outline',
-		soft: 'field-soft',
-		line: 'field-line'
-	};
-	const colors = {
-		primary: 'field-primary',
-		secondary: 'field-secondary',
-		accent: 'field-accent',
-		muted: 'field-muted'
-	};
-
-	const sizes = {
-		small: 'field-small',
-		medium: 'field-medium',
-		large: 'field-large'
-	};
 
 	const uid = $props.id();
 
+	let isActive = $state(false);
 	let isFocused = $state(false);
+
+	let iconClasses = $derived(
+		cn('control-icon', floatLabel && !isActive && !isFocused && value == '' && 'invisible')
+	);
+	let textClasses = $derived(
+		cn('control-text', floatLabel && !isActive && !isFocused && value == '' && 'invisible')
+	);
 
 	$effect.pre(() => {
 		if (defaultValue) {
@@ -85,82 +80,75 @@
 </script>
 
 <div class={cn('field', className)}>
-	{#if labelOutside && label}
-		<span class="label">{label}</span>
+	{#if !floatLabel && label}
+		<span class="field-label">{label}</span>
 	{/if}
 	<label
-		class={cn('field-control', variants[variant], colors[color], sizes[size])}
+		class={cn(
+			'control',
+			variant,
+			size,
+			floatLabel && 'float',
+			(isActive || isFocused) && 'active',
+			controlClass
+		)}
 		for={`${uid}-{name}`}
 		class:is-error={errorText}
+		onmouseenter={() => (isActive = true)}
+		onmouseleave={() => (isActive = false)}
 	>
-		{#if !labelOutside && label}
-			<span class:is-active={isFocused || value || labelActive} class="label-inside">{label}</span>
+		{#if floatLabel && label}
+			<span class={cn('control-label', (isActive || isFocused || value !== '') && 'active')}>
+				{label}
+			</span>
 		{/if}
 
-		{#if startIcon || startText}
-			<span class="field-start">
-				{#if startIcon}
-					<Icon
-						class={cn(
-							'field-icon',
-							labelOutside || isFocused || value || labelActive ? 'visible' : 'invisible'
-						)}
-						icon={startIcon}
-					/>
-				{/if}
-				{#if startText}
-					<span
-						class={cn(
-							'field-text',
-							labelOutside || isFocused || value || labelActive ? 'visible' : 'invisible'
-						)}>{startText}</span
-					>
-				{/if}
+		{#if startIcon}
+			<Icon class={iconClasses} name={startIcon} />
+		{/if}
+
+		{#if startText}
+			<span class={textClasses}>
+				{startText}
 			</span>
 		{/if}
 
 		<input
 			{type}
+			bind:this={el}
 			bind:value
 			id={`${uid}-{name}`}
-			class={cn('field-input', inputClass)}
-			placeholder={labelOutside || isFocused || labelActive ? placeholder : ''}
+			class={cn(
+				'control-input',
+				floatLabel && !isActive && !isFocused && value == '' && 'invisible',
+				controlClass
+			)}
+			{placeholder}
 			{autocomplete}
 			{name}
+			{min}
+			{max}
 			{defaultValue}
 			onchange={(e) => onchange?.((e.target as HTMLInputElement).value)}
 			oninput={(e) => oninput?.((e.target as HTMLInputElement).value)}
-			onfocusin={() => {
-				if (!labelActive) isFocused = true;
-			}}
-			onfocusout={() => {
-				if (!labelActive) isFocused = false;
-			}}
+			onfocusin={() => (isFocused = true)}
+			onfocusout={() => (isFocused = false)}
 		/>
 
-		{#if endIcon || endText}
-			<span class="field-end">
-				{#if endText}
-					<span
-						class={cn(
-							'field-text',
-							labelOutside || isFocused || value || labelActive ? 'visible' : 'invisible'
-						)}>{endText}</span
-					>
-				{/if}
-				{#if endIcon}
-					<Icon
-						class={cn(
-							'field-icon',
-							labelOutside || isFocused || value || labelActive ? 'visible' : 'invisible'
-						)}
-						icon={endIcon}
-					/>
-				{/if}
+		{#if endText}
+			<span class={textClasses}>
+				{endText}
 			</span>
 		{/if}
+
+		{#if endIcon}
+			<Icon class={iconClasses} name={endIcon} />
+		{/if}
 	</label>
+
 	{#if errorText || helpText}
-		<div class={cn('field-help', errorText && 'is-error')}>{errorText || helpText}</div>
+		<div class={cn('field_help')}>
+			{errorText || helpText}
+		</div>
 	{/if}
 </div>

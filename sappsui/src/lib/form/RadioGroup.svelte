@@ -15,7 +15,7 @@
 		name: string;
 		info?: string;
 		error?: string;
-		color?: 'primary' | 'secondary' | 'accent' | 'muted';
+		color?: 'primary' | 'secondary' | 'muted';
 		radioSize?: 'small' | 'medium' | 'large';
 	};
 	let {
@@ -34,7 +34,6 @@
 	const colors = {
 		primary: 'radio-primary',
 		secondary: 'radio-secondary',
-		accent: 'radio-accent',
 		muted: 'radio-muted'
 	};
 
@@ -48,7 +47,7 @@
 <div class={cn('field', className)}>
 	<input type="text" {name} hidden />
 	{#if label}
-		<div class="field-label">{label}</div>
+		<div class="label">{label}</div>
 	{/if}
 
 	<div class={cn('radio-group')}>

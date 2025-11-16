@@ -13,7 +13,7 @@
 		onchange?: (value: string | number | undefined) => void;
 		oninput?: (value: string | number | undefined) => void;
 		variant?: 'solid' | 'outline' | 'soft' | 'line';
-		color?: 'primary' | 'secondary' | 'accent' | 'muted';
+		color?: 'primary' | 'secondary' | 'muted';
 		inputSize?: 'small' | 'medium' | 'large';
 		name: string;
 		label?: string;
@@ -63,7 +63,6 @@
 	const colors = {
 		primary: 'field-primary',
 		secondary: 'field-secondary',
-		accent: 'field-accent',
 		muted: 'field-muted'
 	};
 

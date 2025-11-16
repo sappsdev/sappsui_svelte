@@ -22,7 +22,7 @@
 			@apply appearance-none rounded-full cursor-pointer border border-white;
 		}
 		&.slider-primary {
-			--slider-color: theme('colors.primary');
+			--slider-color: var(--color-primary);
 			&::-webkit-slider-thumb {
 				@apply bg-primary;
 			}
@@ -32,25 +32,16 @@
 		}
 
 		&.slider-secondary {
-			--slider-color: theme('colors.secondary');
+			--slider-color: var(--color-secondary);
 			&::-webkit-slider-thumb {
 				@apply bg-secondary;
 			}
 			&::-moz-range-thumb {
 				@apply bg-secondary;
-			}
-		}
-		&.slider-accent {
-			--slider-color: theme('colors.accent');
-			&::-webkit-slider-thumb {
-				@apply bg-accent;
-			}
-			&::-moz-range-thumb {
-				@apply bg-accent;
 			}
 		}
 		&.slider-muted {
-			--slider-color: theme('colors.muted');
+			--slider-color: var(--color-muted);
 			&::-webkit-slider-thumb {
 				@apply bg-muted;
 			}

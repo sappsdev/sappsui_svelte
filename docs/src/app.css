@@ -2,27 +2,24 @@
 @import 'sappsui/css';
 
 body {
-	font-family: 'Inter Variable', sans-serif;
+	font-family: 'Montserrat Variable', sans-serif;
 }
 
 :root {
 	--primary: oklch(54.6% 0.245 262.881);
-	--on-primary: oklch(97% 0.014 254.604);
+	--on-primary: oklch(93.2% 0.032 255.585);
 
 	--secondary: oklch(60% 0.118 184.704);
-	--on-secondary: oklch(98.4% 0.014 180.72);
+	--on-secondary: oklch(95.3% 0.051 180.801);
 
-	--accent: oklch(71.4% 0.203 305.504);
-	--on-accent: oklch(29.1% 0.149 302.717);
+	--muted: oklch(87.2% 0.01 258.338);
+	--on-muted: oklch(37.2% 0.044 257.287);
 
 	--background: oklch(98.5% 0.002 247.839);
 	--on-background: oklch(21% 0.034 264.665);
 
 	--surface: oklch(96.7% 0.003 264.542);
-	--on-surface: oklch(21% 0.034 264.665);
-
-	--muted: oklch(87.2% 0.01 258.338);
-	--on-muted: oklch(55.1% 0.027 264.364);
+	--on-surface: oklch(27.9% 0.041 260.031);
 
 	--outline: oklch(70.7% 0.022 261.325);
 	--on-outline: oklch(21% 0.034 264.665);
@@ -39,8 +36,8 @@ body {
 	--warning: oklch(68.1% 0.162 75.834);
 	--on-warning: oklch(97.3% 0.071 103.193);
 
-	--error: oklch(57.7% 0.245 27.325);
-	--on-error: oklch(93.6% 0.032 17.717);
+	--danger: oklch(57.7% 0.245 27.325);
+	--on-danger: oklch(93.6% 0.032 17.717);
 
 	--radius-avatar: 0.75rem;
 	--radius-control: 0.75rem;
@@ -53,14 +50,14 @@ body {
 }
 
 .dark {
+	--muted: oklch(37.3% 0.034 259.733);
+	--on-muted: oklch(87.2% 0.01 258.338);
+
 	--background: oklch(13% 0.028 261.692);
 	--on-background: oklch(96.7% 0.003 264.542);
 
 	--surface: oklch(21% 0.034 264.665);
-	--on-surface: oklch(96.7% 0.003 264.542);
-
-	--muted: oklch(37.3% 0.034 259.733);
-	--on-muted: oklch(55.1% 0.027 264.364);
+	--on-surface: oklch(92.8% 0.006 264.531);
 
 	--outline: oklch(44.6% 0.03 256.802);
 	--on-outline: oklch(96.7% 0.003 264.542);

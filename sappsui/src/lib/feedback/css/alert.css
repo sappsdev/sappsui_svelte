@@ -7,7 +7,7 @@
 				@apply bg-success text-on-success;
 			}
 			&.alert-error {
-				@apply bg-error text-on-error;
+				@apply bg-danger text-on-danger;
 			}
 			&.alert-warning {
 				@apply bg-warning text-on-warning;
@@ -21,7 +21,7 @@
 				@apply bg-success/30 text-success;
 			}
 			&.alert-error {
-				@apply bg-error/30 text-error;
+				@apply bg-danger/30 text-danger;
 			}
 			&.alert-warning {
 				@apply bg-warning/30 text-warning;

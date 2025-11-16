@@ -1,11 +1,17 @@
 <script lang="ts">
-	import Icon from '@iconify/svelte';
+	import { icons, type IconName } from '$lib/assets/icons/index.js';
+
 	type Props = {
-		icon: string;
+		name: IconName;
 		class?: string;
-		onclick?: () => void;
 	};
-	const { icon, class: className, onclick }: Props = $props();
+	const { name, class: className }: Props = $props();
 </script>
 
-<Icon {icon} class={className} {onclick} />
+<svg
+	viewBox={name && name.startsWith('circle-flags:') ? '0 0 512 512' : '0 0 24 24'}
+	class={className}
+	xmlns="http://www.w3.org/2000/svg"
+>
+	{@html icons[name]}
+</svg>

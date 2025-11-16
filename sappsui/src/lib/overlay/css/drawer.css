@@ -31,7 +31,7 @@
 			}
 
 			&.drawer-open {
-				@apply transform !translate-x-0 !translate-y-0;
+				@apply transform translate-x-0! translate-y-0!;
 			}
 
 			&.drawer-default {
@@ -46,28 +46,25 @@
 			&.drawer-secondary {
 				@apply bg-secondary text-on-secondary;
 			}
-			&.drawer-accent {
-				@apply bg-accent text-on-accent;
-			}
 			&.drawer-muted {
 				@apply bg-muted text-on-muted;
 			}
 
 			.drawer-header {
-				@apply flex flex-col gap-2 p-2;
+				@apply flex flex-col gap-3 p-3;
 			}
 
 			.drawer-footer {
-				@apply flex flex-col gap-2 p-2;
+				@apply flex flex-col gap-3 p-3;
 			}
 
-			.drawer-content {
-				@apply flex min-h-0 flex-1 flex-col gap-2 overflow-auto;
+			.drawer-body {
+				@apply flex min-h-0 flex-1 flex-col gap-3 p-3 overflow-auto;
 			}
 		}
 
 		.drawer-btn-close {
-			@apply absolute top-1 right-1 float-right z-50 size-6 p-1 hover:bg-muted rounded-full flex items-center justify-center text-on-muted hover:text-error cursor-pointer;
+			@apply absolute top-1 right-1 float-right z-50 size-6 p-1 hover:bg-muted rounded-full flex items-center justify-center text-on-muted hover:text-danger cursor-pointer;
 		}
 	}
 }

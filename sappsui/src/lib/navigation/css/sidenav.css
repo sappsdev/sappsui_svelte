@@ -54,15 +54,12 @@
 			&.sidenav-secondary.is-active {
 				@apply bg-secondary/30 text-secondary;
 			}
-			&.sidenav-accent.is-active {
-				@apply bg-accent/30 text-accent;
-			}
 		}
 		.sidenav-submenus {
 			@apply flex flex-col w-full pt-4 pb-1;
 
 			.sidenav-submenu {
-				@apply flex justify-between items-center gap-1 relative;
+				@apply flex justify-between items-center gap-1 relative cursor-pointer;
 
 				.sidenav-start {
 					@apply flex justify-start items-center;

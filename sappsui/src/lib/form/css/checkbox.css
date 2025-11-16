@@ -33,9 +33,6 @@
 			&.checkbox-secondary {
 				@apply bg-secondary border-secondary;
 			}
-			&.checkbox-accent {
-				@apply bg-accent border-accent;
-			}
 			&.checkbox-muted {
 				@apply bg-muted border-muted;
 			}

@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { normalizedCountries, type Country } from '$lib/assets/countries.js';
-	import { Icon } from '$lib/index.js';
+	import { Avatar, Icon } from '$lib/index.js';
 	import { cn } from '$lib/utils/class-names.js';
 	import { onMount, tick } from 'svelte';
+	import TextField from './TextField.svelte';
+	import type { IconName } from '$lib/assets/icons/index.js';
 
 	type Props = {
 		value?: unknown;
@@ -11,13 +13,14 @@
 		placeholder?: string;
 		onchange?: (value: unknown) => void;
 		variant?: 'solid' | 'outline' | 'soft' | 'line';
-		color?: 'primary' | 'secondary' | 'accent' | 'muted';
-		inputSize?: 'small' | 'medium' | 'large';
+		color?: 'primary' | 'secondary' | 'muted';
+		size?: 'small' | 'medium' | 'large';
 		name: string;
 		dialCodeName?: string;
 		class?: string;
 		label?: string;
 		labelOutside?: boolean;
+		labelActive?: boolean;
 		info?: string;
 		error?: string;
 		priorityCountries?: string[];
@@ -32,11 +35,12 @@
 		onchange,
 		variant = 'soft',
 		color = 'primary',
-		inputSize = 'medium',
+		size = 'medium',
 		name,
 		dialCodeName = 'dialCode',
 		label,
 		labelOutside,
+		labelActive,
 		info,
 		error,
 		priorityCountries = []
@@ -79,7 +83,6 @@
 	const colors = {
 		primary: 'field-primary',
 		secondary: 'field-secondary',
-		accent: 'field-accent',
 		muted: 'field-muted'
 	};
 
@@ -88,6 +91,12 @@
 		medium: 'field-medium',
 		large: 'field-large'
 	};
+
+	const avatarSizes = {
+		small: 'tiny',
+		medium: 'small',
+		large: 'medium'
+	} as const;
 
 	const toggleDropdown = async () => {
 		if (!isOpen) {
@@ -163,9 +172,8 @@
 		}
 	};
 
-	const handleSearchInput = async (event: Event) => {
-		const target = event.target as HTMLInputElement;
-		searchQuery = target.value;
+	const handleSearchInput = async (value: unknown) => {
+		searchQuery = value as string;
 		await loadInitialCountries();
 		updatePosition();
 	};
@@ -346,31 +354,36 @@
 	<button
 		type="button"
 		bind:this={controlElement}
-		class={cn('field-control', variants[variant], colors[color], sizes[inputSize])}
+		class={cn('field-control', variants[variant], colors[color], sizes[size])}
 		class:is-error={error}
 		onclick={handleToggleWrapper}
 	>
 		{#if !labelOutside && label}
-			<div class:is-active={isOpen || value || countryCode} class="field-label">
+			<div class:is-active={isOpen || value || countryCode || labelActive} class="label-inside">
 				{label}
 			</div>
 		{/if}
 
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
-		<div class="field-selected" class:invisible={!countryCode && !value && !isOpen}>
-			<!-- svelte-ignore a11y_no_static_element_interactions -->
-			<div class="field-selected-start" onclick={handleCountry}>
-				<Icon
-					icon={`circle-flags:${countryCode ? countryCode : 'xx'}`}
-					class="field-selected-icon"
-				/>
-				<span class="field-selected-info">
-					{dialCode ? `+${dialCode}` : '+--'}
-				</span>
+		<!-- svelte-ignore a11y_no_static_element_interactions -->
+		<div
+			class="field-start"
+			onclick={handleCountry}
+			class:invisible={!countryCode && !value && !isOpen}
+		>
+			<Avatar
+				name="Country"
+				icon={`circle-flags:${countryCode ? countryCode : 'xx'}` as IconName}
+				{size}
+				color="transparent"
+			/>
+			<div class="select-center">
+				{dialCode ? `+${dialCode}` : '+--'}
 			</div>
-			<div class="field-selected-content">
-				<input bind:this={phoneInputEl} type="number" {name} class="field-input" />
-			</div>
+		</div>
+
+		<div class="field-center" class:invisible={!countryCode && !value && !isOpen}>
+			<input bind:this={phoneInputEl} type="number" {name} class="field-input" />
 		</div>
 	</button>
 
@@ -379,41 +392,50 @@
 	{/if}
 
 	<div class:is-open={isOpen} class="select-popover" bind:this={contentEl} {style}>
-		<div class="select-search">
-			<input
-				bind:this={searchInputEl}
-				type="text"
-				placeholder="Search country"
-				value={searchQuery}
-				oninput={handleSearchInput}
-			/>
-		</div>
+		<TextField
+			bind:el={searchInputEl}
+			type="text"
+			name="country-search"
+			placeholder="Search country"
+			bind:value={searchQuery}
+			oninput={handleSearchInput}
+			variant="line"
+			startIcon="fluent:search-24-regular"
+			{color}
+		/>
+
 		<ul class="select-options" bind:this={optionsEl} onscroll={handleScroll}>
 			{#each displayedCountries as item}
 				<li>
 					<button
 						type="button"
 						class:active={countryCode === item.id}
-						class="option-item"
+						class="select-item"
 						onclick={() => handleSelect(item)}
 					>
-						<Icon icon={`circle-flags:${item.id}`} class="option-avatar" />
+						<div class="select-start">
+							<Avatar
+								icon={`circle-flags:${item.id}` as IconName}
+								name="Country"
+								color="transparent"
+							/>
+						</div>
 
-						<div class="option-content">
-							<div class="option-label">
+						<div class="select-center">
+							<div class="select-label">
 								{item.label}
 							</div>
 						</div>
 
 						{#if countryCode === item.id}
-							<Icon icon="material-symbols:check-rounded" class="option-check" />
+							<Icon name="fluent:checkmark-24-regular" class="select-check" />
 						{/if}
 					</button>
 				</li>
 			{/each}
 			{#if isLoadingMore}
 				<li class="select-options-loading">
-					<Icon icon="svg-spinners:3-dots-move" />
+					<Icon name={'svg-spinners:3-dots-move' as IconName} />
 				</li>
 			{/if}
 		</ul>

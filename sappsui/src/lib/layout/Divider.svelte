@@ -7,15 +7,17 @@
 		children?: Snippet;
 		class?: string;
 		vertical?: boolean;
-		color?: 'primary' | 'secondary' | 'accent';
+		color?: 'default' | 'surface' | 'primary' | 'secondary' | 'muted';
 	};
 
-	let { children, class: className, vertical, color }: Props = $props();
+	let { children, class: className, vertical, color = 'default' }: Props = $props();
 
 	const colors = {
+		default: 'divider-default',
+		surface: 'divider-surface',
 		primary: 'divider-primary',
 		secondary: 'divider-secondary',
-		accent: 'divider-accent'
+		muted: 'divider-muted'
 	};
 </script>
 

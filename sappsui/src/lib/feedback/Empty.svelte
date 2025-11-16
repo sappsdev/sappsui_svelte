@@ -2,6 +2,10 @@
 	type Props = {
 		type?: 'playlist' | 'result' | 'data' | 'template';
 		class?: string;
+		title?: string;
+		description?: string;
+		href?: string;
+		onclick?: () => void;
 	};
 	let { type = 'template', class: className }: Props = $props();
 </script>

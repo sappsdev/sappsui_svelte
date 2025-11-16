@@ -1,0 +1,160 @@
+@layer components {
+	.btn {
+		@apply relative flex items-center justify-center w-fit;
+		@appls font-medium whitespace-nowrap;
+		@apply rounded-ui outline-none;
+		@apply cursor-pointer select-none;
+		@apply transition-all duration-200 active:scale-[0.98];
+		@apply disabled:cursor-not-allowed disabled:opacity-50;
+		@apply disabled:transition-none disabled:active:scale-100;
+	}
+
+	.btn-loading {
+		@apply absolute inset-0 flex items-center justify-center;
+	}
+
+	.btn.xs:not(.icon) {
+		@apply h-6 gap-2 px-2 text-xs;
+		.btn-icon {
+			@apply h-4 w-auto;
+		}
+		.loading-icon {
+			@apply h-6 w-auto;
+		}
+	}
+
+	.btn.sm:not(.icon) {
+		@apply h-8 gap-2 px-2 text-xs;
+
+		.btn-icon {
+			@apply h-4 w-auto;
+		}
+
+		.loading-icon {
+			@apply h-8 w-auto;
+		}
+	}
+
+	.btn.md:not(.icon) {
+		@apply h-10 gap-3 px-3 text-sm;
+
+		.btn-icon {
+			@apply h-5 w-auto;
+		}
+
+		.loading-icon {
+			@apply h-10 w-auto;
+		}
+	}
+
+	.btn.lg:not(.icon) {
+		@apply h-12 gap-3 px-4 text-lg;
+
+		.btn-icon {
+			@apply h-6 w-auto;
+		}
+
+		.loading-icon {
+			@apply h-12 w-auto;
+		}
+	}
+
+	.btn.icon.xs {
+		@apply h-6 w-6;
+
+		.btn-icon {
+			@apply h-4 w-4;
+		}
+
+		.loading-icon {
+			@apply h-5 w-5;
+		}
+	}
+
+	.btn.icon.sm {
+		@apply h-8 w-8;
+
+		.btn-icon {
+			@apply h-5 w-5;
+		}
+
+		.loading-icon {
+			@apply h-6 w-6;
+		}
+	}
+
+	.btn.icon.md {
+		@apply h-10 w-10;
+
+		.btn-icon {
+			@apply h-6 w-6;
+		}
+
+		.loading-icon {
+			@apply h-8 w-8;
+		}
+	}
+
+	.btn.icon.lg {
+		@apply h-12 w-12;
+		.btn-icon {
+			@apply h-8 w-8;
+		}
+
+		.loading-icon {
+			@apply h-10 w-10;
+		}
+	}
+
+	.btn.wide {
+		@apply w-full;
+	}
+
+	.btn.shadow {
+		@apply shadow-lg;
+	}
+
+	.btn.primary {
+		@apply bg-primary text-on-primary hover:bg-primary/90;
+		@apply disabled:hover:bg-primary;
+	}
+
+	.btn.secondary {
+		@apply bg-secondary text-on-secondary hover:bg-secondary/90;
+		@apply disabled:hover:bg-secondary;
+	}
+
+	.btn.soft {
+		@apply bg-on-primary text-primary;
+	}
+
+	.btn.outline {
+		@apply inset-ring inset-ring-outline text-on-muted hover:bg-muted;
+		@apply disabled:hover:bg-transparent;
+	}
+
+	.btn.ghost {
+		@apply text-on-muted hover:bg-muted;
+		@apply disabled:hover:bg-transparent;
+	}
+
+	.btn.success {
+		@apply bg-success text-on-success hover:bg-success/90;
+		@apply disabled:hover:bg-success;
+	}
+
+	.btn.warning {
+		@apply bg-warning text-on-warning hover:bg-warning/90;
+		@apply disabled:hover:bg-warning;
+	}
+
+	.btn.info {
+		@apply bg-info text-on-info hover:bg-info/90;
+		@apply disabled:hover:bg-info;
+	}
+
+	.btn.danger {
+		@apply bg-danger text-on-danger hover:bg-danger/90;
+		@apply disabled:hover:bg-danger;
+	}
+}

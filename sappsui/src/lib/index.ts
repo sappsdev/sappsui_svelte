@@ -9,17 +9,22 @@ import Accordion from '$lib/disclosure/Accordion.svelte';
 import Collapsible from '$lib/disclosure/Collapsible.svelte';
 
 import Avatar from '$lib/display/Avatar.svelte';
+import ChatBox from '$lib/display/ChatBox.svelte';
 import Chart from '$lib/display/Chart.svelte';
 import Code from '$lib/display/Code.svelte';
 import Listbox from '$lib/display/ListBox.svelte';
 import Table from '$lib/display/Table.svelte';
 
 import Alert from '$lib/feedback/Alert.svelte';
+import AlertDialog from '$lib/feedback/AlertDialog.svelte';
 import Empty from '$lib/feedback/Empty.svelte';
 import Toast from '$lib/feedback/Toast.svelte';
 
 import Checkbox from '$lib/form/Checkbox.svelte';
+import Combobox from '$lib/form/Combobox.svelte';
+import CsvField from '$lib/form/CsvField.svelte';
 import DateField from '$lib/form/DateField.svelte';
+import Dropzone from '$lib/form/Dropzone.svelte';
 import TextField from '$lib/form/TextField.svelte';
 import PasswordField from '$lib/form/PasswordField.svelte';
 import PinField from '$lib/form/PinField.svelte';
@@ -36,6 +41,8 @@ import Section from '$lib/layout/Section.svelte';
 import Scaffold from '$lib/layout/Scaffold.svelte';
 import Sidebar from '$lib/layout/Sidebar.svelte';
 
+import Audio from '$lib/media/Audio.svelte';
+import Record from '$lib/media/Record.svelte';
 import Video from '$lib/media/Video.svelte';
 
 import NavMenu from '$lib/navigation/NavMenu.svelte';
@@ -43,10 +50,13 @@ import BottomNav from '$lib/navigation/BottomNav.svelte';
 import SideNav from '$lib/navigation/SideNav.svelte';
 import Tabs from '$lib/navigation/Tabs.svelte';
 
+import Command from '$lib/overlay/Command.svelte';
 import Drawer from '$lib/overlay/Drawer.svelte';
 import Dropdown from '$lib/overlay/Dropdown.svelte';
 import Modal from '$lib/overlay/Modal.svelte';
+import PopoverStack from '$lib/overlay/PopoverStack.svelte';
 
+import Badge from '$lib/utility/Badge.svelte';
 import Chip from '$lib/utility/Chip.svelte';
 
 import {
@@ -72,22 +82,32 @@ import { useLocalStorage } from './hooks/use-localstorage.svelte.js';
 import { useClipboard } from './hooks/use-clipboard.svelte.js';
 import { useAuth } from './hooks/use-auth.svelte.js';
 import { theme } from './stores/theme.svelte.js';
+import { useSearch } from './hooks/use-search.svelte.js';
+import { useChat } from './hooks/use-chat.svelte.js';
 
 export {
 	Alert,
+	AlertDialog,
 	AppBar,
 	Accordion,
 	Avatar,
+	Audio,
+	Badge,
 	Button,
 	BottomNav,
 	Card,
+	ChatBox,
 	Chart,
 	Checkbox,
 	Chip,
 	Code,
 	Collapsible,
+	Command,
+	Combobox,
+	CsvField,
 	DateField,
 	Drawer,
+	Dropzone,
 	Divider,
 	Dropdown,
 	Empty,
@@ -106,8 +126,10 @@ export {
 	PhoneField,
 	PinField,
 	plural,
+	PopoverStack,
 	Provider,
 	RadioGroup,
+	Record,
 	Scaffold,
 	Section,
 	Select,
@@ -125,11 +147,13 @@ export {
 	Toggle,
 	ToggleTheme,
 	useAuth,
+	useChat,
 	useClipboard,
 	useFetch,
 	useForm,
 	useLocalStorage,
 	useScroll,
+	useSearch,
 	useTable,
 	useWebSocket,
 	Video

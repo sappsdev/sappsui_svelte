@@ -9,7 +9,7 @@
 				@apply bg-muted whitespace-nowrap text-sm font-semibold rounded-card;
 				th {
 					&:first-child {
-						@apply rounded-l-item;
+						@apply rounded-l-item pl-6;
 					}
 
 					&:last-child {
@@ -18,79 +18,194 @@
 				}
 
 				.table-head {
-					@apply py-3 pr-3 pl-4 text-left text-sm font-semibold text-on-muted sm:pl-6;
+					@apply py-3 px-4 text-left text-sm font-semibold text-on-muted;
 				}
 			}
+
 			.table-body {
 				@apply divide-y divide-outline/40;
+
+				tr {
+					@apply transition-colors duration-150;
+				}
+
 				td {
-					@apply px-3 py-4 text-sm whitespace-nowrap;
+					@apply px-4 py-4 text-sm whitespace-nowrap;
+
+					&:first-child {
+						@apply pl-6;
+					}
 				}
 			}
 		}
 	}
 
+	/* Variante Striped */
 	.table-striped {
 		tbody {
 			tr {
 				&:nth-child(even) {
-					@apply bg-muted rounded-lg;
+					@apply bg-muted/50;
 
 					td {
 						&:first-child {
-							@apply rounded-l-lg;
+							@apply rounded-l-item;
 						}
 
 						&:last-child {
-							@apply rounded-r-lg;
+							@apply rounded-r-item;
 						}
-					}
-
-					&.table-pin-cols th {
-						@apply bg-muted;
 					}
 				}
 
-				&.row-hover {
-					&,
-					&:nth-child(even) {
-						@apply hover:bg-muted;
+				&:hover {
+					@apply bg-muted/70;
+				}
+			}
+		}
+	}
+
+	/* Variante Condensed */
+	.table-condensed {
+		.table-header {
+			.table-head {
+				@apply py-2 px-3;
+			}
+		}
+
+		.table-body {
+			td {
+				@apply py-2 px-3;
+
+				&:first-child {
+					@apply pl-4;
+				}
+			}
+		}
+	}
+
+	/* Variante Bordered */
+	.table-bordered {
+		@apply border border-outline/40 rounded-lg overflow-hidden;
+
+		.table-body {
+			tr {
+				td {
+					@apply border-r border-outline/40;
+
+					&:last-child {
+						@apply border-r-0;
 					}
 				}
 			}
 		}
 	}
 
+	/* Sin divisores */
+	.table-no-dividers {
+		.table-body {
+			@apply divide-y-0;
+		}
+	}
+
+	/* Tamaños */
 	.table-small {
-		:not(thead, tfoot) tr {
-			@apply text-xs;
+		.table-header {
+			.table-head {
+				@apply text-xs py-2 px-3;
+			}
 		}
 
-		:where(th, td) {
-			@apply px-3 py-2;
+		.table-body {
+			td {
+				@apply text-xs py-2 px-3;
+
+				&:first-child {
+					@apply pl-4;
+				}
+			}
 		}
 	}
 
 	.table-medium {
-		:not(thead, tfoot) tr {
-			@apply text-sm;
+		.table-header {
+			.table-head {
+				@apply text-sm py-3 px-4;
+			}
 		}
 
-		:where(th, td) {
-			@apply px-4 py-3;
+		.table-body {
+			td {
+				@apply text-sm py-4 px-4;
+
+				&:first-child {
+					@apply pl-6;
+				}
+			}
 		}
 	}
 
 	.table-large {
-		:not(thead, tfoot) tr {
-			@apply text-lg;
+		.table-header {
+			.table-head {
+				@apply text-base py-4 px-5;
+			}
 		}
 
-		:where(th, td) {
-			@apply px-5 py-4;
+		.table-body {
+			td {
+				@apply text-base py-5 px-5;
+
+				&:first-child {
+					@apply pl-7;
+				}
+			}
 		}
 	}
 
+	/* Loading State */
+	.table-loading-row {
+		@apply animate-pulse;
+	}
+
+	.skeleton-loader {
+		@apply h-4 bg-muted/50 rounded-md animate-pulse;
+	}
+
+	/* Empty State */
+	.table-empty-row {
+		@apply border-0;
+	}
+
+	.table-empty-cell {
+		@apply border-0 py-12;
+	}
+
+	.empty-state {
+		@apply flex flex-col items-center justify-center gap-4 text-center;
+	}
+
+	.empty-icon {
+		@apply text-on-muted/40;
+
+		.empty-state-icon {
+			@apply w-16 h-16;
+		}
+	}
+
+	.empty-content {
+		@apply flex flex-col gap-1;
+	}
+
+	.empty-title {
+		@apply text-lg font-semibold text-on-background;
+	}
+
+	.empty-description {
+		@apply text-sm text-on-muted;
+	}
+
+	/* Wrapper y Pagination */
 	.table-wrapper {
 		@apply flex flex-col gap-4;
 	}

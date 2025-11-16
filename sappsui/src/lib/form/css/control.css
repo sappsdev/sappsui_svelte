@@ -1,0 +1,137 @@
+@layer components {
+	.control {
+		@apply relative flex items-center justify-between w-full gap-2 px-3;
+		@apply transition-all duration-300 ease-in-out;
+	}
+
+	.control-label {
+		@apply absolute left-3 top-1/2 -translate-y-1/2;
+		@apply transition-all duration-300;
+	}
+
+	.control-label.active {
+		@apply text-xs left-3 top-0.5! translate-y-0.5!;
+	}
+
+	.control.sm {
+		@apply h-8;
+	}
+
+	.control.sm .control-icon {
+		@apply h-6 w-auto;
+	}
+
+	.control.float.sm {
+		@apply h-10 pt-3;
+	}
+
+	.control.md {
+		@apply h-10;
+	}
+
+	.control.md .control-icon {
+		@apply h-8 w-auto;
+	}
+
+	.control.float.md {
+		@apply h-12 pt-3.5;
+	}
+
+	.control.lg {
+		@apply h-12;
+	}
+
+	.control.lg .control-icon {
+		@apply h-10 w-auto;
+	}
+
+	.control.float.lg {
+		@apply h-14 pt-3.5;
+	}
+
+	.control.primary,
+	.control.secondary {
+		@apply inset-ring inset-ring-outline rounded-ui;
+	}
+
+	.control.primary.active {
+		@apply inset-ring-2 inset-ring-primary;
+	}
+
+	.control.secondary.active {
+		@apply inset-ring-2 inset-ring-secondary;
+	}
+
+	.control.soft {
+		@apply bg-muted text-on-muted rounded-ui;
+	}
+
+	.control.soft.active {
+		@apply border border-outline;
+	}
+
+	.control.line {
+		@apply border-b  border-outline text-on-muted px-0;
+	}
+
+	.control.line.active {
+		@apply border-b-2 border-primary;
+		.label {
+			@apply left-0!;
+		}
+	}
+
+	.control-btn {
+		@apply absolute right-2 top-1/2 -translate-y-1/2;
+	}
+
+	.control:has(> .control-btn) {
+		@apply pr-8;
+	}
+
+	.control-arrow {
+		@apply size-4 transition-transform;
+		@apply transition-all duration-300 ease-in-out;
+	}
+
+	.control-arrow.active {
+		@apply rotate-90;
+	}
+
+	.control-selected {
+		@apply flex-1 text-left truncate;
+	}
+
+	.control-input {
+		@apply appearance-none flex-1 border-none outline-none;
+		@apply placeholder:transition-opacity placeholder:duration-200;
+
+		&::-webkit-outer-spin-button,
+		&::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+
+		&[type='number'] {
+			appearance: textfield;
+			-moz-appearance: textfield;
+		}
+
+		&:-webkit-autofill,
+		&:-webkit-autofill:hover,
+		&:-webkit-autofill:focus,
+		&:-webkit-autofill:active {
+			-webkit-box-shadow: 0 0 0 30px transparent inset !important;
+			-webkit-text-fill-color: inherit !important;
+			background-color: transparent !important;
+			background-image: none !important;
+			color: inherit !important;
+			transition: background-color 5000000s ease-in-out 0s !important;
+		}
+
+		&:-moz-autofill {
+			background-color: transparent !important;
+			color: inherit !important;
+		}
+	}
+}

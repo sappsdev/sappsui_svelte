@@ -1,23 +1,36 @@
 <script lang="ts" generics="T">
 	import type { TableState } from '$lib/hooks/use-table.svelte.js';
 	import { cn } from '$lib/utils/class-names.js';
+	import { Icon } from '$lib/index.js';
 
 	type Props = {
 		table: TableState<T>;
 		striped?: boolean;
-		noDataMessage?: string;
+		condensed?: boolean;
+		bordered?: boolean;
+		showDividers?: boolean;
+		noDataTitle?: string;
+		noDataDescription?: string;
+		noDataType?: 'playlist' | 'result' | 'data' | 'template';
 		tableSize?: 'small' | 'medium' | 'large';
 		showPagination?: boolean;
 		paginationAlign?: 'left' | 'center' | 'right';
+		loadingRows?: number;
 	};
 
 	const {
 		table,
 		striped = false,
-		noDataMessage = 'No data available',
+		condensed = false,
+		bordered = false,
+		showDividers = true,
+		noDataTitle = 'No data',
+		noDataDescription = 'There are no records to display',
+		noDataType = 'data',
 		tableSize = 'medium',
 		showPagination,
-		paginationAlign = 'center'
+		paginationAlign = 'center',
+		loadingRows = 5
 	}: Props = $props();
 
 	const getPageNumbers = (current: number, total: number): (number | string)[] => {
@@ -57,7 +70,16 @@
 
 <div class="table-wrapper">
 	<div class="table-container">
-		<table class={cn('table', striped && 'table-striped', tableSize && `table-${tableSize}`)}>
+		<table
+			class={cn(
+				'table',
+				striped && 'table-striped',
+				condensed && 'table-condensed',
+				bordered && 'table-bordered',
+				!showDividers && 'table-no-dividers',
+				tableSize && `table-${tableSize}`
+			)}
+		>
 			<thead class="table-header">
 				<tr>
 					{#each table.columns as column}
@@ -72,10 +94,36 @@
 				</tr>
 			</thead>
 			<tbody class="table-body">
-				{#if table.data.length === 0}
-					<tr>
-						<td colspan={table.columns.length}>
-							{noDataMessage}
+				{#if table.isLoading}
+					{#each Array(loadingRows) as _, index}
+						<tr class="table-loading-row">
+							{#each table.columns as column}
+								<td style="text-align: {column.align || 'left'}">
+									<div class="skeleton-loader"></div>
+								</td>
+							{/each}
+						</tr>
+					{/each}
+				{:else if table.data.length === 0}
+					<tr class="table-empty-row">
+						<td colspan={table.columns.length} class="table-empty-cell">
+							<div class="empty-state">
+								<div class="empty-icon">
+									{#if noDataType === 'playlist'}
+										<Icon name="mdi:playlist-remove" class="empty-state-icon" />
+									{:else if noDataType === 'result'}
+										<Icon name="mdi:magnify-remove-outline" class="empty-state-icon" />
+									{:else if noDataType === 'template'}
+										<Icon name="mdi:file-document-remove-outline" class="empty-state-icon" />
+									{:else}
+										<Icon name="mdi:database-remove-outline" class="empty-state-icon" />
+									{/if}
+								</div>
+								<div class="empty-content">
+									<h3 class="empty-title">{noDataTitle}</h3>
+									<p class="empty-description">{noDataDescription}</p>
+								</div>
+							</div>
 						</td>
 					</tr>
 				{:else}
@@ -96,7 +144,7 @@
 			</tbody>
 		</table>
 	</div>
-	{#if showPagination && table.totalPages && table.totalPages > 1}
+	{#if showPagination && table.totalPages && table.totalPages > 1 && !table.isLoading}
 		<div
 			class="pagination-container"
 			style="justify-content: {paginationAlign === 'left'

@@ -19,9 +19,6 @@
 			&.toggle-secondary {
 				@apply bg-secondary;
 			}
-			&.toggle-accent {
-				@apply bg-accent;
-			}
 			&.toggle-muted {
 				@apply bg-muted;
 			}

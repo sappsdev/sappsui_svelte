@@ -1,37 +1,26 @@
-<script lang="ts" generics="T, C">
+<script lang="ts" generics="T">
 	import { page } from '$app/state';
+	import type { IconName } from '$lib/assets/icons/index.js';
 	import { Icon } from '$lib/index.js';
 	import { cn } from '$lib/utils/class-names.js';
 	import type { Snippet } from 'svelte';
 	import { slide } from 'svelte/transition';
 
-	interface SubItem<C> {
-		label: string;
-		icon?: string;
-		description?: string;
-		href: string;
-		button?: boolean;
-		external?: boolean;
-		status?: string | Snippet;
-		onclick?: (item: SubItem<C>) => void;
-	}
-
 	interface Item<T> {
 		type?: 'item' | 'divider' | 'header' | 'submenu';
 		label?: string;
 		description?: string;
-		icon?: string;
+		icon?: IconName;
 		href?: string;
-		external?: boolean;
 		onclick?: (item: Item<T>) => void;
 		status?: string | Snippet;
-		subitems?: SubItem<C>[];
+		subitems?: Item<T>[];
 		open?: boolean;
 	}
 
 	type Props = {
 		items: Item<T>[];
-		color?: 'primary' | 'secondary' | 'accent';
+		color?: 'primary' | 'secondary';
 		class?: string;
 		itemClass?: string;
 	};
@@ -52,8 +41,7 @@
 
 	const colors = {
 		primary: 'sidenav-primary',
-		secondary: 'sidenav-secondary',
-		accent: 'sidenav-accent'
+		secondary: 'sidenav-secondary'
 	};
 
 	function toggleSubmenu(index: number) {
@@ -64,7 +52,7 @@
 {#snippet sidenavItem(item: Item<T>)}
 	{#if item.icon}
 		<div class="sidenav-start">
-			<Icon icon={item.icon} class="sidenav-icon" />
+			<Icon name={item.icon} class="sidenav-icon" />
 		</div>
 	{/if}
 	<div class="sidenav-center">
@@ -87,7 +75,7 @@
 				<div class="sidenav-header">
 					{#if item.icon}
 						<div class="sidenav-start">
-							<Icon icon={item.icon} class="sidenav-icon" />
+							<Icon name={item.icon} class="sidenav-icon" />
 						</div>
 					{/if}
 					<div class="sidenav-center">
@@ -106,7 +94,7 @@
 					<div class="sidenav-submenu">
 						{#if item.icon}
 							<div class="sidenav-start">
-								<Icon icon={item.icon} class="sidenav-icon" />
+								<Icon name={item.icon} class="sidenav-icon" />
 							</div>
 						{/if}
 						<div class="sidenav-center">
@@ -119,7 +107,7 @@
 						</div>
 						<div class="sidenav-btn">
 							<Icon
-								icon="fluent:arrow-sort-down-24-regular"
+								name="fluent:arrow-sort-down-24-regular"
 								class={cn('sidenav-arrow', openSubmenus[index] && 'is-active')}
 							/>
 						</div>
@@ -133,7 +121,6 @@
 											<a
 												href={item.href}
 												class={cn('sidenav-item', colors[color], itemClass)}
-												target={item.external ? '_blank' : '_self'}
 												class:is-active={page.url.pathname.includes(subitem.href)}
 											>
 												{@render sidenavItem(subitem as Item<T>)}
@@ -157,7 +144,6 @@
 				<a
 					href={item.href}
 					class={cn('sidenav-item', colors[color], itemClass)}
-					target={item.external ? '_blank' : '_self'}
 					class:is-active={page.url.pathname.includes(item.href)}
 				>
 					{@render sidenavItem(item)}

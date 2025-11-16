@@ -14,7 +14,7 @@
 		headerClass?: string;
 		footerClass?: string;
 		contentClass?: string;
-		color?: 'default' | 'surface' | 'primary' | 'secondary' | 'accent' | 'muted';
+		color?: 'default' | 'surface' | 'primary' | 'secondary' | 'muted';
 	};
 
 	const {
@@ -37,7 +37,6 @@
 		surface: 'modal-surface',
 		primary: 'modal-primary',
 		secondary: 'modal-secondary',
-		accent: 'modal-accent',
 		muted: 'modal-muted'
 	};
 
