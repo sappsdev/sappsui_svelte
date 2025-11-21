@@ -11,7 +11,7 @@
 		selected?: T;
 		placeholder?: string;
 		onchange?: (value: unknown) => void;
-		variant?: 'solid' | 'outline' | 'soft' | 'line';
+		variant?: 'solid' | 'outlined' | 'soft' | 'line';
 		color?: 'primary' | 'secondary' | 'muted';
 		size?: 'small' | 'medium' | 'large';
 		name: string;
@@ -52,18 +52,6 @@
 		iconKey = 'icon' as keyof T,
 		srcKey = 'src' as keyof T
 	}: Props = $props();
-
-	const variants = {
-		solid: 'field-solid',
-		outline: 'field-outline',
-		soft: 'field-soft',
-		line: 'field-line'
-	};
-	const colors = {
-		primary: 'field-primary',
-		secondary: 'field-secondary',
-		muted: 'field-muted'
-	};
 
 	const sizes = {
 		small: 'field-small',

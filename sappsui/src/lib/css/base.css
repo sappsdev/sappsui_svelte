@@ -153,7 +153,7 @@
 		}
 
 		blockquote {
-			@apply my-6 border-l-4 border-outline pl-6 italic text-on-muted;
+			@apply my-6 border-l-4 border-muted pl-6 italic text-on-muted;
 		}
 
 		table {
@@ -180,7 +180,7 @@
 		}
 
 		hr {
-			@apply my-8 border-outline;
+			@apply my-8 border-muted;
 		}
 
 		img {

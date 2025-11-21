@@ -1,5 +1,19 @@
 <script lang="ts">
-	import { Tabs, Card, Code, Section, Divider, Select } from 'sappsui';
+	import DocCode from '$lib/components/doc/DocCode.svelte';
+	import DocHeader from '$lib/components/doc/DocHeader.svelte';
+	import DocOptions from '$lib/components/doc/DocOptions.svelte';
+	import DocPreview from '$lib/components/doc/DocPreview.svelte';
+	import DocProps from '$lib/components/doc/DocProps.svelte';
+	import { Tabs, Checkbox, Select } from 'sappsui';
+
+	const variantOptions = [
+		{ id: 'primary', label: 'Primary' },
+		{ id: 'secondary', label: 'Secondary' },
+		{ id: 'muted', label: 'Muted' },
+		{ id: 'outline', label: 'Outline' },
+		{ id: 'line', label: 'Line' },
+		{ id: 'ghost', label: 'Ghost' }
+	];
 
 	const positionOptions = [
 		{ id: 'top', label: 'Top' },
@@ -8,158 +22,176 @@
 		{ id: 'end', label: 'End' }
 	];
 
-	const variantOptions = [
-		{ id: 'solid', label: 'Solid' },
-		{ id: 'pill', label: 'Pill' },
-		{ id: 'outline', label: 'Outline' },
-		{ id: 'underlined', label: 'Underlined' },
-		{ id: 'ghost', label: 'Ghost' }
-	];
+	// Selects
+	let variant: any = $state('muted');
+	let position: any = $state('top');
 
-	const colorOptions = [
-		{ id: 'primary', label: 'Primary' },
-		{ id: 'secondary', label: 'Secondary' }
-	];
+	// States
+	let withIcon = $state(false);
+	let contentAsSnippet = $state(false);
+	let pill = $state(false);
 
-	let selectedPosition: any = $state('top');
-	let selectedVariant: any = $state('solid');
-	let selectedColor: any = $state('primary');
-
-	const tabItems = [
-		{ id: 'tab1', label: 'Tab 1', content: 'Content for Tab 1' },
-		{ id: 'tab2', label: 'Tab 2', content: 'Content for Tab 2' },
-		{ id: 'tab3', label: 'Tab 3', content: 'Content for Tab 3' }
-	];
-
-	let hasProps = $derived(
-		[selectedPosition !== 'top', selectedVariant !== 'solid', selectedColor !== 'primary'].some(
-			Boolean
-		)
-	);
+	let hasProps = $derived([variant !== 'muted', position !== 'top', withIcon, pill].some(Boolean));
 
 	let code = $derived(() => {
 		const scriptLines = [
 			`<script lang="ts">`,
 			`\timport { Tabs } from 'sappsui';`,
-			``,
-			`\tconst tabItems = [`,
-			`\t\t{ id: 'tab1', label: 'Tab 1', content: 'Content for Tab 1' },`,
-			`\t\t{ id: 'tab2', label: 'Tab 2', content: 'Content for Tab 2' },`,
-			`\t\t{ id: 'tab3', label: 'Tab 3', content: 'Content for Tab 3' }`,
-			`\t];`,
-			`<\/script>`
+			contentAsSnippet && `\n\tconst tabs = [`,
+			contentAsSnippet &&
+				`\t\t{ id: '1', label: 'Tab 1'${withIcon ? ", icon: 'fluent:home-24-regular'" : ''}, content: content1 },`,
+			contentAsSnippet &&
+				`\t\t{ id: '2', label: 'Tab 2'${withIcon ? ", icon: 'fluent:person-24-regular'" : ''}, content: content2 },`,
+			contentAsSnippet &&
+				`\t\t{ id: '3', label: 'Tab 3'${withIcon ? ", icon: 'fluent:settings-24-regular'" : ''}, content: content3 }`,
+			contentAsSnippet && `\t];`,
+			!contentAsSnippet && `\n\tconst tabs = [`,
+			!contentAsSnippet &&
+				`\t\t{ id: '1', label: 'Tab 1'${withIcon ? ", icon: 'fluent:home-24-regular'" : ''}, content: 'Content for Tab 1' },`,
+			!contentAsSnippet &&
+				`\t\t{ id: '2', label: 'Tab 2'${withIcon ? ", icon: 'fluent:person-24-regular'" : ''}, content: 'Content for Tab 2' },`,
+			!contentAsSnippet &&
+				`\t\t{ id: '3', label: 'Tab 3'${withIcon ? ", icon: 'fluent:settings-24-regular'" : ''}, content: 'Content for Tab 3' }`,
+			!contentAsSnippet && `\t];`,
+			`<\/script>`,
+			contentAsSnippet && `\n{#snippet content1()}`,
+			contentAsSnippet && `\t<p>Content for Tab 1</p>`,
+			contentAsSnippet && `{/snippet}`,
+			contentAsSnippet && `\n{#snippet content2()}`,
+			contentAsSnippet && `\t<p>Content for Tab 2</p>`,
+			contentAsSnippet && `{/snippet}`,
+			contentAsSnippet && `\n{#snippet content3()}`,
+			contentAsSnippet && `\t<p>Content for Tab 3</p>`,
+			contentAsSnippet && `{/snippet}`
 		].filter(Boolean);
 
-		const componentLines = [
-			hasProps && `<Tabs`,
-			hasProps && `\ttabs={tabItems}`,
-			selectedPosition !== 'top' && `\tposition="${selectedPosition}"`,
-			selectedVariant !== 'solid' && `\tvariant="${selectedVariant}"`,
-			selectedColor !== 'primary' && `\tcolor="${selectedColor}"`,
-			hasProps && `/>`,
-			!hasProps && `<Tabs tabs={tabItems} />`
-		].filter(Boolean);
+		const componentLine = hasProps
+			? `\n<Tabs ${[
+					'{tabs}',
+					variant !== 'muted' && `variant="${variant}"`,
+					position !== 'top' && `position="${position}"`,
+					pill && 'pill'
+				]
+					.filter(Boolean)
+					.join(' ')} />`
+			: '\n<Tabs {tabs} />';
 
-		return [...scriptLines, ...componentLines].join('\n');
+		return [...scriptLines, componentLine].join('\n');
 	});
+
+	const props = [
+		{ prop: 'tabs', type: 'Tab[]', initial: '[]', required: true },
+		{ prop: 'position', type: 'top | bottom | start | end', initial: 'top' },
+		{
+			prop: 'variant',
+			type: 'primary | secondary | muted | outlined | line | ghost',
+			initial: 'muted'
+		},
+		{ prop: 'pill', type: 'boolean', initial: 'false' },
+		{ prop: 'class', type: 'string', initial: '' },
+		{ prop: 'tabListClass', type: 'string', initial: '' },
+		{ prop: 'tabClass', type: 'string', initial: '' },
+		{ prop: 'tabContentClass', type: 'string', initial: '' }
+	];
+
+	const tabProps = [
+		{ prop: 'id', type: 'string', initial: '', required: true },
+		{ prop: 'label', type: 'string', initial: '', required: true },
+		{ prop: 'icon', type: 'IconName', initial: '' },
+		{ prop: 'content', type: 'Snippet | string', initial: '', required: true }
+	];
 </script>
 
-<Section>
-	<div class="prose">
-		<h1>Tabs</h1>
-		<p>Tabs organize content into separate views where only one view can be visible at a time.</p>
-	</div>
-</Section>
+{#snippet content1()}
+	<p>Content for Tab 1</p>
+{/snippet}
 
-<Section>
-	<Card>
-		<div class="column lg:row w-full gap-3">
-			<div class="column flex-1">
-				<h4>Preview</h4>
-				<div class="column center gap-4 flex-1 p-4">
-					<Tabs
-						tabs={tabItems}
-						position={selectedPosition}
-						variant={selectedVariant}
-						color={selectedColor}
-					/>
-				</div>
-			</div>
-			<Divider class="invisible lg:visible" vertical />
-			<Divider class="lg:hidden" />
-			<div class="column gap-3 min-w-64">
-				<h4>Builder</h4>
+{#snippet content2()}
+	<p>Content for Tab 2</p>
+{/snippet}
 
-				<Select
-					label="Position"
-					name="position"
-					size="sm"
-					options={positionOptions}
-					bind:value={selectedPosition}
-				/>
-				<Select
-					label="Variant"
-					name="variant"
-					size="sm"
-					options={variantOptions}
-					bind:value={selectedVariant}
-				/>
-				<Select
-					label="Color"
-					name="color"
-					size="sm"
-					options={colorOptions}
-					bind:value={selectedColor}
-				/>
-			</div>
-		</div>
-	</Card>
-</Section>
+{#snippet content3()}
+	<p>Content for Tab 3</p>
+{/snippet}
 
-<Section>
-	<Code lang="svelte" code={code()} />
-</Section>
+{#snippet preview()}
+	{@const tabs = contentAsSnippet
+		? [
+				{
+					id: '1',
+					label: 'Tab 1',
+					icon: withIcon ? 'fluent:home-24-regular' : undefined,
+					content: content1
+				},
+				{
+					id: '2',
+					label: 'Tab 2',
+					icon: withIcon ? 'fluent:person-24-regular' : undefined,
+					content: content2
+				},
+				{
+					id: '3',
+					label: 'Tab 3',
+					icon: withIcon ? 'fluent:settings-24-regular' : undefined,
+					content: content3
+				}
+			]
+		: [
+				{
+					id: '1',
+					label: 'Tab 1',
+					icon: withIcon ? 'fluent:home-24-regular' : undefined,
+					content: 'Content for Tab 1'
+				},
+				{
+					id: '2',
+					label: 'Tab 2',
+					icon: withIcon ? 'fluent:person-24-regular' : undefined,
+					content: 'Content for Tab 2'
+				},
+				{
+					id: '3',
+					label: 'Tab 3',
+					icon: withIcon ? 'fluent:settings-24-regular' : undefined,
+					content: 'Content for Tab 3'
+				}
+			]}
+	<Tabs {tabs} {variant} {position} {pill} />
+{/snippet}
 
-<Section>
-	<div class="prose">
-		<h3>Props</h3>
-		<p>The Tabs component accepts the following props:</p>
-		<ul>
-			<li><code>tabs</code> - Array of tab objects with id, label, and content (required)</li>
-			<li><code>position</code> - Position of tabs: top, bottom, start, or end (default: top)</li>
-			<li>
-				<code>variant</code> - Visual style: solid, pill, outline, underlined, or ghost (default: solid)
-			</li>
-			<li><code>color</code> - Color theme: primary or secondary (default: primary)</li>
-			<li><code>class</code> - Custom CSS classes for the container</li>
-			<li><code>tabListClass</code> - Custom CSS classes for the tab list</li>
-			<li><code>tabClass</code> - Custom CSS classes for individual tabs</li>
-			<li><code>tabContentClass</code> - Custom CSS classes for tab content</li>
-		</ul>
-	</div>
-</Section>
+{#snippet builder()}
+	<Select label="Variant" name="variant" size="sm" options={variantOptions} bind:value={variant} />
+	<Select
+		label="Position"
+		name="position"
+		size="sm"
+		options={positionOptions}
+		bind:value={position}
+	/>
 
-<Section>
-	<div class="prose">
-		<h3>Tab Object Structure</h3>
-		<p>Each tab in the <code>tabs</code> array should have the following structure:</p>
-		<ul>
-			<li><code>id</code> - Unique identifier for the tab (required)</li>
-			<li><code>label</code> - Display text for the tab (required)</li>
-			<li><code>content</code> - Content to display when tab is active (required)</li>
-		</ul>
-	</div>
-</Section>
+	<DocOptions title="Tab Options">
+		<Checkbox bind:checked={withIcon} name="with-icon" label="Icon" />
+		<Checkbox bind:checked={contentAsSnippet} name="content-snippet" label="Snippet" />
+	</DocOptions>
 
-<Section>
-	<div class="prose">
-		<h3>Custom Classes</h3>
-		<p>You can pass custom classes to different parts of the Tabs component:</p>
-		<ul>
-			<li><code>class</code> - Applies to the tabs container</li>
-			<li><code>tabListClass</code> - Applies to the tab list wrapper</li>
-			<li><code>tabClass</code> - Applies to each individual tab button</li>
-			<li><code>tabContentClass</code> - Applies to the tab content area</li>
-		</ul>
-	</div>
-</Section>
+	<DocOptions title="Props">
+		<Checkbox bind:checked={pill} name="pill" label="Pill" />
+	</DocOptions>
+{/snippet}
+
+<DocHeader title="Tabs"
+	>Tabs organize content into different sections that users can navigate between.</DocHeader
+>
+
+<DocPreview {preview} {builder} />
+
+<DocCode code={code()} />
+
+<DocProps {props} />
+
+<div class="prose mt-8">
+	<h3>Tab Type</h3>
+	<p>Each tab in the tabs array should follow this structure:</p>
+</div>
+
+<DocProps props={tabProps} />

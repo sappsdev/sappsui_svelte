@@ -2,28 +2,23 @@
 	import { Record, Card, Checkbox, Code, Section, Divider, Select, TextField } from 'sappsui';
 
 	const variantOptions = [
-		{ id: 'solid', label: 'Solid' },
-		{ id: 'soft', label: 'Soft' }
-	];
-
-	const colorOptions = [
-		{ id: 'default', label: 'Default' },
-		{ id: 'surface', label: 'Surface' },
 		{ id: 'primary', label: 'Primary' },
 		{ id: 'secondary', label: 'Secondary' },
-		{ id: 'error', label: 'Error' },
-		{ id: 'muted', label: 'Muted' }
+		{ id: 'outline', label: 'Outline' },
+		{ id: 'soft', label: 'Soft' },
+		{ id: 'ghost', label: 'Ghost' },
+		{ id: 'success', label: 'Success' },
+		{ id: 'info', label: 'Info' },
+		{ id: 'danger', label: 'Danger' },
+		{ id: 'warning', label: 'Warning' }
 	];
 
-	let selectedVariant: any = $state('solid');
-	let selectedColor: any = $state('error');
+	let selectedVariant: any = $state('primary');
 	let recordName = $state('voice-recording');
 	let uploadUrl = $state('');
 	let useUploadUrl = $state(false);
 
-	let hasProps = $derived(
-		[selectedVariant !== 'solid', selectedColor !== 'error', useUploadUrl].some(Boolean)
-	);
+	let hasProps = $derived([selectedVariant !== 'primary', useUploadUrl].some(Boolean));
 
 	let code = $derived(() => {
 		const scriptLines = [
@@ -40,7 +35,6 @@
 			hasProps && `<Record`,
 			hasProps && `\tname="${recordName}"`,
 			selectedVariant !== 'solid' && `\tvariant="${selectedVariant}"`,
-			selectedColor !== 'error' && `\tcolor="${selectedColor}"`,
 			useUploadUrl && uploadUrl && `\turl="${uploadUrl}"`,
 			hasProps && `\tonRecordingComplete={handleRecordingComplete}`,
 			hasProps && `/>`,
@@ -75,7 +69,6 @@
 						<Record
 							name={recordName}
 							variant={selectedVariant}
-							color={selectedColor}
 							url={useUploadUrl && uploadUrl ? uploadUrl : undefined}
 							onRecordingComplete={handleRecordingComplete}
 						/>
@@ -106,14 +99,6 @@
 					size="sm"
 					options={variantOptions}
 					bind:value={selectedVariant}
-				/>
-
-				<Select
-					label="Color"
-					name="color"
-					size="sm"
-					options={colorOptions}
-					bind:value={selectedColor}
 				/>
 
 				<div class="flex flex-col gap-2">

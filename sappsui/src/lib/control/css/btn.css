@@ -13,7 +13,7 @@
 		@apply absolute inset-0 flex items-center justify-center;
 	}
 
-	.btn.xs:not(.icon) {
+	.btn.is-xs:not(.has-icon) {
 		@apply h-6 gap-2 px-2 text-xs;
 		.btn-icon {
 			@apply h-4 w-auto;
@@ -23,7 +23,7 @@
 		}
 	}
 
-	.btn.sm:not(.icon) {
+	.btn.is-sm:not(.has-icon) {
 		@apply h-8 gap-2 px-2 text-xs;
 
 		.btn-icon {
@@ -35,7 +35,7 @@
 		}
 	}
 
-	.btn.md:not(.icon) {
+	.btn.is-md:not(.has-icon) {
 		@apply h-10 gap-3 px-3 text-sm;
 
 		.btn-icon {
@@ -47,7 +47,7 @@
 		}
 	}
 
-	.btn.lg:not(.icon) {
+	.btn.is-lg:not(.has-icon) {
 		@apply h-12 gap-3 px-4 text-lg;
 
 		.btn-icon {
@@ -59,7 +59,7 @@
 		}
 	}
 
-	.btn.icon.xs {
+	.btn.has-icon.is-xs {
 		@apply h-6 w-6;
 
 		.btn-icon {
@@ -71,7 +71,7 @@
 		}
 	}
 
-	.btn.icon.sm {
+	.btn.has-icon.is-sm {
 		@apply h-8 w-8;
 
 		.btn-icon {
@@ -83,7 +83,7 @@
 		}
 	}
 
-	.btn.icon.md {
+	.btn.has-icon.is-md {
 		@apply h-10 w-10;
 
 		.btn-icon {
@@ -95,7 +95,7 @@
 		}
 	}
 
-	.btn.icon.lg {
+	.btn.has-icon.is-lg {
 		@apply h-12 w-12;
 		.btn-icon {
 			@apply h-8 w-8;
@@ -106,55 +106,86 @@
 		}
 	}
 
-	.btn.wide {
+	.btn.has-wide {
 		@apply w-full;
 	}
 
-	.btn.shadow {
-		@apply shadow-lg;
+	.btn.has-shadow {
+		@apply shadow-lg shadow-muted;
 	}
 
-	.btn.primary {
+	.btn:disabled {
+		@apply opacity-50;
+	}
+
+	.btn.is-primary {
+		@apply bg-on-primary text-primary hover:bg-on-primary/90;
+	}
+
+	.btn.is-solid.is-primary {
 		@apply bg-primary text-on-primary hover:bg-primary/90;
-		@apply disabled:hover:bg-primary;
 	}
 
-	.btn.secondary {
+	.btn.is-secondary {
+		@apply bg-on-secondary text-secondary hover:bg-on-secondary/90;
+	}
+
+	.btn.is-solid.is-secondary {
 		@apply bg-secondary text-on-secondary hover:bg-secondary/90;
-		@apply disabled:hover:bg-secondary;
 	}
 
-	.btn.soft {
-		@apply bg-on-primary text-primary;
+	.btn.is-muted {
+		@apply bg-muted text-on-muted hover:bg-muted/90;
 	}
 
-	.btn.outline {
-		@apply inset-ring inset-ring-outline text-on-muted hover:bg-muted;
-		@apply disabled:hover:bg-transparent;
+	.btn.is-solid.is-muted {
+		@apply bg-on-muted text-muted hover:bg-on-muted/90;
 	}
 
-	.btn.ghost {
-		@apply text-on-muted hover:bg-muted;
-		@apply disabled:hover:bg-transparent;
+	.btn.is-success {
+		@apply bg-on-success text-success hover:bg-on-success/90;
 	}
 
-	.btn.success {
+	.btn.is-solid.is-success {
 		@apply bg-success text-on-success hover:bg-success/90;
-		@apply disabled:hover:bg-success;
 	}
 
-	.btn.warning {
-		@apply bg-warning text-on-warning hover:bg-warning/90;
-		@apply disabled:hover:bg-warning;
+	.btn.is-info {
+		@apply bg-on-info text-info hover:bg-on-info/90;
 	}
 
-	.btn.info {
+	.btn.is-solid.is-info {
 		@apply bg-info text-on-info hover:bg-info/90;
-		@apply disabled:hover:bg-info;
 	}
 
-	.btn.danger {
+	.btn.is-warning {
+		@apply bg-on-warning text-warning hover:bg-on-warning/90;
+	}
+
+	.btn.is-solid.is-warning {
+		@apply bg-warning text-on-warning hover:bg-warning/90;
+	}
+
+	.btn.is-danger {
+		@apply bg-on-danger text-danger hover:bg-on-danger/90;
+	}
+
+	.btn.is-solid.is-danger {
 		@apply bg-danger text-on-danger hover:bg-danger/90;
-		@apply disabled:hover:bg-danger;
+	}
+
+	.btn.is-outline {
+		@apply inset-ring inset-ring-muted text-on-muted hover:bg-muted;
+	}
+
+	.btn.is-ghost {
+		@apply text-on-muted hover:bg-muted;
+	}
+
+	.btn-close {
+		@apply absolute right-2 top-2;
+	}
+	.btn-close-icon {
+		@apply h-4 w-4 cursor-pointer;
 	}
 }

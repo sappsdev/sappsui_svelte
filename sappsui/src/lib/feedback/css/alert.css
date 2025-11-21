@@ -1,6 +1,6 @@
 @layer components {
 	.alert {
-		@apply flex rounded-card text-sm w-full p-2 gap-2;
+		@apply flex rounded-ui text-sm w-full p-2 gap-2;
 
 		&.alert-solid {
 			&.alert-success {

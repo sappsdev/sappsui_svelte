@@ -1,12 +1,12 @@
 @layer components {
 	.chatbox {
-		@apply relative flex h-full w-full flex-col overflow-hidden rounded-card;
-		@apply border border-outline bg-surface;
+		@apply relative flex h-full w-full flex-col overflow-hidden rounded-ui;
+		@apply bg-surface;
 	}
 
 	.chatbox-header {
-		@apply flex items-center justify-between gap-3 border-b border-outline px-4 py-3;
-		@apply bg-surface;
+		@apply flex items-center justify-between gap-3 border-b border-muted px-4 py-3;
+		@apply bg-background text-on-background;
 	}
 
 	.chatbox-header-start {
@@ -31,7 +31,7 @@
 
 	.chatbox-messages {
 		@apply flex flex-1 flex-col gap-2 overflow-y-auto px-4 py-4;
-		@apply bg-background;
+		@apply bg-surface;
 	}
 
 	.chatbox-messages::-webkit-scrollbar {
@@ -80,7 +80,7 @@
 	}
 
 	.message:not(.own) {
-		@apply rounded-bl-md;
+		@apply rounded-bl-md bg-surface text-on-surface;
 	}
 
 	.message.own {
@@ -123,44 +123,59 @@
 		@apply text-sm;
 	}
 
-	/* Variante Solid */
-	.chatbox.chatbox-solid {
-		.message:not(.own) {
-			@apply bg-surface text-on-surface;
-			@apply border border-outline;
-		}
-
-		.message.own {
-			@apply bg-primary text-on-primary;
-		}
+	/* Variantes de color para mensajes propios */
+	.chatbox-primary .message.own {
+		@apply bg-primary text-on-primary;
 	}
 
-	/* Variante Soft */
-	.chatbox.chatbox-soft {
-		.message:not(.own) {
-			@apply bg-muted/20 text-on-surface;
-		}
+	.chatbox-secondary .message.own {
+		@apply bg-secondary text-on-secondary;
+	}
 
-		.message.own {
-			@apply bg-primary/10 text-primary;
-		}
+	.chatbox-success .message.own {
+		@apply bg-success text-on-success;
+	}
+
+	.chatbox-info .message.own {
+		@apply bg-info text-on-info;
+	}
+
+	.chatbox-warning .message.own {
+		@apply bg-warning text-on-warning;
+	}
+
+	.chatbox-danger .message.own {
+		@apply bg-danger text-on-danger;
+	}
+
+	.chatbox-soft .message.own {
+		@apply bg-primary/10 text-primary;
+	}
+
+	.chatbox-outlined .message.own {
+		@apply border border-primary bg-transparent text-primary;
 	}
 
 	.chatbox-footer {
-		@apply border-t border-outline bg-surface px-4 py-3;
+		@apply border-t border-surface text-on-background p-2;
+	}
+
+	.chatbox-input {
+		@apply appearance-none w-full h-full outline-none;
 	}
 
 	.chatbox-input-wrapper {
-		@apply flex items-end gap-2;
+		@apply flex items-center gap-2 bg-background rounded-ui p-2;
+		box-shadow: 0 0 3px 0 var(--color-muted);
 	}
 
 	.chatbox-input-actions {
-		@apply flex items-center gap-1 pb-1;
+		@apply flex items-center gap-1;
 	}
 
 	.chatbox-record-overlay {
 		@apply absolute inset-x-0 bottom-0 z-10;
-		@apply border-t border-outline bg-surface/95 backdrop-blur-sm;
+		@apply border-t border-muted bg-surface/95 backdrop-blur-sm;
 		@apply px-4 py-3;
 	}
 

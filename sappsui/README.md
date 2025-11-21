@@ -1,58 +1,118 @@
-# Svelte library
+# SappsUI
 
-Everything you need to build a Svelte library, powered by [`sv`](https://npmjs.com/package/sv).
+**A modern, accessible UI component library built for Svelte 5**
 
-Read more about creating a library [in the docs](https://svelte.dev/docs/kit/packaging).
+SappsUI is a comprehensive UI component library designed to leverage Svelte 5's latest features. Build beautiful, accessible interfaces with minimal configuration and maximum developer experience.
 
-## Creating a project
+---
 
-If you're seeing this, you've probably already done this step. Congrats!
+## ✨ Features
 
-```sh
-# create a new project in the current directory
-npx sv create
+### 🎨 Modern Design System
 
-# create a new project in my-app
-npx sv create my-app
+Beautiful, pre-styled components with multiple variants and customization options. Choose from primary, secondary, soft, outlined, and ghost variants to match your design needs.
+
+### 🎯 Built for Svelte 5
+
+Fully optimized for Svelte 5's runes system with `$state`, `$derived`, and snippets. Experience the full power of Svelte's reactivity with a modern component API.
+
+### 🔧 Highly Customizable
+
+Every component accepts custom classes and styling props. Customize individual sections with dedicated class props for headers, bodies, footers, and more.
+
+### 📱 Responsive Design
+
+Mobile-first design approach with responsive sizing options (xs, sm, md, lg, xl). Components adapt seamlessly to different screen sizes and devices.
+
+### ♿ Accessibility First
+
+Built with accessibility in mind, following WCAG guidelines. Proper ARIA attributes, keyboard navigation, and semantic HTML ensure your apps are usable by everyone.
+
+### 🎭 Rich Component Variants
+
+Multiple style variants for every component including primary, secondary, soft, outlined, ghost, and semantic variants (success, info, warning, danger) for contextual feedback.
+
+### 🖼️ Icon Integration
+
+Seamless integration with Iconify for thousands of icon options. Add icons to buttons, text fields, and other components with a simple prop.
+
+### 📝 Form Components
+
+Comprehensive form component suite with built-in validation, error states, help text, and floating labels. Build complex forms with ease.
+
+### 🎪 Interactive Elements
+
+Rich interactive components including tabs, cards, selects, and more. Create dynamic user interfaces with minimal code.
+
+### 🎨 Theming Support
+
+Flexible theming system with support for custom color schemes. Adapt components to match your brand identity effortlessly.
+
+### 📦 TypeScript Support
+
+Full TypeScript support with comprehensive type definitions. Enjoy autocomplete, type checking, and compile-time error detection throughout your development process.
+
+### 🚀 Lightweight & Fast
+
+Optimized bundle size with tree-shaking support. Only import what you need for blazing-fast load times and minimal overhead.
+
+---
+
+## 📦 Installation
+
+```bash
+# or
+bun add sappsui
 ```
 
-## Developing
+---
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## 🚀 Quick Start
 
-```sh
-npm run dev
+```svelte
+<script lang="ts">
+	import { Button, Card, TextField } from 'sappsui';
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+	let name = $state('');
+</script>
+
+<Card>
+	<h2>Welcome to SappsUI</h2>
+
+	<TextField name="username" label="Your Name" placeholder="Enter your name..." bind:value={name} />
+
+	<Button label="Submit" variant="primary" onclick={() => console.log('Hello', name)} />
+</Card>
 ```
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
+---
 
-## Building
+## 📖 Documentation
 
-To build your library:
+For detailed documentation, examples, and interactive component previews, visit our [official documentation](https://ui.sappsdev.com).
 
-```sh
-npm pack
-```
+---
 
-To create a production version of your showcase app:
+## 🎨 Component Library
 
-```sh
-npm run build
-```
+SappsUI includes a comprehensive set of components for building modern web applications:
 
-You can preview the production build with `npm run preview`.
+- **Buttons & Actions**: Button, IconButton
+- **Forms**: TextField, Select, Checkbox
+- **Layout**: Card, Divider, Section
+- **Navigation**: Tabs
+- **Data Display**: Avatar, Code
+- **Feedback**: Status indicators, Error states
+- **And more...**
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+---
 
-## Publishing
+## 🌟 Support
 
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
+If you find SappsUI helpful, please consider giving it a star on GitHub! Your support helps us continue improving the library.
 
-To publish your library to [npm](https://www.npmjs.com):
+For questions, issues, or feature requests, please visit our [GitHub Issues](https://github.com/sappsdev/sappsui_svelte/issues) page.
 
-```sh
-npm publish
-```
+---
+
+**Built with ❤️ by the SappsDev Team**

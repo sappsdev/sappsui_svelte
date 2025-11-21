@@ -6,11 +6,12 @@
 
 	type Props = {
 		children: Snippet;
-		toastVariant?: 'solid' | 'soft';
+		toastSolid?: boolean;
+		toastIcon?: boolean;
 		toastPosition?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
 	};
 
-	const { children, toastVariant, toastPosition }: Props = $props();
+	const { children, toastSolid, toastPosition, toastIcon }: Props = $props();
 
 	onNavigate((navigation) => {
 		if (!document.startViewTransition) return;
@@ -49,4 +50,4 @@
 </svelte:head>
 
 {@render children()}
-<Toast variant={toastVariant} position={toastPosition} />
+<Toast position={toastPosition} showIcon={toastIcon} solid={toastSolid} />

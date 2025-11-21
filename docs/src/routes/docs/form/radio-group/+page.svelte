@@ -16,7 +16,7 @@
 	const radioItems = [
 		{ value: 'solid', label: 'Solid' },
 		{ value: 'soft', label: 'Soft' },
-		{ value: 'outline', label: 'Outline' }
+		{ value: 'outlined', label: 'Outlined' }
 	];
 
 	let selectedColor: any = $state('primary');

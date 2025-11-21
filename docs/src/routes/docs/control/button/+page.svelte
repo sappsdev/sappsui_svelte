@@ -1,16 +1,16 @@
 <script lang="ts">
-	import DocCode from '$lib/components/DocCode.svelte';
-	import DocHeader from '$lib/components/DocHeader.svelte';
-	import DocOptions from '$lib/components/DocOptions.svelte';
-	import DocPreview from '$lib/components/DocPreview.svelte';
-	import DocProps from '$lib/components/DocProps.svelte';
+	import DocCode from '$lib/components/doc/DocCode.svelte';
+	import DocHeader from '$lib/components/doc/DocHeader.svelte';
+	import DocOptions from '$lib/components/doc/DocOptions.svelte';
+	import DocPreview from '$lib/components/doc/DocPreview.svelte';
+	import DocProps from '$lib/components/doc/DocProps.svelte';
 	import { Button, Checkbox, Select } from 'sappsui';
 
 	const variantOptions = [
 		{ id: 'primary', label: 'Primary' },
 		{ id: 'secondary', label: 'Secondary' },
+		{ id: 'muted', label: 'Muted' },
 		{ id: 'outline', label: 'Outline' },
-		{ id: 'soft', label: 'Soft' },
 		{ id: 'ghost', label: 'Ghost' },
 		{ id: 'success', label: 'Success' },
 		{ id: 'info', label: 'Info' },
@@ -19,10 +19,13 @@
 	];
 
 	const sizeOptions = [
+		{ id: 'xs', label: 'xs' },
 		{ id: 'sm', label: 'sm' },
 		{ id: 'md', label: 'md' },
 		{ id: 'lg', label: 'lg' }
 	];
+
+	// options
 
 	const typeOptions = [
 		{ id: 'button', label: 'Button' },
@@ -48,6 +51,7 @@
 	let wide = $state(false);
 	let disabled = $state(false);
 	let shadow = $state(false);
+	let solid = $state(true);
 
 	let hasProps = $derived(
 		[
@@ -59,6 +63,7 @@
 			href,
 			loading,
 			wide,
+			solid,
 			disabled,
 			shadow
 		].some(Boolean)
@@ -85,6 +90,7 @@
 			hasProps && !href && `\tonclick={handleClick}`,
 			loading && `\tloading`,
 			wide && `\twide`,
+			solid && `\tsolid`,
 			disabled && `\tdisabled`,
 			shadow && `\tshadow`,
 			hasProps && `/>`,
@@ -97,14 +103,14 @@
 	const props = [
 		{ prop: 'label', type: 'string', initial: '', required: true },
 		{ prop: 'onclick', type: '() => void', initial: '' },
-		{ prop: 'type', type: "'button' | 'submit' | 'reset'", initial: 'button' },
+		{ prop: 'type', type: 'button | submit | reset', initial: 'button' },
 		{ prop: 'href', type: 'string', initial: '' },
 		{
 			prop: 'variant',
-			type: "'primary' | 'secondary' | 'outline' | 'soft' | 'ghost'",
+			type: 'primary | secondary | muted | outline | ghost | success | info | danger | warning',
 			initial: 'primary'
 		},
-		{ prop: 'size', type: "'sm' | 'md' | 'lg'", initial: 'md' },
+		{ prop: 'size', type: 'xs | sm | md | lg', initial: 'md' },
 		{ prop: 'class', type: 'string', initial: '' },
 		{ prop: 'startIcon', type: 'IconName', initial: '' },
 		{ prop: 'endIcon', type: 'IconName', initial: '' },
@@ -112,7 +118,8 @@
 		{ prop: 'loadingIcon', type: 'IconName', initial: '' },
 		{ prop: 'wide', type: 'boolean', initial: 'false' },
 		{ prop: 'disabled', type: 'boolean', initial: 'false' },
-		{ prop: 'shadow', type: 'boolean', initial: 'false' }
+		{ prop: 'shadow', type: 'boolean', initial: 'false' },
+		{ prop: 'solid', type: 'boolean', initial: 'false' }
 	];
 </script>
 
@@ -128,6 +135,7 @@
 		{disabled}
 		{wide}
 		{shadow}
+		{solid}
 	/>
 {/snippet}
 
@@ -148,13 +156,11 @@
 			label="startIcon"
 		/>
 		<Checkbox onchange={(v) => (v ? (href = '/example') : (href = ''))} name="href" label="Link" />
-	</DocOptions>
-
-	<DocOptions title="States">
 		<Checkbox bind:checked={loading} name="loading" label="Loading" />
 		<Checkbox bind:checked={wide} name="wide" label="Wide" />
 		<Checkbox bind:checked={disabled} name="disabled" label="Disabled" />
 		<Checkbox bind:checked={shadow} name="shadow" label="Shadow" />
+		<Checkbox bind:checked={solid} name="solid" label="Solid" />
 	</DocOptions>
 {/snippet}
 

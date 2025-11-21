@@ -11,17 +11,19 @@
 		variant?:
 			| 'primary'
 			| 'secondary'
-			| 'soft'
+			| 'muted'
+			| 'outline'
 			| 'ghost'
 			| 'success'
 			| 'info'
-			| 'danger'
-			| 'warning';
+			| 'warning'
+			| 'danger';
 		size?: 'xs' | 'sm' | 'md' | 'lg';
 		class?: string;
 		loading?: boolean;
 		disabled?: boolean;
 		shadow?: boolean;
+		solid?: boolean;
 	};
 
 	const {
@@ -34,10 +36,40 @@
 		class: className,
 		loading = false,
 		disabled,
-		shadow
+		shadow,
+		solid
 	}: Props = $props();
 
-	let baseClasses = $derived(cn('btn', 'icon', variant, size, shadow && 'shadow', className));
+	const variantClasses = {
+		primary: 'is-primary',
+		secondary: 'is-secondary',
+		muted: 'is-muted',
+		outline: 'is-outline',
+		ghost: 'is-ghost',
+		success: 'is-success',
+		info: 'is-info',
+		danger: 'is-danger',
+		warning: 'is-warning'
+	};
+
+	const sizeClasses = {
+		xs: 'is-xs',
+		sm: 'is-sm',
+		md: 'is-md',
+		lg: 'is-lg'
+	};
+
+	let baseClasses = $derived(
+		cn(
+			'btn',
+			'has-icon',
+			variantClasses[variant],
+			sizeClasses[size],
+			solid && 'is-solid',
+			shadow && 'has-shadow',
+			className
+		)
+	);
 	let btnClasses = $derived(cn('btn-icon', loading && 'invisible'));
 </script>
 

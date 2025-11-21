@@ -2,24 +2,21 @@
 	import { Audio, Card, Checkbox, Code, Section, Divider, Select, TextField } from 'sappsui';
 
 	const variantOptions = [
-		{ id: 'solid', label: 'Solid' },
-		{ id: 'soft', label: 'Soft' }
-	];
-
-	const colorOptions = [
-		{ id: 'default', label: 'Default' },
-		{ id: 'surface', label: 'Surface' },
 		{ id: 'primary', label: 'Primary' },
 		{ id: 'secondary', label: 'Secondary' },
+		{ id: 'outline', label: 'Outline' },
+		{ id: 'soft', label: 'Soft' },
+		{ id: 'ghost', label: 'Ghost' },
 		{ id: 'success', label: 'Success' },
-		{ id: 'muted', label: 'Muted' }
+		{ id: 'info', label: 'Info' },
+		{ id: 'danger', label: 'Danger' },
+		{ id: 'warning', label: 'Warning' }
 	];
 
-	let selectedVariant: any = $state('solid');
-	let selectedColor: any = $state('default');
+	let selectedVariant: any = $state('primary');
 	let audioSrc = $state('https://cdn.pixabay.com/audio/2022/04/25/audio_5d61b5204f.mp3');
 
-	let hasProps = $derived([selectedVariant !== 'solid', selectedColor !== 'default'].some(Boolean));
+	let hasProps = $derived([selectedVariant !== 'primary'].some(Boolean));
 
 	let code = $derived(() => {
 		const scriptLines = [`<script lang="ts">`, `\timport { Audio } from 'sappsui';`, `<\/script>`];
@@ -28,7 +25,6 @@
 			hasProps && `<Audio`,
 			hasProps && `\tsrc="${audioSrc}"`,
 			selectedVariant !== 'solid' && `\tvariant="${selectedVariant}"`,
-			selectedColor !== 'default' && `\tcolor="${selectedColor}"`,
 			hasProps && `/>`,
 			!hasProps && `<Audio src="${audioSrc}" />`
 		].filter(Boolean);
@@ -54,7 +50,7 @@
 				<h4>Preview</h4>
 				<div class="column center gap-4 flex-1 p-4">
 					<div class="w-full max-w-md">
-						<Audio src={audioSrc} variant={selectedVariant} color={selectedColor} />
+						<Audio src={audioSrc} variant={selectedVariant} />
 					</div>
 				</div>
 			</div>
@@ -78,14 +74,6 @@
 					size="sm"
 					options={variantOptions}
 					bind:value={selectedVariant}
-				/>
-
-				<Select
-					label="Color"
-					name="color"
-					size="sm"
-					options={colorOptions}
-					bind:value={selectedColor}
 				/>
 			</div>
 		</div>

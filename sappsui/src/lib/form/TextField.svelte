@@ -18,11 +18,10 @@
 		endText?: string;
 		onchange?: (value: unknown) => void;
 		oninput?: (value: unknown) => void;
-		variant?: 'primary' | 'secondary' | 'soft' | 'line';
+		variant?: 'primary' | 'secondary' | 'muted' | 'outline' | 'line';
 		size?: 'sm' | 'md' | 'lg';
 		name: string;
 		label?: string;
-		labelInside?: boolean;
 		labelActive?: boolean;
 		helpText?: string;
 		errorText?: string;
@@ -31,6 +30,7 @@
 		max?: HTMLInputAttributes['max'];
 		maxlength?: HTMLInputAttributes['maxlength'];
 		floatLabel?: boolean;
+		solid?: boolean;
 	};
 
 	let {
@@ -48,7 +48,7 @@
 		endIcon,
 		onchange,
 		oninput,
-		variant = 'primary',
+		variant = 'outline',
 		size = 'md',
 		name,
 		label,
@@ -57,13 +57,28 @@
 		helpText,
 		errorText,
 		min,
-		max
+		max,
+		solid
 	}: Props = $props();
 
 	const uid = $props.id();
 
 	let isActive = $state(false);
 	let isFocused = $state(false);
+
+	const variantClasses = {
+		primary: 'is-primary',
+		secondary: 'is-secondary',
+		muted: 'is-muted',
+		outline: 'is-outline',
+		line: 'is-line'
+	};
+
+	const sizeClasses = {
+		sm: 'is-sm',
+		md: 'is-md',
+		lg: 'is-lg'
+	};
 
 	let iconClasses = $derived(
 		cn('control-icon', floatLabel && !isActive && !isFocused && value == '' && 'invisible')
@@ -86,10 +101,11 @@
 	<label
 		class={cn(
 			'control',
-			variant,
-			size,
-			floatLabel && 'float',
-			(isActive || isFocused) && 'active',
+			variantClasses[variant],
+			sizeClasses[size],
+			solid && 'is-solid',
+			floatLabel && 'is-float',
+			(isActive || isFocused) && 'on-active',
 			controlClass
 		)}
 		for={`${uid}-{name}`}
@@ -98,7 +114,12 @@
 		onmouseleave={() => (isActive = false)}
 	>
 		{#if floatLabel && label}
-			<span class={cn('control-label', (isActive || isFocused || value !== '') && 'active')}>
+			<span
+				class={cn(
+					'control-label',
+					(isActive || isFocused || labelActive || value !== '') && 'on-active'
+				)}
+			>
 				{label}
 			</span>
 		{/if}
@@ -147,7 +168,7 @@
 	</label>
 
 	{#if errorText || helpText}
-		<div class={cn('field_help')}>
+		<div class={cn('field-help', errorText && 'on-danger')}>
 			{errorText || helpText}
 		</div>
 	{/if}

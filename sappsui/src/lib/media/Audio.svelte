@@ -5,11 +5,19 @@
 	type Props = {
 		class?: string;
 		src: string;
-		variant?: 'solid' | 'soft';
-		color?: 'default' | 'surface' | 'primary' | 'secondary' | 'success' | 'muted';
+		variant?:
+			| 'primary'
+			| 'secondary'
+			| 'soft'
+			| 'outlined'
+			| 'ghost'
+			| 'success'
+			| 'info'
+			| 'danger'
+			| 'warning';
 	};
 
-	let { class: className, src, variant = 'solid', color = 'success' }: Props = $props();
+	let { class: className, src, variant = 'success' }: Props = $props();
 
 	let audio: HTMLAudioElement;
 	let currentTime = $state(0);
@@ -21,21 +29,7 @@
 
 	const BAR_COUNT = 50;
 
-	const variantClass = {
-		solid: 'audio-solid',
-		soft: 'audio-soft'
-	};
-
-	const colorClass = {
-		default: 'audio-default',
-		surface: 'audio-surface',
-		primary: 'audio-primary',
-		secondary: 'audio-secondary',
-		success: 'audio-success',
-		muted: 'audio-muted'
-	};
-
-	let baseClasses = $derived(cn('audio', variantClass[variant], colorClass[color], className));
+	let baseClasses = $derived(cn('media', variant, className));
 
 	async function analyzeAudio() {
 		try {
@@ -121,7 +115,7 @@
 
 	function handleMouseMove(event: MouseEvent) {
 		if (isDragging) {
-			const waveformEl = document.querySelector('.audio-waveform') as HTMLElement;
+			const waveformEl = document.querySelector('.media-waveform') as HTMLElement;
 			if (waveformEl) {
 				seek(event.clientX, waveformEl);
 			}
@@ -189,7 +183,7 @@
 	/>
 
 	<div
-		class="audio-waveform"
+		class="media-waveform clickable"
 		onmousedown={handleMouseDown}
 		role="slider"
 		tabindex="0"
@@ -199,22 +193,18 @@
 		aria-valuemax="100"
 	>
 		{#if isAnalyzing}
-			<div class="audio-loading">Analizando...</div>
+			<div class="media-loading">Analizando...</div>
 		{:else}
-			<div class="audio-bars">
+			<div class="media-bars">
 				{#each waveformData as height, i}
 					{@const progress = duration > 0 ? currentTime / duration : 0}
 					{@const barPosition = (i + 0.5) / waveformData.length}
 					{@const isPlayed = barPosition <= progress}
-					<div
-						class="audio-bar"
-						class:audio-bar-played={isPlayed}
-						style="height: {height * 100}%"
-					></div>
+					<div class="media-bar" class:active={isPlayed} style="height: {height * 100}%"></div>
 				{/each}
 			</div>
 		{/if}
 	</div>
 
-	<span class="audio-time">{duration > 0 ? formatTime(duration - currentTime) : '0:00'}</span>
+	<span class="media-time">{duration > 0 ? formatTime(duration - currentTime) : '0:00'}</span>
 </div>

@@ -4,7 +4,7 @@
 	}
 	.badge__content {
 		@apply absolute flex items-center justify-center rounded-ui;
-		@apply inset-ring inset-ring-outline;
+		@apply inset-ring inset-ring-muted;
 		@apply h-5 min-w-5 px-1;
 	}
 	.badge__content-text {

@@ -23,9 +23,9 @@
 	}: Props = $props();
 
 	const colors = {
-		primary: 'checkbox-primary',
-		secondary: 'checkbox-secondary',
-		muted: 'checkbox-muted'
+		primary: 'is-primary',
+		secondary: 'is-secondary',
+		muted: 'is-muted'
 	};
 </script>
 

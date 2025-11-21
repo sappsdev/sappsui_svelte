@@ -2,7 +2,7 @@
 	.sidenav {
 		@apply flex w-full min-w-0 flex-col gap-0.5 text-on-muted;
 		.sidenav-divider {
-			@apply my-1 h-px w-full bg-outline;
+			@apply my-1 h-px w-full bg-muted;
 		}
 
 		.sidenav-header {
@@ -44,7 +44,7 @@
 			}
 		}
 		.sidenav-item {
-			@apply flex items-center gap-2 rounded-item ml-1 px-2 py-1 text-sm font-extralight select-none;
+			@apply flex items-center gap-2 rounded-ui ml-1 px-2 py-1 text-sm font-extralight select-none;
 			@apply outline-hidden hover:bg-muted hover:text-on-muted;
 			@apply flex w-fit items-center gap-2 text-left;
 
@@ -93,7 +93,7 @@
 			}
 
 			.sidenav-subitems {
-				@apply flex flex-col gap-1 mt-2 pl-1 ml-2 border-l border-outline;
+				@apply flex flex-col gap-1 mt-2 pl-1 ml-2 border-l border-muted;
 
 				.sidenav-subitem {
 					@apply flex justify-between items-center gap-1 relative;

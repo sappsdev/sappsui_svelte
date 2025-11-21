@@ -6,7 +6,7 @@
 	type Props = {
 		iconDark?: IconName;
 		iconLight?: IconName;
-		variant?: 'primary' | 'secondary' | 'soft' | 'ghost';
+		variant?: 'primary' | 'secondary' | 'muted' | 'ghost';
 		size?: 'sm' | 'md' | 'lg';
 		class?: string;
 	};

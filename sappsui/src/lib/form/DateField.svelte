@@ -8,7 +8,7 @@
 		value?: unknown;
 		placeholder?: string;
 		onchange?: (value: unknown) => void;
-		variant?: 'solid' | 'outline' | 'soft' | 'line';
+		variant?: 'solid' | 'outlined' | 'soft' | 'line';
 		color?: 'primary' | 'secondary' | 'muted';
 		inputSize?: 'small' | 'medium' | 'large';
 		name: string;
@@ -56,7 +56,7 @@
 
 	const variants = {
 		solid: 'field-solid',
-		outline: 'field-outline',
+		outlined: 'field-outlined',
 		soft: 'field-soft',
 		line: 'field-line'
 	};

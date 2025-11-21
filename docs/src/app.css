@@ -39,12 +39,7 @@ body {
 	--danger: oklch(57.7% 0.245 27.325);
 	--on-danger: oklch(93.6% 0.032 17.717);
 
-	--radius-avatar: 0.75rem;
-	--radius-control: 0.75rem;
-	--radius-card: 0.75rem;
-	--radius-field: 0.75rem;
-	--radius-item: 0.75rem;
-	--radius-popover: 0.75rem;
+	--radius-ui: 0.75rem;
 
 	--scrollbar-size: 6px;
 }
@@ -58,7 +53,4 @@ body {
 
 	--surface: oklch(21% 0.034 264.665);
 	--on-surface: oklch(92.8% 0.006 264.531);
-
-	--outline: oklch(44.6% 0.03 256.802);
-	--on-outline: oklch(96.7% 0.003 264.542);
 }

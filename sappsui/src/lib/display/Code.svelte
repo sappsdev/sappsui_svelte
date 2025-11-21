@@ -41,7 +41,7 @@
 			<IconButton
 				onclick={handleCopy}
 				icon={clipboard.copied ? 'fluent:checkmark-24-regular' : 'fluent:copy-24-regular'}
-				variant="soft"
+				variant="primary"
 				size="sm"
 			/>
 		</div>

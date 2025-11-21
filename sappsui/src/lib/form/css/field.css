@@ -8,10 +8,10 @@
 	}
 
 	.field-help {
-		@apply text-xs;
+		@apply text-xs leading-none -mt-1;
 	}
 
-	.field-help.danger {
+	.field-help.on-danger {
 		@apply text-danger;
 	}
 }

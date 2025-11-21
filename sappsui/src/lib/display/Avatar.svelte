@@ -8,7 +8,7 @@
 		icon?: IconName;
 		name?: string;
 		alt?: string;
-		color?:
+		variant?:
 			| 'primary'
 			| 'secondary'
 			| 'muted'
@@ -18,7 +18,8 @@
 			| 'info'
 			| 'transparent';
 		size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-		outline?: boolean;
+		status?: 'online' | 'offline' | 'busy' | 'away';
+		border?: boolean;
 		class?: string;
 	};
 
@@ -28,13 +29,53 @@
 		name,
 		alt = 'Avatar',
 		size = 'lg',
-		color = 'primary',
-		outline,
+		variant = 'primary',
+		status,
+		border,
 		class: className
 	}: Props = $props();
+
+	const variantClasses = {
+		primary: 'is-primary',
+		secondary: 'is-secondary',
+		muted: 'is-muted',
+		success: 'is-success',
+		warning: 'is-warning',
+		error: 'is-error',
+		info: 'is-info',
+		transparent: 'is-transparent'
+	};
+
+	const sizeClasses = {
+		xs: 'is-xs',
+		sm: 'is-sm',
+		md: 'is-md',
+		lg: 'is-lg',
+		xl: 'is-xl'
+	};
+
+	const statusClasses = {
+		online: 'is-online',
+		offline: 'is-offline',
+		busy: 'is-busy',
+		away: 'is-away'
+	};
 </script>
 
-<div class={cn('avatar', size, color, outline && 'outline', className)}>
+<div
+	class={cn(
+		'avatar',
+		sizeClasses[size],
+		variantClasses[variant],
+		border && 'has-border',
+		className
+	)}
+>
+	{#if status}
+		<div class="avatar-status">
+			<div class={cn('avatar-indicator', statusClasses[status])}></div>
+		</div>
+	{/if}
 	{#if src}
 		<img {src} {alt} class="avatar-image" />
 	{:else if icon}

@@ -14,11 +14,18 @@
 	} from 'sappsui';
 
 	const variantOptions = [
-		{ id: 'solid', label: 'Solid' },
-		{ id: 'soft', label: 'Soft' }
+		{ id: 'primary', label: 'Primary' },
+		{ id: 'secondary', label: 'Secondary' },
+		{ id: 'outline', label: 'Outline' },
+		{ id: 'soft', label: 'Soft' },
+		{ id: 'ghost', label: 'Ghost' },
+		{ id: 'success', label: 'Success' },
+		{ id: 'info', label: 'Info' },
+		{ id: 'danger', label: 'Danger' },
+		{ id: 'warning', label: 'Warning' }
 	];
 
-	let selectedVariant: any = $state('solid');
+	let selectedVariant: any = $state('primary');
 	let hasHeaderActions = $state(false);
 	let hasVoiceNote = $state(false);
 	let hasFileAttach = $state(false);
@@ -30,7 +37,7 @@
 	const mockChat = useChat({
 		chatId: 'preview-chat',
 		userId: 'user-456',
-		apiUrl: 'https://api.example.com',
+		apiUrl: 'https://localhost',
 		wsUrl: 'ws://localhost:3000/ws/chats',
 		autoConnect: false
 	});

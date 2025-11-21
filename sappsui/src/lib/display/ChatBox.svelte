@@ -8,7 +8,15 @@
 		class?: string;
 		chat: ChatState;
 		currentUserId: string;
-		variant?: 'solid' | 'soft';
+		variant?:
+			| 'primary'
+			| 'secondary'
+			| 'success'
+			| 'info'
+			| 'warning'
+			| 'danger'
+			| 'soft'
+			| 'outlined';
 		userName: string;
 		userAvatar?: string;
 		userStatus?: string;
@@ -22,7 +30,7 @@
 		class: className,
 		chat,
 		currentUserId,
-		variant = 'solid',
+		variant = 'primary',
 		userName,
 		userAvatar,
 		userStatus = 'Online',
@@ -144,11 +152,7 @@
 						<!-- svelte-ignore a11y_img_redundant_alt -->
 						<img src={message.metadata?.fileUrl} alt="Shared image" class="message-image" />
 					{:else if message.type === 'voice'}
-						<Audio
-							src={message.metadata?.fileUrl || ''}
-							{variant}
-							color={isOwn ? 'primary' : 'surface'}
-						/>
+						<Audio src={message.metadata?.fileUrl || ''} variant={isOwn ? variant : 'soft'} />
 					{:else if message.type === 'file'}
 						<div class="message-file">
 							<span class="message-file-icon">📎</span>
@@ -180,31 +184,34 @@
 	<!-- Recording Overlay -->
 	{#if isRecording}
 		<div class="chatbox-record-overlay">
-			<Record
-				name="voice-note"
-				{variant}
-				color="primary"
-				onRecordingComplete={handleRecordingComplete}
-			/>
+			<Record name="voice-note" {variant} onRecordingComplete={handleRecordingComplete} />
 		</div>
 	{/if}
 
 	<!-- Footer -->
 	<div class="chatbox-footer">
-		<div class="chatbox-input-wrapper">
+		<label class="chatbox-input-wrapper">
+			<label class="flex-1">
+				<input
+					bind:value={messageInput}
+					placeholder="Type a message..."
+					onkeydown={handleKeyPress}
+					disabled={chat.isSending}
+					class="chatbox-input"
+				/>
+			</label>
+
 			<div class="chatbox-input-actions">
 				<IconButton
 					icon="fluent:mic-24-regular"
 					size="sm"
 					variant="ghost"
-					color="muted"
 					onclick={toggleRecording}
 				/>
 				<IconButton
 					icon="fluent:attach-24-regular"
 					size="sm"
 					variant="ghost"
-					color="muted"
 					onclick={() => fileInput.click()}
 				/>
 				<input
@@ -218,30 +225,18 @@
 						icon="fluent:camera-24-regular"
 						size="sm"
 						variant="ghost"
-						color="muted"
 						onclick={onCameraCapture}
 					/>
 				{/if}
 			</div>
 
-			<div class="flex-1">
-				<TextField
-					bind:value={messageInput}
-					placeholder="Type a message..."
-					variant="soft"
-					size="sm"
-					onkeypress={handleKeyPress}
-					disabled={chat.isSending}
-				/>
-			</div>
-
 			<IconButton
 				icon="fluent:send-24-filled"
 				size="sm"
-				color="primary"
+				{variant}
 				onclick={handleSend}
 				disabled={chat.isSending || !messageInput.trim()}
 			/>
-		</div>
+		</label>
 	</div>
 </div>

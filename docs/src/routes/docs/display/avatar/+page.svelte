@@ -1,14 +1,26 @@
 <script lang="ts">
-	import { Button, Card, Checkbox, Code, Section, Divider, Select, Avatar } from 'sappsui';
-	const colorOptions = [
+	import DocCode from '$lib/components/doc/DocCode.svelte';
+	import DocHeader from '$lib/components/doc/DocHeader.svelte';
+	import DocOptions from '$lib/components/doc/DocOptions.svelte';
+	import DocPreview from '$lib/components/doc/DocPreview.svelte';
+	import DocProps from '$lib/components/doc/DocProps.svelte';
+	import { Avatar, Checkbox, Select } from 'sappsui';
+
+	const sourceOptions = [
+		{ id: 'image', label: 'Image' },
+		{ id: 'name', label: 'Name' },
+		{ id: 'icon', label: 'Icon' }
+	];
+
+	const variantOptions = [
 		{ id: 'primary', label: 'Primary' },
 		{ id: 'secondary', label: 'Secondary' },
-		{ id: 'accent', label: 'Accent' },
 		{ id: 'muted', label: 'Muted' },
 		{ id: 'success', label: 'Success' },
 		{ id: 'warning', label: 'Warning' },
 		{ id: 'error', label: 'Error' },
-		{ id: 'info', label: 'Info' }
+		{ id: 'info', label: 'Info' },
+		{ id: 'transparent', label: 'Transparent' }
 	];
 
 	const sizeOptions = [
@@ -19,82 +31,98 @@
 		{ id: 'xl', label: 'xl' }
 	];
 
-	const sourceOptions = [
-		{ id: 'image', label: 'Image' },
-		{ id: 'name', label: 'Name' },
-		{ id: 'icon', label: 'Icon' }
+	const statusOptions = [
+		{ id: 'none', label: 'None' },
+		{ id: 'online', label: 'Online' },
+		{ id: 'offline', label: 'Offline' },
+		{ id: 'busy', label: 'Busy' },
+		{ id: 'away', label: 'Away' }
 	];
 
-	let selectedColor: any = $state('primary');
-	let selectedSize: any = $state('lg');
-	let selectedSource: any = $state('image');
+	// Selects
+	let source: any = $state('image');
+	let variant: any = $state('primary');
+	let size: any = $state('lg');
+	let statusValue: any = $state('none');
 
-	let isOutline: any = $state(false);
+	// States
+	let border = $state(false);
+
+	let hasProps = $derived(
+		[source !== 'image', variant !== 'primary', size !== 'md', statusValue !== 'none', border].some(
+			Boolean
+		)
+	);
+
+	let code = $derived(() => {
+		const scriptLines = [
+			`<script lang="ts">`,
+			`\timport { Avatar } from 'sappsui';`,
+			`<\/script>`
+		].filter(Boolean);
+
+		const componentLines = [
+			hasProps && `<Avatar`,
+			source === 'image' && `\tsrc="/avatar-1.jpeg"`,
+			source === 'name' && `\tname="J"`,
+			source === 'icon' && `\ticon="fluent:person-24-regular"`,
+			variant !== 'primary' && `\tvariant="${variant}"`,
+			size !== 'md' && `\tsize="${size}"`,
+			statusValue !== 'none' && `\tstatus="${statusValue}"`,
+			border && `\tborder`,
+			hasProps && `/>`,
+			!hasProps && `<Avatar src="/avatar-1.jpeg" />`
+		].filter(Boolean);
+
+		return [...scriptLines, ...componentLines].join('\n');
+	});
+
+	const props = [
+		{ prop: 'src', type: 'string', initial: '' },
+		{ prop: 'icon', type: 'IconName', initial: '' },
+		{ prop: 'name', type: 'string', initial: '' },
+		{ prop: 'alt', type: 'string', initial: '' },
+		{
+			prop: 'variant',
+			type: 'primary | secondary | muted | success | warning | error | info | transparent',
+			initial: 'primary'
+		},
+		{ prop: 'size', type: 'xs | sm | md | lg | xl', initial: 'lg' },
+		{ prop: 'status', type: 'online | offline | busy | away', initial: '' },
+		{ prop: 'border', type: 'boolean', initial: 'false' },
+		{ prop: 'class', type: 'string', initial: '' }
+	];
 </script>
 
-<Section>
-	<div class="prose">
-		<h1>Avatar</h1>
-		<p>Avatar component is used to display user profile pictures or initials.</p>
-	</div>
-	<Card bodyClass="column gap-4">
-		<div class="row w-full">
-			<div class="column w-full">
-				<h4>Preview</h4>
-				<div class="column center flex-1 p-2 md:p-4">
-					<Avatar
-						color={selectedColor}
-						src={selectedSource === 'image' ? '/avatar-1.jpeg' : undefined}
-						name={selectedSource === 'name' ? 'J' : undefined}
-						icon={selectedSource === 'icon' ? 'fluent:person-24-regular' : undefined}
-						size={selectedSize}
-						outline={isOutline}
-					/>
-				</div>
-			</div>
-			<Divider vertical />
-			<div class="column gap-4 ml-4 w-56">
-				<h4>Builder</h4>
-				<Select
-					label="Source"
-					name="source"
-					size="sm"
-					options={sourceOptions}
-					bind:value={selectedSource}
-				/>
-				<Select
-					label="Color"
-					name="color"
-					size="sm"
-					options={colorOptions}
-					bind:value={selectedColor}
-				/>
-				<Select
-					label="Size"
-					name="size"
-					size="sm"
-					options={sizeOptions}
-					bind:value={selectedSize}
-				/>
-				<Checkbox bind:checked={isOutline} name="outline" label="Outline" />
-			</div>
-		</div>
+{#snippet preview()}
+	<Avatar
+		src={source === 'image' ? '/avatar-1.jpeg' : undefined}
+		name={source === 'name' ? 'J' : undefined}
+		icon={source === 'icon' ? 'fluent:person-24-regular' : undefined}
+		{variant}
+		{size}
+		status={statusValue !== 'none' ? statusValue : undefined}
+		{border}
+	/>
+{/snippet}
 
-		{#snippet footer()}
-			<Code
-				lang="svelte"
-				code={`<script lang="ts">
-  import { Avatar } from 'sappsui';
-<\/script>
-<Avatar
-  ${selectedSource === 'image' ? `src="/avatar-1.jpeg"` : ''}
-  ${selectedSource === 'icon' ? `icon="fluent:person-24-regular"` : ''}
-  ${selectedSource === 'name' ? `name="Jonh"` : ''}
-  ${selectedColor !== 'primary' ? `color="${selectedColor}"` : ''}
-  ${selectedSize !== 'large' ? `size="${selectedSize}"` : ''}
-  ${isOutline ? '\n  outline' : ''}
-/>`.replace(/^\s*\n/gm, '')}
-			/>
-		{/snippet}
-	</Card>
-</Section>
+{#snippet builder()}
+	<Select label="Source" name="source" size="sm" options={sourceOptions} bind:value={source} />
+	<Select label="Variant" name="variant" size="sm" options={variantOptions} bind:value={variant} />
+	<Select label="Size" name="size" size="sm" options={sizeOptions} bind:value={size} />
+	<Select label="Status" name="status" size="sm" options={statusOptions} bind:value={statusValue} />
+
+	<DocOptions title="Props">
+		<Checkbox bind:checked={border} name="border" label="Border" />
+	</DocOptions>
+{/snippet}
+
+<DocHeader title="Avatar"
+	>Avatars are used to show a thumbnail representation of an individual or business.</DocHeader
+>
+
+<DocPreview {preview} {builder} />
+
+<DocCode code={code()} />
+
+<DocProps {props} />

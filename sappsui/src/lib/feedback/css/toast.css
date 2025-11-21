@@ -4,68 +4,64 @@
 		max-width: 420px;
 		width: 100%;
 
-		&.toast-top-left {
+		&.is-top-left {
 			@apply top-4 left-1/2 lg:left-4 -translate-x-1/2 lg:translate-x-0;
 		}
-		&.toast-top-right {
+		&.is-top-right {
 			@apply top-4 right-1/2 lg:right-4 -translate-x-1/2 lg:translate-x-0;
 		}
 
-		&.toast-bottom-left {
+		&.is-bottom-left {
 			@apply bottom-4 left-1/2 lg:left-4 -translate-x-1/2 lg:translate-x-0;
 			flex-direction: column-reverse;
 		}
 
-		&.toast-bottom-right {
+		&.is-bottom-right {
 			@apply bottom-4 right-1/2 lg:right-4 -translate-x-1/2 lg:translate-x-0;
 			flex-direction: column-reverse;
 		}
 	}
 
 	.toast {
-		@apply relative flex items-start gap-3 px-4 py-2 pointer-events-auto rounded-popover;
+		@apply relative flex items-center gap-3 p-4 pointer-events-auto rounded-ui;
 		@apply transition-all duration-300 ease-in-out;
 		opacity: calc(1 - var(--toast-index) * 0.15);
 		z-index: calc(50 - var(--toast-index));
 
-		&.toast-success {
-			&.toast-solid {
+		&.is-success {
+			@apply bg-on-success text-success;
+
+			&.is-solid {
 				@apply bg-success text-on-success;
 			}
-			&.toast-soft {
-				@apply bg-success/30 text-success;
-			}
 		}
 
-		&.toast-error {
-			&.toast-solid {
+		&.is-danger {
+			@apply bg-on-danger text-danger;
+
+			&.is-solid {
 				@apply bg-danger text-on-danger;
 			}
-			&.toast-soft {
-				@apply bg-danger/30 text-danger;
-			}
 		}
 
-		&.toast-warning {
-			&.toast-solid {
+		&.is-warning {
+			@apply bg-on-warning text-warning;
+
+			&.is-solid {
 				@apply bg-warning text-on-warning;
 			}
-			&.toast-soft {
-				@apply bg-warning/30 text-warning;
-			}
 		}
 
-		&.toast-info {
-			&.toast-solid {
+		&.is-info {
+			@apply bg-on-info text-info;
+
+			&.is-solid {
 				@apply bg-info text-on-info;
-			}
-			&.toast-soft {
-				@apply bg-info/30 text-info;
 			}
 		}
 
 		.toast-icon {
-			@apply flex items-center justify-center shrink-0;
+			@apply h-8 w-auto;
 		}
 
 		.toast-content {

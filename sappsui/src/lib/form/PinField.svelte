@@ -5,7 +5,7 @@
 		length?: number;
 		values?: string[];
 		class?: string;
-		variant?: 'solid' | 'outline' | 'soft' | 'line';
+		variant?: 'solid' | 'outlined' | 'soft' | 'line';
 		color?: 'primary' | 'secondary' | 'muted';
 		inputSize?: 'small' | 'medium' | 'large';
 		type?: 'text' | 'password' | 'number';
@@ -33,7 +33,7 @@
 
 	const variants = {
 		solid: 'field-solid',
-		outline: 'field-outline',
+		outlined: 'field-outlined',
 		soft: 'field-soft',
 		line: 'field-line'
 	};

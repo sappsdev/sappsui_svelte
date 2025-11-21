@@ -1,8 +1,0 @@
-@layer components {
-	.chart {
-		@apply w-full h-full;
-	}
-	.chart-default {
-		@apply w-full h-56;
-	}
-}

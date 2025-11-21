@@ -1,4 +1,4 @@
-<script lang="ts" generics="T">
+<script lang="ts">
 	import { page } from '$app/state';
 	import type { IconName } from '$lib/assets/icons/index.js';
 	import { Icon } from '$lib/index.js';
@@ -6,20 +6,29 @@
 	import type { Snippet } from 'svelte';
 	import { slide } from 'svelte/transition';
 
-	interface Item<T> {
+	type SubmenuItem = {
+		label: string;
+		href?: string;
+		onclick?: (item: SubmenuItem) => void;
+		icon?: IconName;
+		description?: string;
+		status?: string | Snippet;
+	};
+
+	type Item = {
 		type?: 'item' | 'divider' | 'header' | 'submenu';
 		label?: string;
 		description?: string;
 		icon?: IconName;
 		href?: string;
-		onclick?: (item: Item<T>) => void;
+		onclick?: (item: Item) => void;
 		status?: string | Snippet;
-		subitems?: Item<T>[];
+		subitems?: SubmenuItem[];
 		open?: boolean;
-	}
+	};
 
 	type Props = {
-		items: Item<T>[];
+		items: Item[];
 		color?: 'primary' | 'secondary';
 		class?: string;
 		itemClass?: string;
@@ -49,7 +58,7 @@
 	}
 </script>
 
-{#snippet sidenavItem(item: Item<T>)}
+{#snippet sidenavItem(item: Item)}
 	{#if item.icon}
 		<div class="sidenav-start">
 			<Icon name={item.icon} class="sidenav-icon" />
@@ -123,7 +132,7 @@
 												class={cn('sidenav-item', colors[color], itemClass)}
 												class:is-active={page.url.pathname.includes(subitem.href)}
 											>
-												{@render sidenavItem(subitem as Item<T>)}
+												{@render sidenavItem(subitem as Item)}
 											</a>
 										{:else}
 											<button
@@ -131,7 +140,7 @@
 												type="button"
 												onclick={() => subitem.onclick?.(subitem)}
 											>
-												{@render sidenavItem(subitem as Item<T>)}
+												{@render sidenavItem(subitem as Item)}
 											</button>
 										{/if}
 									</li>

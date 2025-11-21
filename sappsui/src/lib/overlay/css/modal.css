@@ -6,7 +6,7 @@
 			@apply absolute inset-0 bg-overlay;
 		}
 		.modal {
-			@apply relative flex flex-col gap-4 md:gap-6 rounded-card py-4 md:py-6 max-w-[95vw] max-h-[95vh];
+			@apply relative flex flex-col gap-4 md:gap-6 rounded-ui py-4 md:py-6 max-w-[95vw] max-h-[95vh] overflow-hidden overflow-y-auto;
 
 			&.modal-default {
 				@apply bg-background text-on-background;

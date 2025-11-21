@@ -3,7 +3,7 @@
 		@apply flex items-center w-full;
 		&:before,
 		&:after {
-			@apply content-[''] h-px flex-1 bg-outline;
+			@apply content-[''] h-px flex-1 bg-muted;
 		}
 		& > * {
 			@apply px-4;
@@ -14,7 +14,7 @@
 
 		&:before,
 		&:after {
-			@apply content-[''] w-px flex-1 bg-outline;
+			@apply content-[''] w-px flex-1 bg-muted;
 		}
 
 		& > * {
@@ -28,7 +28,7 @@
 		&.divider-surface {
 			&:before,
 			&:after {
-				@apply bg-outline;
+				@apply bg-muted;
 			}
 		}
 

@@ -26,7 +26,7 @@
 	const variantOptions = [
 		{ id: 'solid', label: 'Solid' },
 		{ id: 'soft', label: 'Soft' },
-		{ id: 'outline', label: 'Outline' },
+		{ id: 'outlined', label: 'Outlined' },
 		{ id: 'line', label: 'Line' }
 	];
 

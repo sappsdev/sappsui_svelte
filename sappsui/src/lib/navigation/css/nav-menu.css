@@ -7,7 +7,7 @@
 
 			.navmenu-btn {
 				@apply hover:text-muted focus:text-muted disabled:pointer-events-none disabled:opacity-50;
-				@apply inline-flex items-center justify-center rounded-control text-base;
+				@apply inline-flex items-center justify-center rounded-ui text-base;
 				@apply outline-none transition-[color,box-shadow] focus-visible:ring-2;
 
 				&.active {

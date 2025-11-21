@@ -9,7 +9,7 @@
 </script>
 
 <Section>
-	<Card>
+	<Card variant="outline">
 		<div class="column lg:row w-full gap-3">
 			<div class="column flex-1">
 				<h4>Preview</h4>

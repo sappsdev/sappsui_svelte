@@ -1,232 +1,118 @@
 @layer components {
 	.tabs {
 		@apply flex relative;
-		&.tabs-top {
+		&.is-top {
 			@apply flex-col;
 		}
-		&.tabs-bottom {
+		&.is-bottom {
 			@apply flex-col-reverse;
 		}
-		&.tabs-start {
+		&.is-start {
 			@apply flex-row h-fit gap-1;
 			.tabs-list {
 				@apply flex-col;
-
-				&.tabs-pill {
-					@apply !rounded-xl;
-				}
 			}
 		}
-		&.tabs-end {
+		&.is-end {
 			@apply flex-row-reverse h-fit gap-1;
 			.tabs-list {
 				@apply flex-col;
-				&.tabs-pill {
-					@apply !rounded-xl;
-				}
-			}
-		}
-		&.tabs-start,
-		&.tabs-end {
-			.tabs-list.tabs-underlined {
-				.tabs-indicator {
-					@apply border-b-0 border-r-2;
-					right: 0;
-					left: auto !important;
-					bottom: auto;
-					width: 2px !important;
-				}
 			}
 		}
 		.tabs-list {
 			@apply flex w-auto max-w-min overflow-x-auto scrollbar-hide gap-2 p-1 relative select-none;
-
-			.tabs-indicator {
-				@apply absolute pointer-events-none z-0;
-				&.is-ready {
-					transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+			&.is-primary {
+				@apply bg-primary/10 text-on-surface rounded-xl py-1;
+				.tab {
+					@apply flex flex-nowrap cursor-pointer px-4 py-1 relative rounded-lg transition-colors;
+					&.on-active {
+						@apply bg-primary text-on-primary;
+					}
 				}
 			}
-
-			&.tabs-solid {
+			&.is-secondary {
+				@apply bg-secondary/10 text-on-surface rounded-xl py-1;
+				.tab {
+					@apply flex flex-nowrap cursor-pointer px-4 py-1 relative rounded-lg transition-colors;
+					&.on-active {
+						@apply bg-secondary text-on-secondary;
+					}
+				}
+			}
+			&.is-muted {
 				@apply bg-muted text-on-muted rounded-xl py-1;
-				.tabs-indicator {
-					@apply rounded-lg;
-				}
 				.tab {
-					@apply flex flex-nowrap cursor-pointer px-4 py-1 relative z-10;
-				}
-				&.tabs-primary {
-					.tabs-indicator {
-						@apply bg-primary;
-					}
-					.tab.is-active {
-						@apply text-on-primary;
-					}
-				}
-				&.tabs-secondary {
-					.tabs-indicator {
-						@apply bg-secondary;
-					}
-					.tab.is-active {
-						@apply text-on-secondary;
+					@apply flex flex-nowrap cursor-pointer px-4 py-1 relative rounded-lg transition-colors;
+					&.on-active {
+						@apply bg-on-muted text-muted;
 					}
 				}
 			}
-			&.tabs-pill {
-				@apply bg-muted text-on-muted rounded-full py-1;
-				.tabs-indicator {
-					@apply rounded-full;
-				}
+			&.is-outline {
+				@apply border border-muted rounded-xl;
 				.tab {
-					@apply flex flex-nowrap cursor-pointer px-4 py-1 relative z-10;
-				}
-				&.tabs-primary {
-					.tabs-indicator {
-						@apply bg-primary;
-					}
-					.tab.is-active {
-						@apply text-on-primary;
-					}
-				}
-				&.tabs-secondary {
-					.tabs-indicator {
-						@apply bg-secondary;
-					}
-					.tab.is-active {
-						@apply text-on-secondary;
+					@apply flex flex-nowrap cursor-pointer px-4 py-1 relative rounded-lg transition-colors;
+					&.on-active {
+						@apply bg-primary text-on-primary;
 					}
 				}
 			}
-			&.tabs-outline {
-				@apply border border-outline rounded-xl;
-
-				.tabs-indicator {
-					@apply rounded-lg;
-				}
-				.tab {
-					@apply flex flex-nowrap cursor-pointer px-4 py-1 relative z-10;
-				}
-
-				&.tabs-primary {
-					.tabs-indicator {
-						@apply bg-primary;
-					}
-					.tab.is-active {
-						@apply text-on-primary;
-					}
-				}
-				&.tabs-secondary {
-					.tabs-indicator {
-						@apply bg-secondary;
-					}
-					.tab.is-active {
-						@apply text-on-secondary;
-					}
-				}
-			}
-			&.tabs-underlined {
+			&.is-line {
 				@apply gap-4;
-				.tabs-indicator {
-					@apply border-b-2;
-					top: auto !important;
-					bottom: 0;
-					height: 2px !important;
-				}
 				.tab {
-					@apply flex flex-nowrap cursor-pointer px-4 py-1 relative z-10;
-				}
-				&.tabs-primary {
-					.tabs-indicator {
-						@apply border-primary;
-					}
-					.tab.is-active {
-						@apply text-primary;
-					}
-				}
-				&.tabs-secondary {
-					.tabs-indicator {
-						@apply border-secondary;
-					}
-					.tab.is-active {
-						@apply text-secondary;
+					@apply flex flex-nowrap cursor-pointer px-4 py-1 relative;
+					&.on-active {
+						@apply text-primary border-b-2 border-primary;
 					}
 				}
 			}
-			&.tabs-ghost {
-				.tabs-indicator {
-					@apply rounded-lg;
-				}
+			&.is-ghost {
 				.tab {
-					@apply flex flex-nowrap cursor-pointer px-4 py-1 relative z-10;
-				}
-				&.tabs-primary {
-					.tab.is-active {
+					@apply flex flex-nowrap cursor-pointer px-4 py-1 relative;
+					&.on-active {
 						@apply text-primary;
 					}
 				}
-				&.tabs-secondary {
-					.tab.is-active {
-						@apply text-secondary;
-					}
-				}
 			}
-
 			.tab {
 				.tabs-icon {
-					@apply mr-2 flex-shrink-0;
+					@apply mr-2 shrink-0 h-6 w-auto;
 				}
 				.tabs-label {
 					@apply whitespace-nowrap;
 				}
 			}
 		}
-
+		&.is-top,
+		&.is-bottom {
+			.tabs-list {
+				&.is-pill:not(.is-line) {
+					@apply rounded-full;
+					.tab {
+						@apply rounded-full;
+					}
+				}
+			}
+		}
+		&.is-start {
+			.tabs-list.is-line {
+				.tab.on-active {
+					@apply border-b-0 border-l-2 border-primary;
+				}
+			}
+		}
+		&.is-end {
+			.tabs-list.is-line {
+				.tab.on-active {
+					@apply border-b-0 border-r-2 border-primary;
+				}
+			}
+		}
 		.tabs-wrapper {
 			@apply flex flex-1 overflow-hidden relative;
 			.tabs-content {
 				@apply relative w-full;
-				animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-				&.right {
-					animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-				}
-
-				&.left {
-					animation: slideInLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-				}
 			}
-		}
-	}
-
-	@keyframes slideInRight {
-		from {
-			opacity: 0;
-			transform: translateX(20px);
-		}
-		to {
-			opacity: 1;
-			transform: translateX(0);
-		}
-	}
-
-	@keyframes slideInLeft {
-		from {
-			opacity: 0;
-			transform: translateX(-20px);
-		}
-		to {
-			opacity: 1;
-			transform: translateX(0);
-		}
-	}
-
-	@keyframes slideIn {
-		from {
-			opacity: 0;
-		}
-		to {
-			opacity: 1;
 		}
 	}
 }

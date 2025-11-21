@@ -8,7 +8,7 @@
 		}
 	}
 
-	.card.divider {
+	.card.has-divider {
 		.card-header {
 			@apply border-b;
 		}
@@ -17,15 +17,29 @@
 		}
 	}
 
-	.card.shadow {
-		@apply shadow-lg;
+	.card.has-shadow {
+		@apply shadow-lg shadow-muted;
 	}
 
-	.card.primary {
+	.card.is-primary {
+		@apply bg-on-primary text-primary;
+	}
+
+	.card.is-primary.has-divider {
+		.card-header {
+			@apply border-primary;
+		}
+
+		.card-footer {
+			@apply border-primary;
+		}
+	}
+
+	.card.is-primary.is-solid {
 		@apply bg-primary text-on-primary;
 	}
 
-	.card.primary.divider {
+	.card.is-primary.is-solid.has-divider {
 		.card-header {
 			@apply border-on-primary;
 		}
@@ -35,11 +49,25 @@
 		}
 	}
 
-	.card.secondary {
+	.card.is-secondary {
+		@apply bg-on-secondary text-secondary;
+	}
+
+	.card.is-secondary.has-divider {
+		.card-header {
+			@apply border-secondary;
+		}
+
+		.card-footer {
+			@apply border-secondary;
+		}
+	}
+
+	.card.is-secondary.is-solid {
 		@apply bg-secondary text-on-secondary;
 	}
 
-	.card.secondary.divider {
+	.card.is-secondary.is-solid.has-divider {
 		.card-header {
 			@apply border-on-secondary;
 		}
@@ -49,39 +77,11 @@
 		}
 	}
 
-	.card.outline {
-		@apply border border-outline;
-	}
-
-	.card.outline.divider {
-		.card-header {
-			@apply border-outline;
-		}
-
-		.card-footer {
-			@apply border-outline;
-		}
-	}
-
-	.card.surface {
-		@apply bg-surface text-on-surface;
-	}
-
-	.card.surface.divider {
-		.card-header {
-			@apply border-on-surface;
-		}
-
-		.card-footer {
-			@apply border-on-surface;
-		}
-	}
-
-	.card.soft {
+	.card.is-muted {
 		@apply bg-muted text-on-muted;
 	}
 
-	.card.soft.divider {
+	.card.is-muted.has-divider {
 		.card-header {
 			@apply border-on-muted;
 		}
@@ -91,12 +91,54 @@
 		}
 	}
 
-	.card.ghost {
+	.card.is-muted.is-solid {
+		@apply bg-on-muted text-muted;
+	}
+
+	.card.is-muted.is-solid.has-divider {
+		.card-header {
+			@apply border-muted;
+		}
+
+		.card-footer {
+			@apply border-muted;
+		}
+	}
+
+	.card.is-outline {
+		@apply border border-muted;
+	}
+
+	.card.is-outline.has-divider {
+		.card-header {
+			@apply border-muted;
+		}
+
+		.card-footer {
+			@apply border-muted;
+		}
+	}
+
+	.card.is-surface {
+		@apply bg-surface text-on-surface;
+	}
+
+	.card.is-surface.has-divider {
+		.card-header {
+			@apply border-on-surface;
+		}
+
+		.card-footer {
+			@apply border-on-surface;
+		}
+	}
+
+	.card.is-ghost {
 		@apply bg-transparent;
 	}
 
 	.card-cover {
-		@apply absolute inset-0 object-cover size-full rounded-card -z-10;
+		@apply absolute inset-0 object-cover size-full rounded-ui -z-10;
 	}
 
 	.card-overlay {

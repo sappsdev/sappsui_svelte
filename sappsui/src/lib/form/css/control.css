@@ -9,74 +9,109 @@
 		@apply transition-all duration-300;
 	}
 
-	.control-label.active {
-		@apply text-xs left-3 top-0.5! translate-y-0.5!;
+	.control-label.on-active {
+		@apply text-xs left-3 top-px! translate-y-px!;
 	}
 
-	.control.sm {
-		@apply h-8;
+	.control.is-sm {
+		@apply h-8 text-sm;
 	}
 
-	.control.sm .control-icon {
-		@apply h-6 w-auto;
+	.control.is-sm .control-icon {
+		@apply h-5 w-auto;
 	}
 
-	.control.float.sm {
+	.control.is-float.is-sm {
 		@apply h-10 pt-3;
 	}
 
-	.control.md {
-		@apply h-10;
+	.control.is-md {
+		@apply h-10 text-base;
 	}
 
-	.control.md .control-icon {
-		@apply h-8 w-auto;
+	.control.is-md .control-icon {
+		@apply h-6 w-auto;
 	}
 
-	.control.float.md {
+	.control.is-float.is-md {
 		@apply h-12 pt-3.5;
 	}
 
-	.control.lg {
-		@apply h-12;
+	.control.is-lg {
+		@apply h-12 text-xl;
 	}
 
-	.control.lg .control-icon {
-		@apply h-10 w-auto;
+	.control.is-lg .control-icon {
+		@apply h-8 w-auto;
 	}
 
-	.control.float.lg {
+	.control.is-float.is-lg {
 		@apply h-14 pt-3.5;
 	}
 
-	.control.primary,
-	.control.secondary {
-		@apply inset-ring inset-ring-outline rounded-ui;
+	.control.is-primary {
+		@apply bg-on-primary text-primary rounded-ui;
 	}
 
-	.control.primary.active {
-		@apply inset-ring-2 inset-ring-primary;
+	.control.is-solid.is-primary {
+		@apply bg-primary text-on-primary;
 	}
 
-	.control.secondary.active {
-		@apply inset-ring-2 inset-ring-secondary;
+	.control.is-primary.on-active {
+		@apply bg-on-primary/90;
 	}
 
-	.control.soft {
+	.control.is-solid.is-primary.on-active {
+		@apply bg-primary/90;
+	}
+
+	.control.is-secondary {
+		@apply bg-on-secondary text-secondary rounded-ui;
+	}
+
+	.control.is-solid.is-secondary {
+		@apply bg-secondary text-on-secondary;
+	}
+
+	.control.is-secondary.on-active {
+		@apply bg-on-secondary/90;
+	}
+
+	.control.is-solid.is-secondary.on-active {
+		@apply bg-secondary/90;
+	}
+
+	.control.is-muted {
 		@apply bg-muted text-on-muted rounded-ui;
 	}
 
-	.control.soft.active {
-		@apply border border-outline;
+	.control.is-solid.is-muted {
+		@apply bg-on-muted text-muted;
 	}
 
-	.control.line {
-		@apply border-b  border-outline text-on-muted px-0;
+	.control.is-muted.on-active {
+		@apply bg-muted/90;
 	}
 
-	.control.line.active {
-		@apply border-b-2 border-primary;
-		.label {
+	.control.is-solid.is-muted.on-active {
+		@apply bg-on-muted/90;
+	}
+
+	.control.is-outline {
+		@apply inset-ring-2 inset-ring-muted rounded-ui;
+	}
+
+	.control.is-outline.on-active {
+		@apply inset-ring-2 inset-ring-primary;
+	}
+
+	.control.is-line {
+		@apply box-border border-b-2  border-muted text-on-muted px-0;
+	}
+
+	.control.is-line.on-active {
+		@apply border-primary;
+		.control-label {
 			@apply left-0!;
 		}
 	}
@@ -94,7 +129,7 @@
 		@apply transition-all duration-300 ease-in-out;
 	}
 
-	.control-arrow.active {
+	.control-arrow.on-active {
 		@apply rotate-90;
 	}
 

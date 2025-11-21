@@ -11,22 +11,22 @@
 			@apply transition-all duration-300 ease-in-out;
 
 			&.drawer-start {
-				@apply inset-y-0 left-0 right-auto rounded-r-popover;
+				@apply inset-y-0 left-0 right-auto rounded-r-ui;
 				@apply transform -translate-x-full;
 			}
 
 			&.drawer-end {
-				@apply inset-y-0 right-0 left-auto rounded-l-popover;
+				@apply inset-y-0 right-0 left-auto rounded-l-ui;
 				@apply transform translate-x-full;
 			}
 
 			&.drawer-top {
-				@apply inset-x-0 top-0 bottom-auto rounded-b-popover;
+				@apply inset-x-0 top-0 bottom-auto rounded-b-ui;
 				@apply transform -translate-y-full;
 			}
 
 			&.drawer-bottom {
-				@apply inset-x-0 bottom-0 top-auto rounded-t-popover;
+				@apply inset-x-0 bottom-0 top-auto rounded-t-ui;
 				@apply transform translate-y-full;
 			}
 

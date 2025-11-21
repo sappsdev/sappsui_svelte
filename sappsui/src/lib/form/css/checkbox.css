@@ -3,7 +3,7 @@
 		@apply flex justify-start items-center w-fit gap-2 cursor-pointer;
 
 		.checkbox-input {
-			@apply relative appearance-none w-5 h-5 border-2 border-outline rounded-lg;
+			@apply relative appearance-none w-5 h-5 border-2 border-muted rounded-lg;
 			@apply focus:outline-none;
 			@apply transition-all duration-200 ease-in-out;
 
@@ -27,14 +27,14 @@
 		}
 
 		.checkbox-input:checked {
-			&.checkbox-primary {
+			&.is-primary {
 				@apply bg-primary border-primary;
 			}
-			&.checkbox-secondary {
+			&.is-secondary {
 				@apply bg-secondary border-secondary;
 			}
-			&.checkbox-muted {
-				@apply bg-muted border-muted;
+			&.is-muted {
+				@apply bg-on-muted border-on-muted;
 			}
 
 			&::after {

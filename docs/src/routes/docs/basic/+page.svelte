@@ -22,7 +22,7 @@
 
 	const variantOptions = [
 		{ id: 'solid', label: 'Solid' },
-		{ id: 'outline', label: 'Outline' },
+		{ id: 'outlined', label: 'Outlined' },
 		{ id: 'soft', label: 'Soft' },
 		{ id: 'ghost', label: 'Ghost' },
 		{ id: 'link', label: 'Link' }

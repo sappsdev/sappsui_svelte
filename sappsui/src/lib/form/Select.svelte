@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { IconName } from '$lib/assets/icons/index.js';
-	import { Avatar, Icon } from '$lib/index.js';
+	import { Avatar, Icon, Item } from '$lib/index.js';
 	import { cn } from '$lib/utils/class-names.js';
 	import { onMount } from 'svelte';
 
@@ -18,7 +18,7 @@
 		selected?: Option;
 		placeholder?: string;
 		onchange?: (value: unknown) => void;
-		variant?: 'primary' | 'secondary' | 'soft' | 'line';
+		variant?: 'primary' | 'secondary' | 'muted' | 'outline' | 'line';
 		size?: 'sm' | 'md' | 'lg';
 		name: string;
 		class?: string;
@@ -27,6 +27,7 @@
 		helpText?: string;
 		errorText?: string;
 		floatLabel?: boolean;
+		solid?: boolean;
 	};
 
 	let {
@@ -36,14 +37,15 @@
 		selected = $bindable(),
 		placeholder = 'Select an option',
 		onchange,
-		variant = 'primary',
+		variant = 'outline',
 		size = 'md',
 		name,
 		label,
 		labelActive,
 		helpText,
 		errorText,
-		floatLabel
+		floatLabel,
+		solid
 	}: Props = $props();
 
 	let isOpen = $state(false);
@@ -67,7 +69,35 @@
 		`top: ${position.top}px; left: ${position.left}px; width: ${position.width}px; transform-origin: ${position.isBottomHalf ? 'bottom' : 'top'} center;`
 	);
 
-	const getItems = () => contentEl?.querySelectorAll('select__option') ?? [];
+	const variantClasses = {
+		primary: 'is-primary',
+		secondary: 'is-secondary',
+		muted: 'is-muted',
+		outline: 'is-outline',
+		line: 'is-line'
+	};
+
+	const itemVariants = {
+		primary: 'primary',
+		secondary: 'secondary',
+		muted: 'muted',
+		outline: 'primary',
+		line: 'primary'
+	} as const;
+
+	const sizeClasses = {
+		sm: 'is-sm',
+		md: 'is-md',
+		lg: 'is-lg'
+	};
+
+	const avatarSizes: any = {
+		sm: 'xs',
+		md: 'sm',
+		lg: 'md'
+	};
+
+	const getItems = () => contentEl?.querySelectorAll('select-options') ?? [];
 
 	const updatePosition = async () => {
 		if (!controlElement || !contentEl) return;
@@ -180,14 +210,14 @@
 	const initializeFocusedIndex = async () => {
 		setTimeout(() => {
 			const items = getItems();
-			focusedIndex = Array.from(items).findIndex((i) => i.classList.contains('is-active'));
+			focusedIndex = Array.from(items).findIndex((i) => i.classList.contains('on-active'));
 			if (focusedIndex === -1 && items.length) focusedIndex = 0;
 		}, 50);
 	};
 
 	const scrollToSelectedItem = async () => {
 		setTimeout(() => {
-			const selectedItem = optionsEl?.querySelector('.is-active') as HTMLElement;
+			const selectedItem = optionsEl?.querySelector('.on-active') as HTMLElement;
 			if (selectedItem) {
 				const offset = 50;
 				const top = Math.max(0, selectedItem.offsetTop - offset);
@@ -260,15 +290,7 @@
 	});
 </script>
 
-<div
-	class={cn(
-		'field',
-		(isActive || isFocused || value !== '') && 'select--label-active',
-		(isActive || isFocused) && 'select--control-active',
-		floatLabel && 'select--float',
-		className
-	)}
->
+<div class={cn('field', className)}>
 	<input type="text" {name} bind:value hidden />
 
 	{#if !floatLabel && label}
@@ -278,20 +300,37 @@
 	<button
 		type="button"
 		bind:this={controlElement}
-		class={cn('control', variant, size, floatLabel && 'float', (isActive || isFocused) && 'active')}
+		class={cn(
+			'control',
+			variantClasses[variant],
+			sizeClasses[size],
+			floatLabel && 'is-float',
+			solid && 'is-solid',
+			(isActive || isFocused) && 'on-active'
+		)}
 		class:is-error={errorText}
 		onclick={toggleDropdown}
 		onmouseenter={() => (isActive = true)}
 		onmouseleave={() => (isActive = false)}
 	>
 		{#if floatLabel && label}
-			<span class={cn('control-label', (isActive || isFocused || value !== '') && 'active')}>
+			<span
+				class={cn(
+					'control-label',
+					(isActive || isFocused || labelActive || value !== '') && 'on-active'
+				)}
+			>
 				{label}
 			</span>
 		{/if}
 
 		{#if selected?.src || selected?.icon}
-			<Avatar src={selected.src} name={selected.label} icon={selected.icon} size="sm" />
+			<Avatar
+				src={selected.src}
+				name={selected.label}
+				icon={selected.icon}
+				size={avatarSizes[size]}
+			/>
 		{/if}
 
 		<div class="control-selected" class:invisible={!selected && !isOpen}>
@@ -301,44 +340,31 @@
 		<div class="control-btn">
 			<Icon
 				name="fluent:arrow-sort-down-24-regular"
-				class={cn('control-arrow', isOpen && 'active')}
+				class={cn('control-arrow', isOpen && 'on-active')}
 			/>
 		</div>
 	</button>
 
 	{#if errorText || helpText}
-		<div class={cn('field-help', errorText && 'danger')}>{errorText || helpText}</div>
+		<div class={cn('field-help', errorText && 'on-danger')}>{errorText || helpText}</div>
 	{/if}
 
-	<div class:active={isOpen} class="select-popover" bind:this={contentEl} {style}>
-		<ul class="listbox-items" bind:this={optionsEl}>
+	<div class:on-active={isOpen} class="select-popover" bind:this={contentEl} {style}>
+		<ul class="select-options" bind:this={optionsEl}>
 			{#each options as item}
 				<li>
-					<button
-						type="button"
-						class={cn('listbox-item')}
-						class:is-active={value === item.id}
+					<Item
+						label={item.label}
+						icon={item.icon}
+						src={item.src}
+						description={item.description}
+						id={item.id}
 						onclick={() => handleSelect(item)}
-					>
-						{#if item.src || item.icon}
-							<Avatar src={item.src} name={item.label} icon={item.icon} />
-						{/if}
-
-						<div class="listbox-item-body">
-							<div class="listbox-item-label">
-								{item.label}
-							</div>
-							{#if item.description}
-								<div class="listbox-item-description">
-									{item.description}
-								</div>
-							{/if}
-						</div>
-
-						{#if value === item.id}
-							<Icon name="fluent:checkmark-24-regular" class="listbox-item-check" />
-						{/if}
-					</button>
+						active={value === item.id}
+						variant={itemVariants[variant]}
+						size="sm"
+						compact
+					/>
 				</li>
 			{/each}
 		</ul>

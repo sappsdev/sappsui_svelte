@@ -6,14 +6,14 @@
 			@apply relative w-full text-left rtl:text-right;
 
 			.table-header {
-				@apply bg-muted whitespace-nowrap text-sm font-semibold rounded-card;
+				@apply bg-muted whitespace-nowrap text-sm font-semibold rounded-ui;
 				th {
 					&:first-child {
-						@apply rounded-l-item pl-6;
+						@apply rounded-l-ui pl-6;
 					}
 
 					&:last-child {
-						@apply rounded-r-item;
+						@apply rounded-r-ui;
 					}
 				}
 
@@ -23,7 +23,7 @@
 			}
 
 			.table-body {
-				@apply divide-y divide-outline/40;
+				@apply divide-y divide-muted/40;
 
 				tr {
 					@apply transition-colors duration-150;
@@ -49,11 +49,11 @@
 
 					td {
 						&:first-child {
-							@apply rounded-l-item;
+							@apply rounded-l-ui;
 						}
 
 						&:last-child {
-							@apply rounded-r-item;
+							@apply rounded-r-ui;
 						}
 					}
 				}
@@ -86,12 +86,12 @@
 
 	/* Variante Bordered */
 	.table-bordered {
-		@apply border border-outline/40 rounded-lg overflow-hidden;
+		@apply border border-muted/40 rounded-lg overflow-hidden;
 
 		.table-body {
 			tr {
 				td {
-					@apply border-r border-outline/40;
+					@apply border-r border-muted/40;
 
 					&:last-child {
 						@apply border-r-0;

@@ -6,13 +6,13 @@
 		@apply flex justify-between items-center text-sm font-medium leading-none;
 	}
 	.slider {
-		@apply appearance-none w-full bg-outline rounded-full outline-none;
+		@apply appearance-none w-full bg-muted rounded-full outline-none;
 		background: linear-gradient(
 			to right,
 			var(--slider-color) 0%,
 			var(--slider-color) var(--slider-progress),
-			theme('colors.outline') var(--slider-progress),
-			theme('colors.outline') 100%
+			theme('colors.muted') var(--slider-progress),
+			theme('colors.muted') 100%
 		);
 
 		&::-webkit-slider-thumb {
@@ -21,7 +21,7 @@
 		&::-moz-range-thumb {
 			@apply appearance-none rounded-full cursor-pointer border border-white;
 		}
-		&.slider-primary {
+		&.is-primary {
 			--slider-color: var(--color-primary);
 			&::-webkit-slider-thumb {
 				@apply bg-primary;
@@ -31,7 +31,7 @@
 			}
 		}
 
-		&.slider-secondary {
+		&.is-secondary {
 			--slider-color: var(--color-secondary);
 			&::-webkit-slider-thumb {
 				@apply bg-secondary;
@@ -40,7 +40,7 @@
 				@apply bg-secondary;
 			}
 		}
-		&.slider-muted {
+		&.is-muted {
 			--slider-color: var(--color-muted);
 			&::-webkit-slider-thumb {
 				@apply bg-muted;
@@ -49,7 +49,7 @@
 				@apply bg-muted;
 			}
 		}
-		&.slider-small {
+		&.is-sm {
 			@apply h-1 my-1;
 			&::-webkit-slider-thumb {
 				@apply w-4 h-4;
@@ -58,7 +58,7 @@
 				@apply w-4 h-4;
 			}
 		}
-		&.slider-medium {
+		&.is-md {
 			@apply h-2 my-2;
 			&::-webkit-slider-thumb {
 				@apply w-6 h-6;
@@ -67,7 +67,7 @@
 				@apply w-6 h-6;
 			}
 		}
-		&.slider-large {
+		&.is-lg {
 			@apply h-4 my-2;
 			&::-webkit-slider-thumb {
 				@apply w-8 h-8;

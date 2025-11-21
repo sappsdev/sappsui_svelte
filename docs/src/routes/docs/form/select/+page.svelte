@@ -1,15 +1,16 @@
 <script lang="ts">
-	import DocCode from '$lib/components/DocCode.svelte';
-	import DocHeader from '$lib/components/DocHeader.svelte';
-	import DocOptions from '$lib/components/DocOptions.svelte';
-	import DocPreview from '$lib/components/DocPreview.svelte';
-	import DocProps from '$lib/components/DocProps.svelte';
-	import { Button, Checkbox, Select, TextField } from 'sappsui';
+	import DocCode from '$lib/components/doc/DocCode.svelte';
+	import DocHeader from '$lib/components/doc/DocHeader.svelte';
+	import DocOptions from '$lib/components/doc/DocOptions.svelte';
+	import DocPreview from '$lib/components/doc/DocPreview.svelte';
+	import DocProps from '$lib/components/doc/DocProps.svelte';
+	import { Select, Checkbox } from 'sappsui';
 
 	const variantOptions = [
 		{ id: 'primary', label: 'Primary' },
 		{ id: 'secondary', label: 'Secondary' },
-		{ id: 'soft', label: 'Soft' },
+		{ id: 'muted', label: 'Muted' },
+		{ id: 'outline', label: 'Outline' },
 		{ id: 'line', label: 'Line' }
 	];
 
@@ -19,37 +20,28 @@
 		{ id: 'lg', label: 'lg' }
 	];
 
-	const typeOptions = [
-		{ id: 'text', label: 'Text' },
-		{ id: 'password', label: 'Password' },
-		{ id: 'number', label: 'Number' }
-	];
-
 	const selectOptions = [
-		{ id: '1', src: '/avatar-1.jpeg', label: 'Jonh Doe', description: 'Designer' },
+		{ id: '1', src: '/avatar-1.jpeg', label: 'John Doe', description: 'Designer' },
 		{ id: '2', src: '/avatar-2.jpeg', label: 'Jane Smith', description: 'Developer' },
 		{ id: '3', src: '/avatar-3.jpeg', label: 'Mike Johnson', description: 'Manager' },
 		{ id: '4', src: '/avatar-4.jpeg', label: 'Emily Davis', description: 'Intern' },
-		{ id: '5', src: '/avatar-5.jpeg', label: 'David Wilson', description: 'CEO' },
-		{ id: '6', src: '/avatar-1.jpeg', label: 'Jonh Doe', description: 'Designer' },
-		{ id: '7', src: '/avatar-2.jpeg', label: 'Jane Smith', description: 'Developer' },
-		{ id: '8', src: '/avatar-3.jpeg', label: 'Mike Johnson', description: 'Manager' },
-		{ id: '9', src: '/avatar-4.jpeg', label: 'Emily Davis', description: 'Intern' },
-		{ id: '10', src: '/avatar-5.jpeg', label: 'David Wilson', description: 'CEO' }
+		{ id: '5', src: '/avatar-5.jpeg', label: 'David Wilson', description: 'CEO' }
 	];
 
-	let variant: any = $state('primary');
+	// Selects
+	let variant: any = $state('outline');
 	let size: any = $state('md');
-	let type: any = $state('text');
 
-	let startIcon = $state('');
-	let endIcon = $state('');
+	// Props
+	let label = $state('');
+	let helpText = $state('');
+	let errorText = $state('');
 
-	let floatLabel = $state(false);
-	let disabled = $state(false);
-	let shadow = $state(false);
-	let withDescription = $state(false);
+	// States
 	let withAvatar = $state(false);
+	let withDescription = $state(false);
+	let floatLabel = $state(false);
+	let solid = $state(false);
 
 	let buildOptions: any = $derived.by(() => {
 		if (withDescription && !withAvatar) {
@@ -76,106 +68,138 @@
 	});
 
 	let hasProps = $derived(
-		[variant !== 'primary', size !== 'md', startIcon, endIcon, floatLabel, disabled, shadow].some(
-			Boolean
-		)
+		[
+			variant !== 'primary',
+			size !== 'md',
+			label,
+			helpText,
+			errorText,
+			withAvatar,
+			withDescription,
+			floatLabel,
+			solid
+		].some(Boolean)
 	);
 
 	let code = $derived(() => {
 		const scriptLines = [
 			`<script lang="ts">`,
-			`\timport { Button } from 'sappsui';`,
+			`\timport { Select } from 'sappsui';`,
+			`\n\tconst options = [`,
+			`\t\t{ id: '1', label: 'John Doe'${withAvatar ? ", src: '/avatar-1.jpeg'" : ''}${withDescription ? ", description: 'Designer'" : ''} },`,
+			`\t\t{ id: '2', label: 'Jane Smith'${withAvatar ? ", src: '/avatar-2.jpeg'" : ''}${withDescription ? ", description: 'Developer'" : ''} },`,
+			`\t\t{ id: '3', label: 'Mike Johnson'${withAvatar ? ", src: '/avatar-3.jpeg'" : ''}${withDescription ? ", description: 'Manager'" : ''} }`,
+			`\t];`,
+			`\n\tlet value = $state('');`,
 			`<\/script>`
 		].filter(Boolean);
 
 		const componentLines = [
-			hasProps && `<Button`,
+			hasProps && `<Select`,
+			hasProps && `\tname="select"`,
+			hasProps && `\tplaceholder="Select an option..."`,
+			hasProps && `\toptions={options}`,
+			label && `\tlabel="${label}"`,
 			variant !== 'primary' && `\tvariant="${variant}"`,
-			type !== 'button' && `\ttype="${type}"`,
-			startIcon && `\tstartIcon="fluent:search-24-regular"`,
-			endIcon && `\tendIcon="fluent:camera-sparkles-24-regular"`,
-			hasProps && `\tlabel="Label"`,
-			disabled && `\tdisabled`,
-			shadow && `\tshadow`,
+			size !== 'md' && `\tsize="${size}"`,
+			helpText && `\thelpText="This is a help text"`,
+			errorText && `\terrorText="This field is required"`,
+			floatLabel && `\tfloatLabel`,
+			solid && `\tsolid`,
+			hasProps && `\tbind:value`,
 			hasProps && `/>`,
-			!hasProps && `<Button label="Label" onclick={handleClick} />`
+			!hasProps &&
+				`<Select name="select" placeholder="Select an option..." options={options} bind:value />`
 		].filter(Boolean);
 
 		return [...scriptLines, ...componentLines].join('\n');
 	});
 
 	const props = [
-		{ prop: 'label', type: 'string', initial: '', required: true },
-		{ prop: 'onclick', type: '() => void', initial: '' },
-		{ prop: 'type', type: "'button' | 'submit' | 'reset'", initial: 'button' },
-		{ prop: 'href', type: 'string', initial: '' },
-		{
-			prop: 'variant',
-			type: "'primary' | 'secondary' | 'outline' | 'soft' | 'ghost'",
-			initial: 'primary'
-		},
-		{ prop: 'size', type: "'sm' | 'md' | 'lg'", initial: 'md' },
+		{ prop: 'name', type: 'string', initial: '', required: true },
+		{ prop: 'options', type: 'Option[]', initial: '[]', required: true },
+		{ prop: 'value', type: 'unknown', initial: '' },
+		{ prop: 'selected', type: 'Option', initial: '' },
+		{ prop: 'placeholder', type: 'string', initial: '' },
+		{ prop: 'onchange', type: '(value: unknown) => void', initial: '' },
+		{ prop: 'variant', type: 'primary | secondary | soft | line', initial: 'primary' },
+		{ prop: 'size', type: 'sm | md | lg', initial: 'md' },
 		{ prop: 'class', type: 'string', initial: '' },
-		{ prop: 'startIcon', type: 'IconName', initial: '' },
-		{ prop: 'endIcon', type: 'IconName', initial: '' },
-		{ prop: 'loading', type: 'boolean', initial: 'false' },
-		{ prop: 'loadingIcon', type: 'IconName', initial: '' },
-		{ prop: 'wide', type: 'boolean', initial: 'false' },
-		{ prop: 'disabled', type: 'boolean', initial: 'false' },
-		{ prop: 'shadow', type: 'boolean', initial: 'false' }
+		{ prop: 'label', type: 'string', initial: '' },
+		{ prop: 'labelActive', type: 'boolean', initial: 'false' },
+		{ prop: 'helpText', type: 'string', initial: '' },
+		{ prop: 'errorText', type: 'string', initial: '' },
+		{ prop: 'floatLabel', type: 'boolean', initial: 'false' },
+		{ prop: 'solid', type: 'boolean', initial: 'false' }
 	];
+
+	const optionProps = [
+		{ prop: 'id', type: 'string | number', initial: '', required: true },
+		{ prop: 'label', type: 'string', initial: '', required: true },
+		{ prop: 'description', type: 'string', initial: '' },
+		{ prop: 'icon', type: 'IconName', initial: '' },
+		{ prop: 'src', type: 'string', initial: '' }
+	];
+
+	let value = $state('');
 </script>
 
 {#snippet preview()}
 	<Select
-		label="Label"
-		name="form_select"
-		class="max-w-md"
+		name="select"
+		placeholder="Select an option..."
 		options={buildOptions}
-		{size}
 		{variant}
-		{floatLabel}
+		{size}
+		{solid}
+		label={label || undefined}
+		helpText={helpText || undefined}
+		errorText={errorText || undefined}
+		floatLabel={label && floatLabel ? floatLabel : undefined}
+		bind:value
 	/>
 {/snippet}
 
 {#snippet builder()}
 	<Select label="Variant" name="variant" size="sm" options={variantOptions} bind:value={variant} />
 	<Select label="Size" name="size" size="sm" options={sizeOptions} bind:value={size} />
-	<Select label="Type" name="type" size="sm" options={typeOptions} bind:value={type} />
 
-	<DocOptions title="Props">
-		<Checkbox
-			onchange={(v) => (v ? (startIcon = 'fluent:search-24-regular') : (startIcon = ''))}
-			name="start-icon"
-			label="startIcon"
-		/>
-		<Checkbox
-			onchange={(v) => (v ? (endIcon = 'fluent:camera-sparkles-24-regular') : (endIcon = ''))}
-			name="start-icon"
-			label="startIcon"
-		/>
+	<DocOptions title="Options">
+		<Checkbox bind:checked={withAvatar} name="with-avatar" label="Avatar" />
+		<Checkbox bind:checked={withDescription} name="with-description" label="Description" />
 	</DocOptions>
 
-	<DocOptions title="States">
-		<Checkbox bind:checked={floatLabel} name="float_label" label="floatLabel" />
-		<Checkbox bind:checked={disabled} name="disabled" label="Disabled" />
-		<Checkbox bind:checked={shadow} name="shadow" label="Shadow" />
-	</DocOptions>
-
-	<DocOptions title="Option">
-		<Checkbox bind:checked={withAvatar} name="avatar" label="Avatar" />
-		<Checkbox bind:checked={withDescription} name="description" label="Description" />
+	<DocOptions title="Labels & Messages">
+		<Checkbox onchange={(v) => (v ? (label = 'Label') : (label = ''))} name="label" label="Label" />
+		{#if label}
+			<Checkbox bind:checked={floatLabel} name="float-label" label="floatLabel" />
+		{/if}
+		<Checkbox
+			onchange={(v) => (v ? (helpText = 'This is a help text') : (helpText = ''))}
+			name="help-text"
+			label="helpText"
+		/>
+		<Checkbox
+			onchange={(v) => (v ? (errorText = 'This field is required') : (errorText = ''))}
+			name="error-text"
+			label="errorText"
+		/>
+		<Checkbox bind:checked={solid} name="solid" label="solid" />
 	</DocOptions>
 {/snippet}
 
-<DocHeader title="Select">
-	Select is a form component that allows users to choose an option from a dropdown list. For large
-	datasets or searchable options, consider using
-	<a href="/docs/form/combobox" class="link">Combobox</a> instead.
-</DocHeader>
+<DocHeader title="Select">Select components allow users to choose one option from a list.</DocHeader
+>
 
 <DocPreview {preview} {builder} />
 
 <DocCode code={code()} />
 
 <DocProps {props} />
+
+<div class="prose mt-8">
+	<h3>Option Type</h3>
+	<p>Each option in the options array should follow this structure:</p>
+</div>
+
+<DocProps props={optionProps} />

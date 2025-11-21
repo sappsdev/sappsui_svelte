@@ -2,7 +2,7 @@
 	.video {
 		@apply relative aspect-video;
 		video {
-			@apply rounded-card absolute z-0;
+			@apply rounded-ui absolute z-0;
 		}
 	}
 	.video.horizontal {
@@ -44,7 +44,7 @@
 	}
 	.video-btn {
 		@apply flex items-center justify-center gap-1 p-1;
-		@apply bg-black/30 hover:bg-black/50 rounded-control cursor-pointer;
+		@apply bg-black/30 hover:bg-black/50 rounded-ui cursor-pointer;
 	}
 	.video-btn-icon {
 		@apply size-5 text-white;

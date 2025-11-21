@@ -27,6 +27,10 @@
 			href: '/docs/starter/install'
 		},
 		{
+			label: 'Icons',
+			href: '/docs/starter/icons'
+		},
+		{
 			label: 'LLM',
 			href: '/docs/starter/llm'
 		},
@@ -76,6 +80,10 @@
 		{
 			label: 'Chart',
 			href: '/docs/display/chart'
+		},
+		{
+			label: 'Item',
+			href: '/docs/display/item'
 		},
 		{
 			label: 'Table',
@@ -140,6 +148,10 @@
 			href: '/docs/feedback/empty'
 		},
 		{
+			label: 'Toast',
+			href: '/docs/feedback/toast'
+		},
+		{
 			type: 'header',
 			icon: 'fluent:play-circle-hint-24-regular',
 			label: 'Media'
@@ -173,6 +185,15 @@
 		{
 			label: 'Sidenav',
 			href: '/docs/navigation/sidenav'
+		},
+		{
+			type: 'header',
+			icon: 'fluent:layout-column-one-third-right-hint-24-regular',
+			label: 'Charts'
+		},
+		{
+			label: 'Arc',
+			href: '/docs/charts/arc'
 		}
 	];
 	const dropdownOptions = [{ label: 'Settings' }, { label: 'My Account' }];
@@ -196,7 +217,7 @@
 			{#snippet end()}
 				<ToggleTheme />
 				<Dropdown options={dropdownOptions}>
-					<Avatar size="small" src="/avatar1.png" alt="User Avatar" />
+					<Avatar size="sm" src="/avatar1.png" alt="User Avatar" />
 				</Dropdown>
 			{/snippet}
 		</AppBar>

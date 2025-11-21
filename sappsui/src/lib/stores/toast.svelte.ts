@@ -1,10 +1,14 @@
+import type { IconName } from '$lib/assets/icons/index.js';
+
 export interface ToastMessage {
 	id: string;
-	icon?: string;
+	icon?: IconName;
 	title?: string;
 	description: string;
 	duration?: number;
-	status: 'success' | 'error' | 'info' | 'warning';
+	position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+	solid?: boolean;
+	status: 'success' | 'danger' | 'info' | 'warning';
 }
 
 let toastMessages = $state<ToastMessage[]>([]);
@@ -17,8 +21,10 @@ const toastShow = (message: Omit<ToastMessage, 'id'> & { id?: string }) => {
 		title: message.title,
 		description: message.description,
 		status: message.status || 'info',
-		duration: message.duration || 3000,
-		icon: message.icon
+		duration: message.duration || 0,
+		icon: message.icon,
+		position: message.position,
+		solid: message.solid
 	};
 
 	toastMessages = [...toastMessages, newMessage];

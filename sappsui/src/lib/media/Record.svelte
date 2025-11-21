@@ -5,8 +5,16 @@
 	type Props = {
 		class?: string;
 		name: string;
-		variant?: 'solid' | 'soft';
-		color?: 'default' | 'surface' | 'primary' | 'secondary' | 'error' | 'muted';
+		variant?:
+			| 'primary'
+			| 'secondary'
+			| 'soft'
+			| 'outlined'
+			| 'ghost'
+			| 'success'
+			| 'info'
+			| 'danger'
+			| 'warning';
 		url?: string;
 		headers?: Record<string, string>;
 		onRecordingComplete?: (blob: Blob, url: string) => void;
@@ -15,8 +23,7 @@
 	let {
 		class: className,
 		name,
-		variant = 'solid',
-		color = 'error',
+		variant = 'primary',
 		url,
 		headers,
 		onRecordingComplete
@@ -36,24 +43,17 @@
 	let audioChunks: Blob[] = [];
 	let timerInterval: number | null = null;
 	let isUploading = $state(false);
+	let isReviewing = $state(false);
+	let reviewAudioUrl: string | null = null;
+	let audioElement: HTMLAudioElement | null = null;
+	let isPlaying = $state(false);
+	let playbackTime = $state(0);
+	let playbackDuration = $state(0);
+	let playbackWaveform = $state<number[]>(Array(50).fill(0.2));
 
 	const BAR_COUNT = 50;
 
-	const variantClass = {
-		solid: 'recorder-solid',
-		soft: 'recorder-soft'
-	};
-
-	const colorClass = {
-		default: 'recorder-default',
-		surface: 'recorder-surface',
-		primary: 'recorder-primary',
-		secondary: 'recorder-secondary',
-		error: 'recorder-error',
-		muted: 'recorder-muted'
-	};
-
-	let baseClasses = $derived(cn('recorder', variantClass[variant], colorClass[color], className));
+	let baseClasses = $derived(cn('media', variant, className));
 
 	async function startRecording() {
 		try {
@@ -81,28 +81,15 @@
 
 			mediaRecorder.onstop = async () => {
 				const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-				const audioUrl = URL.createObjectURL(audioBlob);
+				reviewAudioUrl = URL.createObjectURL(audioBlob);
 
-				if (url) {
-					// Enviar via FormData si hay URL
-					await uploadAudio(audioBlob);
-				} else {
-					// Crear archivo para el input hidden
-					const file = new File([audioBlob], `${name}.webm`, { type: 'audio/webm' });
-					const dataTransfer = new DataTransfer();
-					dataTransfer.items.add(file);
-					fileInput.files = dataTransfer.files;
+				// Analizar audio para el waveform
+				await analyzeRecordedAudio(audioBlob);
 
-					// Disparar evento change
-					const event = new Event('change', { bubbles: true });
-					fileInput.dispatchEvent(event);
-				}
+				// Entrar en modo de revisión
+				isReviewing = true;
 
-				if (onRecordingComplete) {
-					onRecordingComplete(audioBlob, audioUrl);
-				}
-
-				// Limpiar
+				// Limpiar stream
 				stream.getTracks().forEach((track) => track.stop());
 				if (audioContext) {
 					audioContext.close();
@@ -244,6 +231,131 @@
 			pauseRecording();
 		}
 	}
+
+	async function confirmRecording() {
+		if (!reviewAudioUrl) return;
+
+		try {
+			const response = await fetch(reviewAudioUrl);
+			const audioBlob = await response.blob();
+
+			if (url) {
+				// Enviar via FormData si hay URL
+				await uploadAudio(audioBlob);
+			} else {
+				// Crear archivo para el input hidden
+				const file = new File([audioBlob], `${name}.webm`, { type: 'audio/webm' });
+				const dataTransfer = new DataTransfer();
+				dataTransfer.items.add(file);
+				fileInput.files = dataTransfer.files;
+
+				// Disparar evento change
+				const event = new Event('change', { bubbles: true });
+				fileInput.dispatchEvent(event);
+			}
+
+			if (onRecordingComplete) {
+				onRecordingComplete(audioBlob, reviewAudioUrl);
+			}
+
+			// Limpiar y resetear
+			cleanup();
+		} catch (error) {
+			console.error('Error confirming recording:', error);
+		}
+	}
+
+	function discardRecording() {
+		cleanup();
+	}
+
+	function continueRecording() {
+		// Mantener el audio actual y permitir continuar
+		isReviewing = false;
+		isRecording = false;
+		isPaused = false;
+	}
+
+	async function analyzeRecordedAudio(blob: Blob) {
+		try {
+			const context = new AudioContext();
+			const arrayBuffer = await blob.arrayBuffer();
+			const audioBuffer = await context.decodeAudioData(arrayBuffer);
+
+			const rawData = audioBuffer.getChannelData(0);
+			const samples = BAR_COUNT;
+			const blockSize = Math.floor(rawData.length / samples);
+			const filteredData: number[] = [];
+
+			for (let i = 0; i < samples; i++) {
+				let sum = 0;
+				for (let j = 0; j < blockSize; j++) {
+					sum += Math.abs(rawData[i * blockSize + j]);
+				}
+				filteredData.push(sum / blockSize);
+			}
+
+			const max = Math.max(...filteredData);
+			playbackWaveform = filteredData.map((value) => (value / max) * 0.8 + 0.2);
+
+			await context.close();
+		} catch (error) {
+			console.error('Error analyzing audio:', error);
+			playbackWaveform = Array(50).fill(0.5);
+		}
+	}
+
+	function cleanup() {
+		if (reviewAudioUrl) {
+			URL.revokeObjectURL(reviewAudioUrl);
+			reviewAudioUrl = null;
+		}
+		if (audioElement) {
+			audioElement.pause();
+			audioElement = null;
+		}
+		isReviewing = false;
+		isRecording = false;
+		isPaused = false;
+		isPlaying = false;
+		recordingTime = 0;
+		playbackTime = 0;
+		playbackDuration = 0;
+		waveformBars = Array(50).fill(0.2);
+		playbackWaveform = Array(50).fill(0.2);
+		audioChunks = [];
+	}
+
+	function togglePlayback() {
+		if (!reviewAudioUrl) return;
+
+		if (!audioElement) {
+			audioElement = new Audio(reviewAudioUrl);
+
+			audioElement.addEventListener('loadedmetadata', () => {
+				playbackDuration = audioElement!.duration;
+			});
+
+			audioElement.addEventListener('timeupdate', () => {
+				if (audioElement) {
+					playbackTime = audioElement.currentTime;
+				}
+			});
+
+			audioElement.addEventListener('ended', () => {
+				isPlaying = false;
+				playbackTime = 0;
+			});
+		}
+
+		if (isPlaying) {
+			audioElement.pause();
+			isPlaying = false;
+		} else {
+			audioElement.play();
+			isPlaying = true;
+		}
+	}
 </script>
 
 {#if !url}
@@ -251,7 +363,53 @@
 {/if}
 
 <div class={baseClasses}>
-	{#if !isRecording}
+	{#if isReviewing}
+		<!-- Modo de revisión -->
+		<IconButton
+			onclick={togglePlayback}
+			icon={isPlaying ? 'fluent:pause-24-filled' : 'fluent:play-24-filled'}
+			size="md"
+			variant="soft"
+		/>
+
+		<div class="media-waveform">
+			<div class="media-bars">
+				{#each playbackWaveform as height, i}
+					{@const progress = playbackDuration > 0 ? playbackTime / playbackDuration : 0}
+					{@const barPosition = (i + 0.5) / playbackWaveform.length}
+					{@const isPlayed = barPosition <= progress}
+					<div class="media-bar" class:active={isPlayed} style="height: {height * 100}%"></div>
+				{/each}
+			</div>
+		</div>
+
+		<span class="media-time">{formatTime(recordingTime)}</span>
+
+		<div class="flex gap-2">
+			<IconButton
+				onclick={discardRecording}
+				icon="fluent:delete-24-filled"
+				size="md"
+				variant="soft"
+				title="Descartar"
+			/>
+			<IconButton
+				onclick={continueRecording}
+				icon="fluent:record-24-filled"
+				size="md"
+				variant="soft"
+				title="Continuar grabando"
+			/>
+			<IconButton
+				onclick={confirmRecording}
+				icon="fluent:checkmark-24-filled"
+				size="md"
+				variant="soft"
+				loading={isUploading}
+				title="Confirmar y enviar"
+			/>
+		</div>
+	{:else if !isRecording}
 		<IconButton
 			onclick={startRecording}
 			icon="fluent:record-24-filled"
@@ -259,37 +417,43 @@
 			variant="soft"
 			disabled={isUploading}
 		/>
+
+		<div class="media-waveform">
+			<div class="media-bars">
+				{#each waveformBars as height}
+					<div class="media-bar" style="height: {height * 100}%"></div>
+				{/each}
+			</div>
+		</div>
+
+		<span class="media-time">{formatTime(recordingTime)}</span>
 	{:else}
 		<IconButton
 			onclick={handleToggleRecording}
 			icon={isPaused ? 'fluent:play-24-filled' : 'fluent:pause-24-filled'}
 			size="md"
 			variant="soft"
-			color={isPaused ? 'warning' : 'success'}
 		/>
-	{/if}
 
-	<div class="recorder-waveform">
-		<div class="recorder-bars">
-			{#each waveformBars as height}
-				<div
-					class="recorder-bar"
-					class:recorder-bar-recording={isRecording && !isPaused}
-					style="height: {height * 100}%"
-				></div>
-			{/each}
+		<div class="media-waveform">
+			<div class="media-bars">
+				{#each waveformBars as height}
+					<div
+						class="media-bar"
+						class:recording={isRecording && !isPaused}
+						style="height: {height * 100}%"
+					></div>
+				{/each}
+			</div>
 		</div>
-	</div>
 
-	<span class="recorder-time">{formatTime(recordingTime)}</span>
+		<span class="media-time">{formatTime(recordingTime)}</span>
 
-	{#if isRecording}
 		<IconButton
 			onclick={stopRecording}
 			icon="fluent:stop-24-filled"
 			size="md"
 			variant="soft"
-			color="error"
 			loading={isUploading}
 		/>
 	{/if}

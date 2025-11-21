@@ -6,42 +6,42 @@
 			@apply flex justify-start items-center gap-3;
 
 			.radio {
-				@apply relative appearance-none border-2 border-outline rounded-full cursor-pointer;
+				@apply relative appearance-none border-2 border-muted rounded-full cursor-pointer;
 				@apply checked:border-primary focus:outline-none;
 				@apply transition-colors duration-200;
 
-				&.radio-primary {
+				&.is-primary {
 					@apply checked:border-primary;
 					&:checked {
 						@apply after:bg-primary;
 					}
 				}
-				&.radio-secondary {
+				&.is-secondary {
 					@apply checked:border-secondary;
 					&:checked {
 						@apply after:bg-secondary;
 					}
 				}
-				&.radio-muted {
+				&.is-muted {
 					@apply checked:border-muted;
 					&:checked {
 						@apply after:bg-muted;
 					}
 				}
 
-				&.radio-small {
+				&.is-sm {
 					@apply w-4 h-4;
 					&:checked {
 						@apply after:w-2 after:h-2;
 					}
 				}
-				&.radio-medium {
+				&.is-md {
 					@apply w-5 h-5;
 					&:checked {
 						@apply after:w-3 after:h-3;
 					}
 				}
-				&.radio-large {
+				&.is-lg {
 					@apply w-6 h-6;
 					&:checked {
 						@apply after:w-3.5 after:h-3.5;
