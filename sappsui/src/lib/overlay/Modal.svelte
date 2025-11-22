@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Icon } from '$lib/index.js';
 	import { cn } from '$lib/utils/class-names.js';
 	import { popover } from '$lib/utils/popover.js';
 	import type { Snippet } from 'svelte';
@@ -17,7 +18,7 @@
 		color?: 'default' | 'surface' | 'primary' | 'secondary' | 'muted';
 	};
 
-	const {
+	let {
 		open = $bindable(),
 		onclose,
 		header,
@@ -71,6 +72,11 @@
 						{@render footer()}
 					</div>
 				{/if}
+				<div class="btn-close">
+					<button onclick={() => (open = false)}>
+						<Icon name="fluent:dismiss-24-regular" class="btn-close-icon" />
+					</button>
+				</div>
 			</div>
 		{/if}
 	</div>

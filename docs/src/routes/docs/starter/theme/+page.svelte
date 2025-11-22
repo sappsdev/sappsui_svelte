@@ -27,6 +27,6 @@
 	</Card>
 </Section>
 
-<Modal open={openColor}>
+<Modal bind:open={openColor}>
 	<Color />
 </Modal>

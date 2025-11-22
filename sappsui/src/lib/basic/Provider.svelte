@@ -2,7 +2,6 @@
 	import { onNavigate } from '$app/navigation';
 	import { Toast } from '$lib/index.js';
 	import type { Snippet } from 'svelte';
-	import '@fontsource-variable/montserrat';
 
 	type Props = {
 		children: Snippet;

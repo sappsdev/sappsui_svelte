@@ -100,5 +100,5 @@
 	--color-danger: var(--danger, oklch(57.7% 0.245 27.325)); /* red-600  */
 	--color-on-danger: var(--on-danger, oklch(93.6% 0.032 17.717)); /* red-100  */
 
-	--radius-ui: var(--radius-ui, 0.75rem);
+	--radius-ui: var(--rounded-ui, 0.75rem);
 }
