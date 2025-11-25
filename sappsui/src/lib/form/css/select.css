@@ -8,7 +8,7 @@
 		z-index: 9999;
 	}
 
-	.select-popover.on-active {
+	.select-popover.is-active {
 		@apply visible opacity-100;
 	}
 

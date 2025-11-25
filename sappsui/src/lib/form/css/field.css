@@ -11,7 +11,7 @@
 		@apply text-xs leading-none -mt-1;
 	}
 
-	.field-help.on-danger {
+	.field-help.is-danger {
 		@apply text-danger;
 	}
 }

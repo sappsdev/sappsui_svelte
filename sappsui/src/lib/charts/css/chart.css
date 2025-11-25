@@ -1,5 +1,0 @@
-@layer components {
-	.chart-container {
-		@apply relative rounded-ui bg-surface p-4;
-	}
-}

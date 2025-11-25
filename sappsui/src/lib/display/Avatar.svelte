@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { IconName } from '$lib/assets/icons/index.js';
 	import { Icon } from '$lib/index.js';
+	import type { IconName } from '$lib/types.js';
 	import { cn } from '$lib/utils/class-names.js';
 
 	type Props = {
@@ -19,7 +19,7 @@
 			| 'transparent';
 		size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 		status?: 'online' | 'offline' | 'busy' | 'away';
-		border?: boolean;
+		isBordered?: boolean;
 		class?: string;
 	};
 
@@ -31,7 +31,7 @@
 		size = 'lg',
 		variant = 'primary',
 		status,
-		border,
+		isBordered,
 		class: className
 	}: Props = $props();
 
@@ -67,7 +67,7 @@
 		'avatar',
 		sizeClasses[size],
 		variantClasses[variant],
-		border && 'has-border',
+		isBordered && 'is-bordered',
 		className
 	)}
 >

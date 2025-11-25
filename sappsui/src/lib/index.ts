@@ -1,31 +1,31 @@
-import Icon from '$lib/basic/Icon.svelte';
-import Provider from '$lib/basic/Provider.svelte';
-
 import AreaChart from '$lib/charts/AreaChart.svelte';
 import ArcChart from '$lib/charts/ArcChart.svelte';
 import BarChart from '$lib/charts/BarChart.svelte';
-import CandlestickChart from '$lib/charts/CandlestickChart.svelte';
+import Candlestick from '$lib/charts/Candlestick.svelte';
 import LineChart from '$lib/charts/LineChart.svelte';
 import PieChart from '$lib/charts/PieChart.svelte';
-import ScatterChart from '$lib/charts/ScatterChart.svelte';
 
+import Audio from '$lib/control/Audio.svelte';
 import Button from '$lib/control/Button.svelte';
 import IconButton from '$lib/control/IconButton.svelte';
+import Record from '$lib/control/Record.svelte';
 import ToggleTheme from '$lib/control/ToggleTheme.svelte';
+import Video from '$lib/control/Video.svelte';
 
-import Accordion from '$lib/disclosure/Accordion.svelte';
-import Collapsible from '$lib/disclosure/Collapsible.svelte';
-
+import Accordion from '$lib/display/Accordion.svelte';
+import Alert from '$lib/display/Alert.svelte';
 import Avatar from '$lib/display/Avatar.svelte';
+import Badge from '$lib/display/Badge.svelte';
+import Card from '$lib/display/Card.svelte';
 import ChatBox from '$lib/display/ChatBox.svelte';
+import Chip from '$lib/display/Chip.svelte';
 import Code from '$lib/display/Code.svelte';
+import Collapsible from '$lib/display/Collapsible.svelte';
+import Empty from '$lib/display/Empty.svelte';
+import Icon from '$lib/display/Icon.svelte';
 import Item from '$lib/display/Item.svelte';
+import Section from '$lib/display/Section.svelte';
 import Table from '$lib/display/Table.svelte';
-
-import Alert from '$lib/feedback/Alert.svelte';
-import AlertDialog from '$lib/feedback/AlertDialog.svelte';
-import Empty from '$lib/feedback/Empty.svelte';
-import Toast from '$lib/feedback/Toast.svelte';
 
 import Checkbox from '$lib/form/Checkbox.svelte';
 import Combobox from '$lib/form/Combobox.svelte';
@@ -42,29 +42,24 @@ import Slider from '$lib/form/Slider.svelte';
 import Toggle from '$lib/form/Toggle.svelte';
 
 import AppBar from '$lib/layout/AppBar.svelte';
-import Card from '$lib/layout/Card.svelte';
 import Divider from '$lib/layout/Divider.svelte';
-import Section from '$lib/layout/Section.svelte';
+import Provider from '$lib/layout/Provider.svelte';
 import Scaffold from '$lib/layout/Scaffold.svelte';
 import Sidebar from '$lib/layout/Sidebar.svelte';
-
-import Audio from '$lib/media/Audio.svelte';
-import Record from '$lib/media/Record.svelte';
-import Video from '$lib/media/Video.svelte';
 
 import NavMenu from '$lib/navigation/NavMenu.svelte';
 import BottomNav from '$lib/navigation/BottomNav.svelte';
 import SideNav from '$lib/navigation/SideNav.svelte';
 import Tabs from '$lib/navigation/Tabs.svelte';
 
+import AlertDialog from '$lib/overlay/AlertDialog.svelte';
 import Command from '$lib/overlay/Command.svelte';
 import Drawer from '$lib/overlay/Drawer.svelte';
 import Dropdown from '$lib/overlay/Dropdown.svelte';
 import Modal from '$lib/overlay/Modal.svelte';
 import PopoverStack from '$lib/overlay/PopoverStack.svelte';
-
-import Badge from '$lib/utility/Badge.svelte';
-import Chip from '$lib/utility/Chip.svelte';
+import Toast from '$lib/overlay/Toast.svelte';
+import Tooltip from '$lib/overlay/Tooltip.svelte';
 
 import {
 	formatCurrency,
@@ -96,10 +91,9 @@ export {
 	AreaChart,
 	ArcChart,
 	BarChart,
-	CandlestickChart,
+	Candlestick,
 	LineChart,
 	PieChart,
-	ScatterChart,
 	Alert,
 	AlertDialog,
 	AppBar,
@@ -159,6 +153,7 @@ export {
 	toast,
 	Toggle,
 	ToggleTheme,
+	Tooltip,
 	useAuth,
 	useChat,
 	useClipboard,

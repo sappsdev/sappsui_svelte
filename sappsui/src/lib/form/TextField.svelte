@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { IconName } from '$lib/assets/icons/index.js';
 	import { Icon } from '$lib/index.js';
+	import type { IconName } from '$lib/types.js';
 	import { cn } from '$lib/utils/class-names.js';
 	import type { HTMLInputAttributes } from 'svelte/elements';
 
@@ -18,19 +18,19 @@
 		endText?: string;
 		onchange?: (value: unknown) => void;
 		oninput?: (value: unknown) => void;
-		variant?: 'primary' | 'secondary' | 'muted' | 'outline' | 'line';
+		variant?: 'primary' | 'secondary' | 'muted' | 'outlined' | 'line';
 		size?: 'sm' | 'md' | 'lg';
-		name: string;
+		name?: string;
 		label?: string;
-		labelActive?: boolean;
+		islabelActive?: boolean;
 		helpText?: string;
 		errorText?: string;
 		autocomplete?: HTMLInputAttributes['autocomplete'];
 		min?: HTMLInputAttributes['min'];
 		max?: HTMLInputAttributes['max'];
 		maxlength?: HTMLInputAttributes['maxlength'];
-		floatLabel?: boolean;
-		solid?: boolean;
+		isFloatLabel?: boolean;
+		isSolid?: boolean;
 	};
 
 	let {
@@ -48,17 +48,17 @@
 		endIcon,
 		onchange,
 		oninput,
-		variant = 'outline',
+		variant = 'outlined',
 		size = 'md',
 		name,
 		label,
-		floatLabel,
-		labelActive,
+		isFloatLabel,
+		islabelActive,
 		helpText,
 		errorText,
 		min,
 		max,
-		solid
+		isSolid
 	}: Props = $props();
 
 	const uid = $props.id();
@@ -70,7 +70,7 @@
 		primary: 'is-primary',
 		secondary: 'is-secondary',
 		muted: 'is-muted',
-		outline: 'is-outline',
+		outlined: 'is-outlined',
 		line: 'is-line'
 	};
 
@@ -81,10 +81,10 @@
 	};
 
 	let iconClasses = $derived(
-		cn('control-icon', floatLabel && !isActive && !isFocused && value == '' && 'invisible')
+		cn('control-icon', isFloatLabel && !isActive && !isFocused && value == '' && 'invisible')
 	);
 	let textClasses = $derived(
-		cn('control-text', floatLabel && !isActive && !isFocused && value == '' && 'invisible')
+		cn('control-text', isFloatLabel && !isActive && !isFocused && value == '' && 'invisible')
 	);
 
 	$effect.pre(() => {
@@ -95,7 +95,7 @@
 </script>
 
 <div class={cn('field', className)}>
-	{#if !floatLabel && label}
+	{#if !isFloatLabel && label}
 		<span class="field-label">{label}</span>
 	{/if}
 	<label
@@ -103,9 +103,9 @@
 			'control',
 			variantClasses[variant],
 			sizeClasses[size],
-			solid && 'is-solid',
-			floatLabel && 'is-float',
-			(isActive || isFocused) && 'on-active',
+			isSolid && 'is-solid',
+			isFloatLabel && 'is-float',
+			(isActive || isFocused) && 'is-active',
 			controlClass
 		)}
 		for={`${uid}-{name}`}
@@ -113,11 +113,11 @@
 		onmouseenter={() => (isActive = true)}
 		onmouseleave={() => (isActive = false)}
 	>
-		{#if floatLabel && label}
+		{#if isFloatLabel && label}
 			<span
 				class={cn(
 					'control-label',
-					(isActive || isFocused || labelActive || value !== '') && 'on-active'
+					(isActive || isFocused || islabelActive || value !== '') && 'is-active'
 				)}
 			>
 				{label}
@@ -141,7 +141,7 @@
 			id={`${uid}-{name}`}
 			class={cn(
 				'control-input',
-				floatLabel && !isActive && !isFocused && value == '' && 'invisible',
+				isFloatLabel && !isActive && !isFocused && value == '' && 'invisible',
 				controlClass
 			)}
 			{placeholder}
@@ -168,7 +168,7 @@
 	</label>
 
 	{#if errorText || helpText}
-		<div class={cn('field-help', errorText && 'on-danger')}>
+		<div class={cn('field-help', errorText && 'is-danger')}>
 			{errorText || helpText}
 		</div>
 	{/if}

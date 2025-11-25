@@ -27,7 +27,7 @@
 		"vite": "^7.1.7"
 	},
 	"dependencies": {
-		"layerchart": "^2.0.0-next.43",
-		"sappsui": "workspace:ui"
+		"@fontsource-variable/montserrat": "^5.2.8",
+		"sappsui": "workspace:*"
 	}
 }

@@ -16,6 +16,8 @@
 		footerClass?: string;
 		contentClass?: string;
 		color?: 'default' | 'surface' | 'primary' | 'secondary' | 'muted';
+		closeOnOverlay?: boolean;
+		hideCloseButton?: boolean;
 	};
 
 	let {
@@ -28,7 +30,9 @@
 		headerClass,
 		contentClass,
 		footerClass,
-		color = 'default'
+		color = 'default',
+		closeOnOverlay,
+		hideCloseButton
 	}: Props = $props();
 
 	let openContent = $state(false);

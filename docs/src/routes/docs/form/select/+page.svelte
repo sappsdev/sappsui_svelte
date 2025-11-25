@@ -10,7 +10,7 @@
 		{ id: 'primary', label: 'Primary' },
 		{ id: 'secondary', label: 'Secondary' },
 		{ id: 'muted', label: 'Muted' },
-		{ id: 'outline', label: 'Outline' },
+		{ id: 'outlined', label: 'Outlined' },
 		{ id: 'line', label: 'Line' }
 	];
 
@@ -29,7 +29,7 @@
 	];
 
 	// Selects
-	let variant: any = $state('outline');
+	let variant: any = $state('outlined');
 	let size: any = $state('md');
 
 	// Props
@@ -40,8 +40,8 @@
 	// States
 	let withAvatar = $state(false);
 	let withDescription = $state(false);
-	let floatLabel = $state(false);
-	let solid = $state(false);
+	let isFloatLabel = $state(false);
+	let isSolid = $state(false);
 
 	let buildOptions: any = $derived.by(() => {
 		if (withDescription && !withAvatar) {
@@ -76,8 +76,8 @@
 			errorText,
 			withAvatar,
 			withDescription,
-			floatLabel,
-			solid
+			isFloatLabel,
+			isSolid
 		].some(Boolean)
 	);
 
@@ -104,8 +104,8 @@
 			size !== 'md' && `\tsize="${size}"`,
 			helpText && `\thelpText="This is a help text"`,
 			errorText && `\terrorText="This field is required"`,
-			floatLabel && `\tfloatLabel`,
-			solid && `\tsolid`,
+			isFloatLabel && `\tisFloatLabel`,
+			isSolid && `\tisSolid`,
 			hasProps && `\tbind:value`,
 			hasProps && `/>`,
 			!hasProps &&
@@ -129,8 +129,8 @@
 		{ prop: 'labelActive', type: 'boolean', initial: 'false' },
 		{ prop: 'helpText', type: 'string', initial: '' },
 		{ prop: 'errorText', type: 'string', initial: '' },
-		{ prop: 'floatLabel', type: 'boolean', initial: 'false' },
-		{ prop: 'solid', type: 'boolean', initial: 'false' }
+		{ prop: 'isFloatLabel', type: 'boolean', initial: 'false' },
+		{ prop: 'isSolid', type: 'boolean', initial: 'false' }
 	];
 
 	const optionProps = [
@@ -151,11 +151,11 @@
 		options={buildOptions}
 		{variant}
 		{size}
-		{solid}
+		{isSolid}
 		label={label || undefined}
 		helpText={helpText || undefined}
 		errorText={errorText || undefined}
-		floatLabel={label && floatLabel ? floatLabel : undefined}
+		isFloatLabel={label && isFloatLabel ? isFloatLabel : undefined}
 		bind:value
 	/>
 {/snippet}
@@ -172,7 +172,7 @@
 	<DocOptions title="Labels & Messages">
 		<Checkbox onchange={(v) => (v ? (label = 'Label') : (label = ''))} name="label" label="Label" />
 		{#if label}
-			<Checkbox bind:checked={floatLabel} name="float-label" label="floatLabel" />
+			<Checkbox bind:checked={isFloatLabel} name="float-label" label="floatLabel" />
 		{/if}
 		<Checkbox
 			onchange={(v) => (v ? (helpText = 'This is a help text') : (helpText = ''))}
@@ -184,7 +184,7 @@
 			name="error-text"
 			label="errorText"
 		/>
-		<Checkbox bind:checked={solid} name="solid" label="solid" />
+		<Checkbox bind:checked={isSolid} name="solid" label="solid" />
 	</DocOptions>
 {/snippet}
 

@@ -6,20 +6,28 @@
 @import './css/base.css';
 
 @import './control/css/btn.css';
+@import './control/css/media.css';
+@import './control/css/video.css';
 
-@import './disclosure/css/accordion.css';
+@import './charts/css/arc-chart.css';
+@import './charts/css/area-chart.css';
+@import './charts/css/bar-chart.css';
+@import './charts/css/candlestick.css';
+@import './charts/css/line-chart.css';
+@import './charts/css/pie-chart.css';
 
-@import './charts/css/chart.css';
-
+@import './display/css/accordion.css';
+@import './display/css/alert.css';
 @import './display/css/avatar.css';
+@import './display/css/badge.css';
+@import './display/css/card.css';
 @import './display/css/chat-box.css';
+@import './display/css/chip.css';
 @import './display/css/code.css';
+@import './display/css/empty.css';
 @import './display/css/item.css';
+@import './display/css/section.css';
 @import './display/css/table.css';
-
-@import './feedback/css/alert.css';
-@import './feedback/css/empty.css';
-@import './feedback/css/toast.css';
 
 @import './form/css/checkbox.css';
 @import './form/css/combobox.css';
@@ -35,14 +43,9 @@
 
 @import './layout/css/app-bar.css';
 @import './layout/css/bottom-bar.css';
-@import './layout/css/card.css';
 @import './layout/css/divider.css';
-@import './layout/css/section.css';
 @import './layout/css/scaffold.css';
 @import './layout/css/sidebar.css';
-
-@import './media/css/media.css';
-@import './media/css/video.css';
 
 @import './navigation/css/bottom-nav.css';
 @import './navigation/css/nav-menu.css';
@@ -53,9 +56,8 @@
 @import './overlay/css/drawer.css';
 @import './overlay/css/dropdown.css';
 @import './overlay/css/hovercard.css';
-
-@import './utility/css/badge.css';
-@import './utility/css/chip.css';
+@import './overlay/css/toast.css';
+@import './overlay/css/tooltip.css';
 
 @theme {
 	--color-primary: var(--primary, oklch(54.6% 0.245 262.881)); /* blue-600 */
@@ -100,5 +102,6 @@
 	--color-danger: var(--danger, oklch(57.7% 0.245 27.325)); /* red-600  */
 	--color-on-danger: var(--on-danger, oklch(93.6% 0.032 17.717)); /* red-100  */
 
-	--radius-ui: var(--rounded-ui, 0.75rem);
+	--radius-ui: 0.75rem;
+	--scrollbar-size: 6px;
 }

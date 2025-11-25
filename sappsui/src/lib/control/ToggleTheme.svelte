@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { IconName } from '$lib/assets/icons/index.js';
 	import { IconButton } from '$lib/index.js';
 	import { theme } from '$lib/stores/theme.svelte.js';
+	import type { IconName } from '$lib/types.js';
 
 	type Props = {
 		iconDark?: IconName;

@@ -1,156 +1,225 @@
 <script lang="ts">
-	import { ArcChart } from 'sappsui';
+	import DocCode from '$lib/components/doc/DocCode.svelte';
+	import DocHeader from '$lib/components/doc/DocHeader.svelte';
+	import DocOptions from '$lib/components/doc/DocOptions.svelte';
+	import DocPreview from '$lib/components/doc/DocPreview.svelte';
+	import DocProps from '$lib/components/doc/DocProps.svelte';
+	import { ArcChart, Checkbox, Select, TextField } from 'sappsui';
+
+	const colorOptions = [
+		{ id: 'primary', label: 'Primary' },
+		{ id: 'secondary', label: 'Secondary' },
+		{ id: 'success', label: 'Success' },
+		{ id: 'info', label: 'Info' },
+		{ id: 'warning', label: 'Warning' },
+		{ id: 'danger', label: 'Danger' },
+		{ id: 'muted', label: 'Muted' }
+	];
+
+	// Selects
+	let color: any = $state('primary');
+	let trackColor: any = $state('muted');
+
+	// Props
+	let value = $state(65);
+	let min = $state(0);
+	let max = $state(100);
+	let width = $state(300);
+	let height = $state(200);
+	let thickness = $state(20);
+	let startAngle = $state(-120);
+	let endAngle = $state(120);
+	let label = $state('Progress');
+	let unit = $state('%');
+	let animationDuration = $state(1000);
+	let paddingY = $state(10);
+
+	// States
+	let showValue = $state(true);
+	let showLabels = $state(true);
+	let animated = $state(true);
+	let loading = $state(false);
+	let empty = $state(false);
+
+	let hasProps = $derived(
+		[
+			value !== 65,
+			min !== 0,
+			max !== 100,
+			width !== 300,
+			height !== 200,
+			thickness !== 20,
+			startAngle !== -120,
+			endAngle !== 120,
+			color !== 'primary',
+			trackColor !== 'muted',
+			!showValue,
+			!showLabels,
+			label !== 'Progress',
+			unit !== '%',
+			!animated,
+			animationDuration !== 1000,
+			loading,
+			empty,
+			paddingY !== 10
+		].some(Boolean)
+	);
+
+	let code = $derived(() => {
+		const scriptLines = [
+			`<script lang="ts">`,
+			`\timport { ArcChart } from 'sappsui';`,
+			`<\/script>`
+		].filter(Boolean);
+
+		const componentLines = [
+			hasProps && `<ArcChart`,
+			value !== 65 && `\tvalue={${value}}`,
+			min !== 0 && `\tmin={${min}}`,
+			max !== 100 && `\tmax={${max}}`,
+			width !== 300 && `\twidth={${width}}`,
+			height !== 200 && `\theight={${height}}`,
+			thickness !== 20 && `\tthickness={${thickness}}`,
+			startAngle !== -120 && `\tstartAngle={${startAngle}}`,
+			endAngle !== 120 && `\tendAngle={${endAngle}}`,
+			color !== 'primary' && `\tcolor="${color}"`,
+			trackColor !== 'muted' && `\ttrackColor="${trackColor}"`,
+			!showValue && `\tshowValue={false}`,
+			!showLabels && `\tshowLabels={false}`,
+			label !== 'Progress' && `\tlabel="${label}"`,
+			unit !== '%' && `\tunit="${unit}"`,
+			!animated && `\tanimated={false}`,
+			animationDuration !== 1000 && `\tanimationDuration={${animationDuration}}`,
+			loading && `\tloading`,
+			empty && `\tempty`,
+			paddingY !== 10 && `\tpaddingY={${paddingY}}`,
+			hasProps && `/>`,
+			!hasProps && `<ArcChart value={65} label="Progress" unit="%" />`
+		].filter(Boolean);
+
+		return [...scriptLines, ...componentLines].join('\n');
+	});
+
+	const props = [
+		{ prop: 'value', type: 'number', initial: '0' },
+		{ prop: 'min', type: 'number', initial: '0' },
+		{ prop: 'max', type: 'number', initial: '100' },
+		{ prop: 'width', type: 'number', initial: 'undefined' },
+		{ prop: 'height', type: 'number', initial: 'undefined' },
+		{
+			prop: 'margin',
+			type: '{ top: number; right: number; bottom: number; left: number }',
+			initial: '{ top: 10, right: 10, bottom: 10, left: 10 }'
+		},
+		{
+			prop: 'color',
+			type: 'primary | secondary | success | info | warning | danger | muted',
+			initial: 'primary'
+		},
+		{
+			prop: 'trackColor',
+			type: 'primary | secondary | success | info | warning | danger | muted',
+			initial: 'muted'
+		},
+		{ prop: 'thickness', type: 'number', initial: '20' },
+		{ prop: 'startAngle', type: 'number', initial: '-120' },
+		{ prop: 'endAngle', type: 'number', initial: '120' },
+		{ prop: 'showValue', type: 'boolean', initial: 'true' },
+		{ prop: 'showLabels', type: 'boolean', initial: 'true' },
+		{ prop: 'label', type: 'string', initial: '' },
+		{ prop: 'unit', type: 'string', initial: '' },
+		{ prop: 'animated', type: 'boolean', initial: 'true' },
+		{ prop: 'animationDuration', type: 'number', initial: '1000' },
+		{ prop: 'loading', type: 'boolean', initial: 'false' },
+		{ prop: 'empty', type: 'boolean', initial: 'false' },
+		{ prop: 'emptyText', type: 'string', initial: 'No data' },
+		{ prop: 'paddingY', type: 'number', initial: '10' },
+		{ prop: 'class', type: 'string', initial: '' }
+	];
+
+	const arcsAuto = [
+		{ value: 75, max: 100, color: 'danger', label: 'Ventas' },
+		{ value: 120, max: 150, color: 'warning', label: 'Marketing' },
+		{ value: 30, max: 50, color: 'info', label: 'Soporte' },
+		{ value: 24, max: 100, color: 'primary', label: 'Desarrollo' }
+	];
+
+	const arcsCustom = [
+		{ value: 85, max: 100, color: 'success', label: 'Completado' },
+		{ value: 45, max: 100, color: 'warning', label: 'En progreso' },
+		{ value: 20, max: 100, color: 'danger', label: 'Pendiente' }
+	];
 </script>
 
-<div class="space-y-8 p-6">
-	<!-- Gauge básico con track (estilo del ejemplo funcional) -->
-	<section>
-		<h2 class="text-2xl font-bold mb-4">Gauge Básico con Track</h2>
-		<ArcChart
-			data={[{ key: 'Example', value: 70 }]}
-			key="key"
-			value="value"
-			maxValue={100}
-			innerRadius={-20}
-			trackOuterRadius={-5}
-			trackInnerRadius={-10}
-			cornerRadius={10}
-			showLegend={false}
-			class="w-full h-[200px]"
-		/>
-	</section>
+{#snippet builder()}
+	<Select label="Color" name="color" size="sm" options={colorOptions} bind:value={color} />
+	<Select
+		label="Track Color"
+		name="trackColor"
+		size="sm"
+		options={colorOptions}
+		bind:value={trackColor}
+	/>
 
-	<!-- Gauge semi-círculo -->
-	<section>
-		<h2 class="text-2xl font-bold mb-4">Semi-Círculo con Track</h2>
-		<ArcChart
-			data={[{ key: 'progress', value: 65 }]}
-			key="key"
-			value="value"
-			maxValue={100}
-			range={[0, 180]}
-			innerRadius={-25}
-			trackOuterRadius={-10}
-			trackInnerRadius={-20}
-			cornerRadius={8}
-			showLegend={false}
-			class="w-full h-[200px]"
-		/>
-	</section>
+	<DocOptions title="Values">
+		<TextField name="value" type="number" label="Value" bind:value size="sm" />
+		<TextField name="min" type="number" label="Min" bind:value={min} size="sm" />
+		<TextField name="max" type="number" label="Max" bind:value={max} size="sm" />
+	</DocOptions>
 
-	<!-- Gauge estilo velocímetro -->
-	<section>
-		<h2 class="text-2xl font-bold mb-4">Velocímetro</h2>
-		<ArcChart
-			data={[{ key: 'speed', value: 120 }]}
-			key="key"
-			value="value"
-			maxValue={200}
-			range={[-90, 90]}
-			innerRadius={-20}
-			trackOuterRadius={-5}
-			trackInnerRadius={-15}
-			cornerRadius={15}
-			showLegend={false}
-			class="w-full h-[200px]"
-		/>
-	</section>
+	<DocOptions title="Dimensions">
+		<TextField name="width" type="number" label="Width" bind:value={width} size="sm" />
+		<TextField name="heigth" type="number" label="Height" bind:value={height} size="sm" />
+		<TextField type="number" label="Thickness" bind:value={thickness} size="sm" />
+		<TextField type="number" label="Padding Y" bind:value={paddingY} size="sm" />
+	</DocOptions>
 
-	<!-- Gauge 3/4 círculo -->
-	<section>
-		<h2 class="text-2xl font-bold mb-4">Gauge 3/4 Círculo</h2>
-		<ArcChart
-			data={[{ key: 'completion', value: 75 }]}
-			key="key"
-			value="value"
-			maxValue={100}
-			range={[0, 270]}
-			innerRadius={-20}
-			trackOuterRadius={-5}
-			trackInnerRadius={-15}
-			cornerRadius={10}
-			showLegend={false}
-			class="w-full h-[250px]"
-		/>
-	</section>
+	<DocOptions title="Angles">
+		<TextField type="number" label="Start Angle" bind:value={startAngle} size="sm" />
+		<TextField type="number" label="End Angle" bind:value={endAngle} size="sm" />
+	</DocOptions>
 
-	<!-- Círculo completo (donut gauge) -->
-	<section>
-		<h2 class="text-2xl font-bold mb-4">Donut Gauge (360°)</h2>
-		<ArcChart
-			data={[{ key: 'storage', value: 320 }]}
-			key="key"
-			value="value"
-			maxValue={500}
-			range={[0, 360]}
-			innerRadius={-20}
-			trackOuterRadius={-5}
-			trackInnerRadius={-15}
-			cornerRadius={10}
-			showLegend={false}
-			class="w-full h-[250px]"
-		/>
-	</section>
+	<DocOptions title="Labels">
+		<TextField label="Label" bind:value={label} size="sm" />
+		<TextField label="Unit" bind:value={unit} size="sm" />
+	</DocOptions>
 
-	<!-- Activity Rings (múltiples series) -->
-	<section>
-		<h2 class="text-2xl font-bold mb-4">Activity Rings</h2>
-		<ArcChart
-			key="key"
-			value="value"
-			series={[
-				{
-					key: 'move',
-					data: [{ key: 'move', value: 400 }],
-					maxValue: 1000,
-					color: '#ef4444'
-				},
-				{
-					key: 'exercise',
-					data: [{ key: 'exercise', value: 20 }],
-					maxValue: 30,
-					color: '#a3e635'
-				},
-				{
-					key: 'stand',
-					data: [{ key: 'stand', value: 10 }],
-					maxValue: 12,
-					color: '#22d3ee'
-				}
-			]}
-			range={[0, 360]}
-			cornerRadius={10}
-			padAngle={0.02}
-			showLegend={true}
-			legendPlacement="bottom"
-			class="w-full h-80"
+	<DocOptions title="Animation">
+		<Checkbox bind:checked={animated} name="animated" label="Animated" />
+		<TextField
+			type="number"
+			label="Animation Duration (ms)"
+			bind:value={animationDuration}
+			size="sm"
 		/>
-	</section>
+	</DocOptions>
 
-	<!-- Gauge con color personalizado -->
-	<section>
-		<h2 class="text-2xl font-bold mb-4">Gauge con Color Personalizado</h2>
-		<ArcChart
-			data={[{ key: 'health', value: 85, color: '#10b981' }]}
-			key="key"
-			value="value"
-			maxValue={100}
-			range={[0, 180]}
-			innerRadius={-15}
-			trackOuterRadius={-5}
-			trackInnerRadius={-12}
-			cornerRadius={8}
-			showLegend={false}
-			class="w-full h-[180px]"
-		/>
-	</section>
-</div>
+	<DocOptions title="States">
+		<Checkbox bind:checked={showValue} name="showValue" label="Show Value" />
+		<Checkbox bind:checked={showLabels} name="showLabels" label="Show Labels" />
+		<Checkbox bind:checked={loading} name="loading" label="Loading" />
+		<Checkbox bind:checked={empty} name="empty" label="Empty" />
+	</DocOptions>
+{/snippet}
 
-<style>
-	.space-y-8 > section {
-		padding: 1.5rem;
-		background: white;
-		border-radius: 0.5rem;
-		box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
-	}
-</style>
+<DocHeader title="ArcChart">
+	Arc charts display data in a circular arc format, ideal for showing progress, gauges, or
+	percentage values.
+</DocHeader>
+
+<DocPreview {builder}>
+	<ArcChart arcs={arcsAuto} centerText="" size={200} />
+</DocPreview>
+<DocPreview>
+	<ArcChart arcs={arcsCustom} centerText="Progreso" centerValue="56%" size={300} />
+</DocPreview>
+<DocPreview>
+	<ArcChart arcs={[]} empty={true} emptyText="No hay datos disponibles" size={300} />
+</DocPreview>
+<DocPreview>
+	<ArcChart arcs={arcsAuto} centerText="Total" thickness={24} gap={12} size={350} />
+</DocPreview>
+
+<DocCode code={code()} />
+
+<DocProps {props} />

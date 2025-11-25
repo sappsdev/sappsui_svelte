@@ -8,7 +8,7 @@
 
 	const variantOptions = [
 		{ id: 'ghost', label: 'Ghost' },
-		{ id: 'outline', label: 'Outline' },
+		{ id: 'outlined', label: 'Outlined' },
 		{ id: 'surface', label: 'Surface' },
 		{ id: 'primary', label: 'Primary' },
 		{ id: 'secondary', label: 'Secondary' },
@@ -45,12 +45,12 @@
 	let withIcon = $state(false);
 	let withStatus = $state(false);
 	let withHref = $state(false);
-	let disabled = $state(false);
-	let active = $state(false);
-	let compact = $state(false);
-	let divider = $state(false);
-	let shadow = $state(false);
-	let solid = $state(false);
+	let isDisabled = $state(false);
+	let isActive = $state(false);
+	let isCompact = $state(false);
+	let hasDivider = $state(false);
+	let hasShadow = $state(false);
+	let isSolid = $state(false);
 	let withActions = $state(false);
 
 	let hasProps = $derived(
@@ -62,12 +62,12 @@
 			withAvatar,
 			status,
 			href,
-			disabled,
-			active,
-			compact,
-			divider,
-			shadow,
-			solid,
+			isDisabled,
+			isActive,
+			isCompact,
+			hasDivider,
+			hasShadow,
+			isSolid,
 			withActions
 		].some(Boolean)
 	);
@@ -90,12 +90,12 @@
 			size !== 'md' && `\tsize="${size}"`,
 			withStatus && status && `\tstatus="${status}"`,
 			withHref && href && `\thref="${href}"`,
-			disabled && `\tdisabled`,
-			active && `\tactive`,
-			compact && `\tcompact`,
-			divider && `\tdivider`,
-			shadow && `\tshadow`,
-			solid && `\tsolid`,
+			isDisabled && `\tisDisabled`,
+			isActive && `\tisActive`,
+			isCompact && `\tisCompact`,
+			hasDivider && `\thasDivider`,
+			hasShadow && `\thasShadow`,
+			isSolid && `\tisSolid`,
 			withActions && `\tonclick={(id) => console.log('Clicked:', id)}`,
 			hasProps && !withActions && `/>`,
 			withActions && `>`,
@@ -124,12 +124,12 @@
 		{ prop: 'size', type: 'sm | md | lg', initial: 'md' },
 		{ prop: 'status', type: 'online | offline | busy | away', initial: '' },
 		{ prop: 'href', type: 'string', initial: '' },
-		{ prop: 'disabled', type: 'boolean', initial: 'false' },
-		{ prop: 'active', type: 'boolean', initial: 'false' },
-		{ prop: 'compact', type: 'boolean', initial: 'false' },
-		{ prop: 'divider', type: 'boolean', initial: 'false' },
-		{ prop: 'shadow', type: 'boolean', initial: 'false' },
-		{ prop: 'solid', type: 'boolean', initial: 'false' },
+		{ prop: 'isDisabled', type: 'boolean', initial: 'false' },
+		{ prop: 'isActive', type: 'boolean', initial: 'false' },
+		{ prop: 'isCompact', type: 'boolean', initial: 'false' },
+		{ prop: 'hasDivider', type: 'boolean', initial: 'false' },
+		{ prop: 'hasShadow', type: 'boolean', initial: 'false' },
+		{ prop: 'isSolid', type: 'boolean', initial: 'false' },
 		{ prop: 'onclick', type: '(id: string | number) => void', initial: '' },
 		{ prop: 'actions', type: 'Snippet', initial: '' }
 	];
@@ -148,14 +148,14 @@
 		src={withAvatar ? '/avatar-1.jpeg' : undefined}
 		{variant}
 		{size}
-		{solid}
+		{isSolid}
 		status={withStatus && status ? status : undefined}
 		href={withHref && href ? href : undefined}
-		{disabled}
-		{active}
-		{compact}
-		{divider}
-		{shadow}
+		{isDisabled}
+		{isActive}
+		{isCompact}
+		{hasDivider}
+		{hasShadow}
 		actions={withActions ? actions : undefined}
 		onclick={withActions ? (id) => console.log('Clicked:', id) : undefined}
 	/>
@@ -215,15 +215,15 @@
 			label="Link (href)"
 		/>
 		<Checkbox bind:checked={withActions} name="with-actions" label="Actions Snippet" />
-		<Checkbox bind:checked={disabled} name="disabled" label="Disabled" />
-		<Checkbox bind:checked={active} name="active" label="Selected" />
+		<Checkbox bind:checked={isDisabled} name="disabled" label="Disabled" />
+		<Checkbox bind:checked={isActive} name="active" label="Selected" />
 	</DocOptions>
 
 	<DocOptions title="Layout">
-		<Checkbox bind:checked={compact} name="compact" label="Compact" />
-		<Checkbox bind:checked={divider} name="divider" label="Divider" />
-		<Checkbox bind:checked={shadow} name="shadow" label="Shadow" />
-		<Checkbox bind:checked={solid} name="solid" label="Solid" />
+		<Checkbox bind:checked={isCompact} name="compact" label="Compact" />
+		<Checkbox bind:checked={hasDivider} name="divider" label="Divider" />
+		<Checkbox bind:checked={hasShadow} name="shadow" label="Shadow" />
+		<Checkbox bind:checked={isSolid} name="solid" label="Solid" />
 	</DocOptions>
 {/snippet}
 

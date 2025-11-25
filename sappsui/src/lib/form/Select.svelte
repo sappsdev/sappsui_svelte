@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { IconName } from '$lib/assets/icons/index.js';
 	import { Avatar, Icon, Item } from '$lib/index.js';
+	import type { IconName } from '$lib/types.js';
 	import { cn } from '$lib/utils/class-names.js';
 	import { onMount } from 'svelte';
 
@@ -18,16 +18,16 @@
 		selected?: Option;
 		placeholder?: string;
 		onchange?: (value: unknown) => void;
-		variant?: 'primary' | 'secondary' | 'muted' | 'outline' | 'line';
+		variant?: 'primary' | 'secondary' | 'muted' | 'outlined' | 'line';
 		size?: 'sm' | 'md' | 'lg';
 		name: string;
 		class?: string;
 		label?: string;
-		labelActive?: boolean;
+		isLabelActive?: boolean;
 		helpText?: string;
 		errorText?: string;
-		floatLabel?: boolean;
-		solid?: boolean;
+		isFloatLabel?: boolean;
+		isSolid?: boolean;
 	};
 
 	let {
@@ -37,15 +37,15 @@
 		selected = $bindable(),
 		placeholder = 'Select an option',
 		onchange,
-		variant = 'outline',
+		variant = 'outlined',
 		size = 'md',
 		name,
 		label,
-		labelActive,
+		isLabelActive,
 		helpText,
 		errorText,
-		floatLabel,
-		solid
+		isFloatLabel,
+		isSolid
 	}: Props = $props();
 
 	let isOpen = $state(false);
@@ -73,7 +73,7 @@
 		primary: 'is-primary',
 		secondary: 'is-secondary',
 		muted: 'is-muted',
-		outline: 'is-outline',
+		outlined: 'is-outlined',
 		line: 'is-line'
 	};
 
@@ -81,7 +81,7 @@
 		primary: 'primary',
 		secondary: 'secondary',
 		muted: 'muted',
-		outline: 'primary',
+		outlined: 'primary',
 		line: 'primary'
 	} as const;
 
@@ -210,14 +210,14 @@
 	const initializeFocusedIndex = async () => {
 		setTimeout(() => {
 			const items = getItems();
-			focusedIndex = Array.from(items).findIndex((i) => i.classList.contains('on-active'));
+			focusedIndex = Array.from(items).findIndex((i) => i.classList.contains('is-active'));
 			if (focusedIndex === -1 && items.length) focusedIndex = 0;
 		}, 50);
 	};
 
 	const scrollToSelectedItem = async () => {
 		setTimeout(() => {
-			const selectedItem = optionsEl?.querySelector('.on-active') as HTMLElement;
+			const selectedItem = optionsEl?.querySelector('.is-active') as HTMLElement;
 			if (selectedItem) {
 				const offset = 50;
 				const top = Math.max(0, selectedItem.offsetTop - offset);
@@ -293,7 +293,7 @@
 <div class={cn('field', className)}>
 	<input type="text" {name} bind:value hidden />
 
-	{#if !floatLabel && label}
+	{#if !isFloatLabel && label}
 		<div class="field-label">{label}</div>
 	{/if}
 
@@ -304,20 +304,20 @@
 			'control',
 			variantClasses[variant],
 			sizeClasses[size],
-			floatLabel && 'is-float',
-			solid && 'is-solid',
-			(isActive || isFocused) && 'on-active'
+			isFloatLabel && 'is-float',
+			isSolid && 'is-solid',
+			(isActive || isFocused) && 'is-active'
 		)}
 		class:is-error={errorText}
 		onclick={toggleDropdown}
 		onmouseenter={() => (isActive = true)}
 		onmouseleave={() => (isActive = false)}
 	>
-		{#if floatLabel && label}
+		{#if isFloatLabel && label}
 			<span
 				class={cn(
 					'control-label',
-					(isActive || isFocused || labelActive || value !== '') && 'on-active'
+					(isActive || isFocused || isLabelActive || value !== '') && 'is-active'
 				)}
 			>
 				{label}
@@ -340,16 +340,16 @@
 		<div class="control-btn">
 			<Icon
 				name="fluent:arrow-sort-down-24-regular"
-				class={cn('control-arrow', isOpen && 'on-active')}
+				class={cn('control-arrow', isOpen && 'is-active')}
 			/>
 		</div>
 	</button>
 
 	{#if errorText || helpText}
-		<div class={cn('field-help', errorText && 'on-danger')}>{errorText || helpText}</div>
+		<div class={cn('field-help', errorText && 'is-danger')}>{errorText || helpText}</div>
 	{/if}
 
-	<div class:on-active={isOpen} class="select-popover" bind:this={contentEl} {style}>
+	<div class:is-active={isOpen} class="select-popover" bind:this={contentEl} {style}>
 		<ul class="select-options" bind:this={optionsEl}>
 			{#each options as item}
 				<li>
@@ -360,10 +360,10 @@
 						description={item.description}
 						id={item.id}
 						onclick={() => handleSelect(item)}
-						active={value === item.id}
+						isActive={value === item.id}
 						variant={itemVariants[variant]}
 						size="sm"
-						compact
+						isCompact
 					/>
 				</li>
 			{/each}

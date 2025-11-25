@@ -59,7 +59,7 @@
 		@apply focus-visible:bg-muted;
 	}
 
-	.item.is-outline {
+	.item.is-outlined {
 		@apply border border-muted bg-transparent;
 	}
 
@@ -67,27 +67,27 @@
 		@apply bg-surface text-on-surface;
 	}
 
-	.item.is-primary.on-active {
+	.item.is-primary.is-active {
 		@apply bg-on-primary text-primary;
 	}
 
-	.item.is-primary.is-solid.on-active {
+	.item.is-primary.is-solid.is-active {
 		@apply bg-primary text-on-primary;
 	}
 
-	.item.is-secondary.on-active {
+	.item.is-secondary.is-active {
 		@apply bg-on-secondary text-secondary;
 	}
 
-	.item.is-secondary.is-solid.on-active {
+	.item.is-secondary.is-solid.is-active {
 		@apply bg-secondary text-on-secondary;
 	}
 
-	.item.is-muted.on-active {
+	.item.is-muted.is-active {
 		@apply bg-muted text-on-muted;
 	}
 
-	.item.is-muted.is-solid.on-active {
+	.item.is-muted.is-solid.is-active {
 		@apply bg-on-muted text-muted;
 	}
 

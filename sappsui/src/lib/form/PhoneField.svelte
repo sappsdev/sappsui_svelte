@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { normalizedCountries, type Country } from '$lib/assets/countries.js';
-	import { Avatar, Icon } from '$lib/index.js';
+	import { Avatar, Icon, TextField } from '$lib/index.js';
 	import { cn } from '$lib/utils/class-names.js';
 	import { onMount, tick } from 'svelte';
-	import TextField from './TextField.svelte';
-	import type { IconName } from '$lib/assets/icons/index.js';
+	import { normalizedCountries, type Country } from './js/countries.js';
+	import type { IconName } from '$lib/types.js';
 
 	type Props = {
 		value?: unknown;

@@ -33,7 +33,7 @@
 
 	const statusOptions = [
 		{ id: 'none', label: 'None' },
-		{ id: 'online', label: 'Online' },
+		{ id: 'onlined', label: 'Onlined' },
 		{ id: 'offline', label: 'Offline' },
 		{ id: 'busy', label: 'Busy' },
 		{ id: 'away', label: 'Away' }
@@ -46,12 +46,16 @@
 	let statusValue: any = $state('none');
 
 	// States
-	let border = $state(false);
+	let isBordered = $state(false);
 
 	let hasProps = $derived(
-		[source !== 'image', variant !== 'primary', size !== 'md', statusValue !== 'none', border].some(
-			Boolean
-		)
+		[
+			source !== 'image',
+			variant !== 'primary',
+			size !== 'md',
+			statusValue !== 'none',
+			isBordered
+		].some(Boolean)
 	);
 
 	let code = $derived(() => {
@@ -69,7 +73,7 @@
 			variant !== 'primary' && `\tvariant="${variant}"`,
 			size !== 'md' && `\tsize="${size}"`,
 			statusValue !== 'none' && `\tstatus="${statusValue}"`,
-			border && `\tborder`,
+			isBordered && `\tisBordered`,
 			hasProps && `/>`,
 			!hasProps && `<Avatar src="/avatar-1.jpeg" />`
 		].filter(Boolean);
@@ -89,7 +93,7 @@
 		},
 		{ prop: 'size', type: 'xs | sm | md | lg | xl', initial: 'lg' },
 		{ prop: 'status', type: 'online | offline | busy | away', initial: '' },
-		{ prop: 'border', type: 'boolean', initial: 'false' },
+		{ prop: 'isBordered', type: 'boolean', initial: 'false' },
 		{ prop: 'class', type: 'string', initial: '' }
 	];
 </script>
@@ -102,7 +106,7 @@
 		{variant}
 		{size}
 		status={statusValue !== 'none' ? statusValue : undefined}
-		{border}
+		{isBordered}
 	/>
 {/snippet}
 
@@ -113,7 +117,7 @@
 	<Select label="Status" name="status" size="sm" options={statusOptions} bind:value={statusValue} />
 
 	<DocOptions title="Props">
-		<Checkbox bind:checked={border} name="border" label="Border" />
+		<Checkbox bind:checked={isBordered} name="bordered" label="Bordered" />
 	</DocOptions>
 {/snippet}
 

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { IconName } from '$lib/assets/icons/index.js';
 	import { Icon } from '$lib/index.js';
+	import type { IconName } from '$lib/types.js';
 	import { cn } from '$lib/utils/class-names.js';
 
 	type Props = {
@@ -16,18 +16,18 @@
 			| 'info'
 			| 'danger'
 			| 'warning'
-			| 'outline'
+			| 'outlined'
 			| 'ghost';
 		size?: 'xs' | 'sm' | 'md' | 'lg';
 		class?: string;
 		startIcon?: IconName;
 		endIcon?: IconName;
 		loadingIcon?: IconName;
-		loading?: boolean;
-		wide?: boolean;
-		disabled?: boolean;
-		shadow?: boolean;
-		solid?: boolean;
+		isLoading?: boolean;
+		isWide?: boolean;
+		isDisabled?: boolean;
+		hasShadow?: boolean;
+		isSolid?: boolean;
 	};
 
 	const {
@@ -41,11 +41,11 @@
 		startIcon,
 		endIcon,
 		loadingIcon = 'svg-spinners:3-dots-move',
-		loading = false,
-		wide = false,
-		disabled,
-		shadow,
-		solid
+		isLoading,
+		isWide,
+		isDisabled,
+		hasShadow,
+		isSolid
 	}: Props = $props();
 
 	const variantClasses = {
@@ -56,7 +56,7 @@
 		info: 'is-info',
 		danger: 'is-danger',
 		warning: 'is-warning',
-		outline: 'is-outline',
+		outlined: 'is-outlined',
 		ghost: 'is-ghost'
 	};
 
@@ -72,13 +72,13 @@
 			'btn',
 			variantClasses[variant],
 			sizeClasses[size],
-			solid && 'is-solid',
-			wide && 'has-wide',
-			shadow && 'has-shadow',
+			isSolid && 'is-solid',
+			isWide && 'has-wide',
+			hasShadow && 'has-shadow',
 			className
 		)
 	);
-	let btnClasses = $derived(cn('btn-icon', loading && 'invisible'));
+	let btnClasses = $derived(cn('btn-icon', isLoading && 'invisible'));
 </script>
 
 {#if href}
@@ -92,8 +92,14 @@
 		{/if}
 	</a>
 {:else}
-	<button {type} {onclick} disabled={disabled || loading} class={baseClasses} aria-busy={loading}>
-		{#if loading}
+	<button
+		{type}
+		{onclick}
+		disabled={isDisabled || isLoading}
+		class={baseClasses}
+		aria-busy={isLoading}
+	>
+		{#if isLoading}
 			<span class="btn-loading">
 				<Icon name={loadingIcon} class="loading-icon" />
 			</span>
@@ -101,7 +107,7 @@
 		{#if startIcon}
 			<Icon class={btnClasses} name={startIcon} />
 		{/if}
-		<span class:invisible={loading}>{label}</span>
+		<span class:invisible={isLoading}>{label}</span>
 		{#if endIcon}
 			<Icon class={btnClasses} name={endIcon} />
 		{/if}

@@ -48,8 +48,8 @@
 			label: 'Layout'
 		},
 		{
-			label: 'Card',
-			href: '/docs/layout/card'
+			label: 'Scaffold',
+			href: '/docs/layout/scaffold'
 		},
 		{
 			type: 'header',
@@ -65,6 +65,18 @@
 			href: '/docs/control/icon-button'
 		},
 		{
+			label: 'Audio',
+			href: '/docs/control/audio'
+		},
+		{
+			label: 'Record',
+			href: '/docs/control/record'
+		},
+		{
+			label: 'Video',
+			href: '/docs/control/video'
+		},
+		{
 			type: 'header',
 			icon: 'fluent:person-chat-24-regular',
 			label: 'Display'
@@ -74,16 +86,28 @@
 			href: '/docs/display/avatar'
 		},
 		{
+			label: 'Card',
+			href: '/docs/display/card'
+		},
+		{
 			label: 'ChatBox',
 			href: '/docs/display/chat-box'
 		},
 		{
-			label: 'Chart',
-			href: '/docs/display/chart'
+			label: 'Empty',
+			href: '/docs/display/empty'
+		},
+		{
+			label: 'Icon',
+			href: '/docs/display/icon'
 		},
 		{
 			label: 'Item',
 			href: '/docs/display/item'
+		},
+		{
+			label: 'Section',
+			href: '/docs/display/section'
 		},
 		{
 			label: 'Table',
@@ -140,38 +164,16 @@
 		},
 		{
 			type: 'header',
-			icon: 'fluent:person-feedback-24-regular',
-			label: 'Feedback'
-		},
-		{
-			label: 'Empty',
-			href: '/docs/feedback/empty'
+			icon: 'fluent:layout-column-one-third-right-hint-24-regular',
+			label: 'Overlay'
 		},
 		{
 			label: 'Toast',
-			href: '/docs/feedback/toast'
+			href: '/docs/overlay/toast'
 		},
 		{
-			type: 'header',
-			icon: 'fluent:play-circle-hint-24-regular',
-			label: 'Media'
-		},
-		{
-			label: 'Audio',
-			href: '/docs/media/audio'
-		},
-		{
-			label: 'Record',
-			href: '/docs/media/record'
-		},
-		{
-			label: 'Video',
-			href: '/docs/media/video'
-		},
-		{
-			type: 'header',
-			icon: 'fluent:layout-column-one-third-right-hint-24-regular',
-			label: 'Overlay'
+			label: 'Tooltip',
+			href: '/docs/overlay/tooltip'
 		},
 		{
 			type: 'header',
@@ -194,19 +196,39 @@
 		{
 			label: 'Arc',
 			href: '/docs/charts/arc'
+		},
+		{
+			label: 'Area',
+			href: '/docs/charts/area'
+		},
+		{
+			label: 'Bar',
+			href: '/docs/charts/bar'
+		},
+		{
+			label: 'Candlestick',
+			href: '/docs/charts/candlestick'
+		},
+		{
+			label: 'Line',
+			href: '/docs/charts/line'
+		},
+		{
+			label: 'Pie',
+			href: '/docs/charts/pie'
 		}
 	];
 	const dropdownOptions = [{ label: 'Settings' }, { label: 'My Account' }];
 </script>
 
 <Scaffold
-	mainClass="lg:ml-48 xl:mr-56 vh-16 lg:p-4"
-	startClass="invisible lg:visible vh-16"
-	endClass="invisible xl:visible vh-16 mr-8 my-4"
+	mainClass="lg:ml-48 xl:mr-56 vh-16 lg:p-4 mt-16"
+	startClass="invisible lg:visible vh-16 mt-16"
+	endClass="invisible xl:visible vh-16 mr-8 my-4 mt-16"
 	bodyClass="boxed"
 >
 	{#snippet appBar()}
-		<AppBar class="h-16 sticky" contentClass="boxed">
+		<AppBar class="h-16" contentClass="boxed" isBlurred>
 			{#snippet start()}
 				<IconButton
 					icon="fluent:list-24-regular"

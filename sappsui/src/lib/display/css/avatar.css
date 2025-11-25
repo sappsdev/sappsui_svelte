@@ -33,7 +33,7 @@
 		@apply bg-info text-on-info;
 	}
 
-	.avatar.has-border {
+	.avatar.is-bordered {
 		.avatar-image {
 			@apply ring-2 ring-muted;
 		}

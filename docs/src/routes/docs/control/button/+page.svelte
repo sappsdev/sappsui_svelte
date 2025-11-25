@@ -10,7 +10,7 @@
 		{ id: 'primary', label: 'Primary' },
 		{ id: 'secondary', label: 'Secondary' },
 		{ id: 'muted', label: 'Muted' },
-		{ id: 'outline', label: 'Outline' },
+		{ id: 'outlined', label: 'Outlined' },
 		{ id: 'ghost', label: 'Ghost' },
 		{ id: 'success', label: 'Success' },
 		{ id: 'info', label: 'Info' },
@@ -47,11 +47,11 @@
 
 	// states
 
-	let loading = $state(false);
-	let wide = $state(false);
-	let disabled = $state(false);
-	let shadow = $state(false);
-	let solid = $state(true);
+	let isLoading = $state(false);
+	let isWide = $state(false);
+	let isDisabled = $state(false);
+	let hasShadow = $state(false);
+	let isSolid = $state(true);
 
 	let hasProps = $derived(
 		[
@@ -61,11 +61,11 @@
 			startIcon,
 			endIcon,
 			href,
-			loading,
-			wide,
-			solid,
-			disabled,
-			shadow
+			isLoading,
+			isWide,
+			isSolid,
+			isDisabled,
+			hasShadow
 		].some(Boolean)
 	);
 
@@ -88,11 +88,11 @@
 			href && `\thref="/example"`,
 			hasProps && `\tlabel="Label"`,
 			hasProps && !href && `\tonclick={handleClick}`,
-			loading && `\tloading`,
-			wide && `\twide`,
-			solid && `\tsolid`,
-			disabled && `\tdisabled`,
-			shadow && `\tshadow`,
+			isLoading && `\tisLoading`,
+			isWide && `\tisWide`,
+			isSolid && `\tisSolid`,
+			isDisabled && `\tisDisabled`,
+			hasShadow && `\thasShadow`,
 			hasProps && `/>`,
 			!hasProps && `<Button label="Label" onclick={handleClick} />`
 		].filter(Boolean);
@@ -114,12 +114,12 @@
 		{ prop: 'class', type: 'string', initial: '' },
 		{ prop: 'startIcon', type: 'IconName', initial: '' },
 		{ prop: 'endIcon', type: 'IconName', initial: '' },
-		{ prop: 'loading', type: 'boolean', initial: 'false' },
+		{ prop: 'isLoading', type: 'boolean', initial: 'false' },
 		{ prop: 'loadingIcon', type: 'IconName', initial: '' },
-		{ prop: 'wide', type: 'boolean', initial: 'false' },
-		{ prop: 'disabled', type: 'boolean', initial: 'false' },
-		{ prop: 'shadow', type: 'boolean', initial: 'false' },
-		{ prop: 'solid', type: 'boolean', initial: 'false' }
+		{ prop: 'isWide', type: 'boolean', initial: 'false' },
+		{ prop: 'isDisabled', type: 'boolean', initial: 'false' },
+		{ prop: 'hasShadow', type: 'boolean', initial: 'false' },
+		{ prop: 'isSolid', type: 'boolean', initial: 'false' }
 	];
 </script>
 
@@ -131,11 +131,11 @@
 		{type}
 		{startIcon}
 		{endIcon}
-		{loading}
-		{disabled}
-		{wide}
-		{shadow}
-		{solid}
+		{isLoading}
+		{isDisabled}
+		{isWide}
+		{hasShadow}
+		{isSolid}
 	/>
 {/snippet}
 
@@ -156,17 +156,19 @@
 			label="startIcon"
 		/>
 		<Checkbox onchange={(v) => (v ? (href = '/example') : (href = ''))} name="href" label="Link" />
-		<Checkbox bind:checked={loading} name="loading" label="Loading" />
-		<Checkbox bind:checked={wide} name="wide" label="Wide" />
-		<Checkbox bind:checked={disabled} name="disabled" label="Disabled" />
-		<Checkbox bind:checked={shadow} name="shadow" label="Shadow" />
-		<Checkbox bind:checked={solid} name="solid" label="Solid" />
+		<Checkbox bind:checked={isLoading} name="loading" label="Loading" />
+		<Checkbox bind:checked={isWide} name="wide" label="Wide" />
+		<Checkbox bind:checked={isDisabled} name="disabled" label="Disabled" />
+		<Checkbox bind:checked={hasShadow} name="shadow" label="Shadow" />
+		<Checkbox bind:checked={isSolid} name="solid" label="Solid" />
 	</DocOptions>
 {/snippet}
 
 <DocHeader title="Button">Buttons allow users to take actions with a single tap.</DocHeader>
 
-<DocPreview {preview} {builder} />
+<DocPreview {builder}>
+	{@render preview()}
+</DocPreview>
 
 <DocCode code={code()} />
 

@@ -10,7 +10,7 @@
 		{ id: 'primary', label: 'Primary' },
 		{ id: 'secondary', label: 'Secondary' },
 		{ id: 'muted', label: 'Muted' },
-		{ id: 'outline', label: 'Outline' },
+		{ id: 'outlined', label: 'Outlined' },
 		{ id: 'line', label: 'Line' }
 	];
 
@@ -30,7 +30,7 @@
 	];
 
 	// Selects
-	let variant: any = $state('outline');
+	let variant: any = $state('outlined');
 	let size: any = $state('md');
 	let type: any = $state('text');
 
@@ -44,8 +44,8 @@
 	let errorText = $state('');
 
 	// States
-	let floatLabel = $state(false);
-	let solid = $state(false);
+	let isFloatLabel = $state(false);
+	let isSolid = $state(false);
 
 	let hasProps = $derived(
 		[
@@ -59,8 +59,8 @@
 			label,
 			helpText,
 			errorText,
-			floatLabel,
-			solid
+			isFloatLabel,
+			isSolid
 		].some(Boolean)
 	);
 
@@ -86,8 +86,8 @@
 			endText && `\tendText=".com"`,
 			helpText && `\thelpText="This is a help text"`,
 			errorText && `\terrorText="This field is required"`,
-			floatLabel && `\tfloatLabel`,
-			solid && `\tsolid`,
+			isFloatLabel && `\tisFloatLabel`,
+			isSolid && `\tisSolid`,
 			hasProps && `\tbind:value`,
 			hasProps && `/>`,
 			!hasProps && `<TextField name="textfield" placeholder="Enter text..." bind:value />`
@@ -121,8 +121,8 @@
 		{ prop: 'min', type: "HTMLInputAttributes['min']", initial: '' },
 		{ prop: 'max', type: "HTMLInputAttributes['max']", initial: '' },
 		{ prop: 'maxlength', type: "HTMLInputAttributes['maxlength']", initial: '' },
-		{ prop: 'floatLabel', type: 'boolean', initial: 'false' },
-		{ prop: 'solid', type: 'boolean', initial: 'false' }
+		{ prop: 'isFloatLabel', type: 'boolean', initial: 'false' },
+		{ prop: 'isSolid', type: 'boolean', initial: 'false' }
 	];
 
 	let value = $state('');
@@ -135,7 +135,7 @@
 		{variant}
 		{size}
 		{type}
-		{solid}
+		{isSolid}
 		startIcon={startIcon || undefined}
 		endIcon={endIcon || undefined}
 		startText={startText || undefined}
@@ -143,7 +143,7 @@
 		label={label || undefined}
 		helpText={helpText || undefined}
 		errorText={errorText || undefined}
-		floatLabel={label && floatLabel ? floatLabel : undefined}
+		isFloatLabel={label && isFloatLabel ? isFloatLabel : undefined}
 		bind:value
 	/>
 {/snippet}
@@ -182,7 +182,7 @@
 	<DocOptions title="Labels & Messages">
 		<Checkbox onchange={(v) => (v ? (label = 'Label') : (label = ''))} name="label" label="Label" />
 		{#if label}
-			<Checkbox bind:checked={floatLabel} name="float-label" label="floatLabel" />
+			<Checkbox bind:checked={isFloatLabel} name="float-label" label="floatLabel" />
 		{/if}
 		<Checkbox
 			onchange={(v) => (v ? (helpText = 'This is a help text') : (helpText = ''))}
@@ -194,7 +194,7 @@
 			name="error-text"
 			label="errorText"
 		/>
-		<Checkbox bind:checked={solid} name="solid" label="solid" />
+		<Checkbox bind:checked={isSolid} name="solid" label="solid" />
 	</DocOptions>
 {/snippet}
 

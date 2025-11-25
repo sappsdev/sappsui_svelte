@@ -2,28 +2,30 @@
 	import { Card, Divider, Section } from 'sappsui';
 	import type { Snippet } from 'svelte';
 	type Props = {
-		preview: Snippet;
-		builder: Snippet;
+		children: Snippet;
+		builder?: Snippet;
 	};
-	let { preview, builder }: Props = $props();
+	let { children, builder }: Props = $props();
 </script>
 
 <Section>
-	<Card variant="outline">
+	<Card>
 		<div class="column lg:row w-full gap-3">
 			<div class="column flex-1">
 				<h4>Preview</h4>
 				<div class="column center gap-4 flex-1 p-4">
-					{@render preview()}
+					{@render children()}
 				</div>
 			</div>
-			<Divider class="invisible lg:visible" vertical />
-			<Divider class="lg:hidden" />
-			<div class="column gap-3 lg:w-64">
-				<h4>Builder</h4>
+			{#if builder}
+				<Divider class="invisible lg:visible" vertical />
+				<Divider class="lg:hidden" />
+				<div class="column gap-3 lg:w-64">
+					<h4>Builder</h4>
 
-				{@render builder()}
-			</div>
+					{@render builder()}
+				</div>
+			{/if}
 		</div>
 	</Card>
 </Section>

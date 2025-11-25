@@ -1,95 +1,298 @@
 <script lang="ts">
-	import { PieChart as LayerPieChart } from 'layerchart';
-	import { cn } from '$lib/utils/class-names.js';
+	type Color = 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'muted';
 
-	export type PieChartData = {
-		label: string;
-		value: number;
-		color?: string;
-	}[];
+	interface DataPoint {
+		[key: string]: any;
+	}
 
-	type Props = {
-		data: PieChartData;
-		class?: string;
-		colors?: string[];
-		innerRadius?: number;
-		outerRadius?: number;
-		cornerRadius?: number;
-		padAngle?: number;
+	interface Slice extends DataPoint {
+		startAngle: number;
+		endAngle: number;
+		midAngle: number;
+		percentage: number;
+		color: Color;
+	}
+
+	interface Margin {
+		top: number;
+		right: number;
+		bottom: number;
+		left: number;
+	}
+
+	interface Props {
+		data?: DataPoint[];
+		width?: number;
+		height?: number;
+		margin?: Margin;
+		labelKey?: string;
+		valueKey?: string;
+		colors?: Color[];
+		donut?: boolean;
+		donutWidth?: number;
+		showLabels?: boolean;
+		showValues?: boolean;
 		showLegend?: boolean;
-		legendPlacement?:
-			| 'top-left'
-			| 'top'
-			| 'top-right'
-			| 'left'
-			| 'center'
-			| 'right'
-			| 'bottom-left'
-			| 'bottom'
-			| 'bottom-right';
-		legendOrientation?: 'vertical' | 'horizontal';
-		legendTitle?: string;
-		showTooltip?: boolean;
-		renderContext?: 'svg' | 'canvas';
-		debug?: boolean;
-	};
+		showPercentages?: boolean;
+		centerLabel?: string;
+		centerValue?: string | number;
+		startAngle?: number;
+		padAngle?: number;
+		loading?: boolean;
+		empty?: boolean;
+		emptyText?: string;
+		class?: string;
+		[key: string]: any;
+	}
 
 	let {
 		data = [],
-		class: className = 'w-full h-64',
-		colors = [
-			'var(--color-primary)',
-			'var(--color-secondary)',
-			'var(--color-info)',
-			'var(--color-success)',
-			'var(--color-warning)',
-			'var(--color-danger)'
-		],
-		innerRadius = 0,
-		outerRadius = -20,
-		cornerRadius = 4,
-		padAngle = 0.02,
+		width = 400,
+		height = 400,
+		margin = { top: 20, right: 20, bottom: 20, left: 20 },
+		labelKey = 'label',
+		valueKey = 'value',
+		colors = ['primary', 'secondary', 'success', 'info', 'warning', 'danger', 'muted'] as Color[],
+		donut = false,
+		donutWidth = 60,
+		showLabels = true,
+		showValues = true,
 		showLegend = true,
-		legendPlacement = 'right',
-		legendOrientation = 'vertical',
-		legendTitle = undefined,
-		showTooltip = true,
-		renderContext = 'svg',
-		debug = false
+		showPercentages = true,
+		centerLabel = 'Total',
+		centerValue = undefined,
+		startAngle = -90,
+		padAngle = 0,
+		loading = false,
+		empty = false,
+		emptyText = 'No data available',
+		class: className = '',
+		...restProps
 	}: Props = $props();
 
-	const chartData = $derived(
-		data.map((item, index) => ({
-			fruit: item.label,
-			value: item.value,
-			color: item.color || colors[index % colors.length]
-		}))
-	);
+	let innerWidth = $derived(width - margin.left - margin.right);
+	let innerHeight = $derived(height - margin.top - margin.bottom);
 
-	const legendConfig = $derived(
-		showLegend
-			? {
-					placement: legendPlacement,
-					orientation: legendOrientation,
-					...(legendTitle ? { title: legendTitle } : {})
-				}
-			: false
-	);
+	let total = $derived(data.reduce((sum, d) => sum + (d[valueKey] as number), 0));
+
+	let slices = $derived.by((): Slice[] => {
+		const startRad = (startAngle * Math.PI) / 180;
+		let currentAngle = startRad;
+		const padRad = (padAngle * Math.PI) / 180;
+
+		return data.map((d, i) => {
+			const value = d[valueKey] as number;
+			const percentage = (value / total) * 100;
+			const angle = (value / total) * 2 * Math.PI - padRad;
+			const startAngle = currentAngle;
+			const endAngle = currentAngle + angle;
+			const midAngle = startAngle + angle / 2;
+
+			currentAngle = endAngle + padRad;
+
+			return {
+				...d,
+				startAngle,
+				endAngle,
+				midAngle,
+				percentage,
+				color: (d.color as Color) || colors[i % colors.length]
+			};
+		});
+	});
+
+	function createArc(
+		startAngle: number,
+		endAngle: number,
+		innerRadius: number,
+		outerRadius: number
+	): string {
+		const x1 = Math.cos(startAngle) * outerRadius;
+		const y1 = Math.sin(startAngle) * outerRadius;
+		const x2 = Math.cos(endAngle) * outerRadius;
+		const y2 = Math.sin(endAngle) * outerRadius;
+
+		const largeArc = endAngle - startAngle > Math.PI ? 1 : 0;
+
+		let path = `M ${x1} ${y1} A ${outerRadius} ${outerRadius} 0 ${largeArc} 1 ${x2} ${y2}`;
+
+		if (innerRadius > 0) {
+			const x3 = Math.cos(endAngle) * innerRadius;
+			const y3 = Math.sin(endAngle) * innerRadius;
+			const x4 = Math.cos(startAngle) * innerRadius;
+			const y4 = Math.sin(startAngle) * innerRadius;
+
+			path += ` L ${x3} ${y3} A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${x4} ${y4} Z`;
+		} else {
+			path += ' L 0 0 Z';
+		}
+
+		return path;
+	}
+
+	let tooltipData = $state<Slice | null>(null);
+	let tooltipPosition = $state<{ x: number; y: number }>({ x: 0, y: 0 });
+	let isTooltipActive = $state(false);
+
+	function handleSliceHover(slice: Slice, event: MouseEvent): void {
+		const target = event.target as SVGPathElement;
+		const rect = target.getBoundingClientRect();
+
+		tooltipData = slice;
+		tooltipPosition = {
+			x: rect.right + 8,
+			y: rect.top + rect.height / 2
+		};
+		isTooltipActive = true;
+	}
+
+	function handleSliceLeave(): void {
+		isTooltipActive = false;
+		setTimeout(() => {
+			if (!isTooltipActive) {
+				tooltipData = null;
+			}
+		}, 100);
+	}
 </script>
 
-<div class={cn('chart-container', className)}>
-	<LayerPieChart
-		data={chartData}
-		key="fruit"
-		value="value"
-		c="color"
-		{innerRadius}
-		{outerRadius}
-		{cornerRadius}
-		{padAngle}
-		legend={legendConfig}
-		tooltip={showTooltip}
-		{renderContext}
-		{debug}
-	/>
+<div
+	class="pie-chart-container {className}"
+	style="width: {width}px; height: {height}px;"
+	{...restProps}
+>
+	{#if loading}
+		<div class="pie-chart-loading">
+			<svg class="pie-chart-loading-spinner" viewBox="0 0 24 24">
+				<circle
+					cx="12"
+					cy="12"
+					r="10"
+					stroke="currentColor"
+					stroke-width="4"
+					fill="none"
+					opacity="0.25"
+				/>
+				<path
+					fill="currentColor"
+					d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+				/>
+			</svg>
+		</div>
+	{:else if empty || data.length === 0}
+		<div class="pie-chart-empty">
+			<svg class="pie-chart-empty-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"
+				/>
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"
+				/>
+			</svg>
+			<span>{emptyText}</span>
+		</div>
+	{:else}
+		<div class="pie-chart">
+			<svg class="pie-chart-svg" {width} {height}>
+				<g transform="translate({margin.left}, {margin.top})">
+					{#if slices.length > 0}
+						{@const centerX = innerWidth / 2}
+						{@const centerY = innerHeight / 2}
+						{@const radius = Math.min(innerWidth, innerHeight) / 2 - 10}
+						{@const innerRadius = donut ? radius - donutWidth : 0}
+
+						<g transform="translate({centerX}, {centerY})">
+							{#each slices as slice}
+								{@const labelRadius = donut ? radius - donutWidth / 2 : radius * 0.7}
+								{@const labelX = Math.cos(slice.midAngle) * labelRadius}
+								{@const labelY = Math.sin(slice.midAngle) * labelRadius}
+
+								<!-- svelte-ignore a11y_no_static_element_interactions -->
+								<path
+									d={createArc(slice.startAngle, slice.endAngle, innerRadius, radius)}
+									class="pie-chart-slice is-{slice.color}"
+									onmouseenter={(e) => handleSliceHover(slice, e)}
+									onmouseleave={handleSliceLeave}
+								/>
+
+								{#if showLabels && slice.percentage > 5}
+									<text
+										x={labelX}
+										y={labelY}
+										class="pie-chart-slice-label"
+										text-anchor="middle"
+										dominant-baseline="middle"
+									>
+										{#if showPercentages}
+											{slice.percentage.toFixed(1)}%
+										{:else if showValues}
+											{slice[valueKey]}
+										{/if}
+									</text>
+								{/if}
+							{/each}
+
+							{#if donut}
+								<text
+									x="0"
+									y="-5"
+									class="pie-chart-center-value"
+									text-anchor="middle"
+									dominant-baseline="middle"
+								>
+									{centerValue ?? total}
+								</text>
+								<text
+									x="0"
+									y="15"
+									class="pie-chart-center-label"
+									text-anchor="middle"
+									dominant-baseline="middle"
+								>
+									{centerLabel}
+								</text>
+							{/if}
+						</g>
+					{/if}
+				</g>
+			</svg>
+		</div>
+
+		{#if tooltipData && isTooltipActive}
+			<div
+				class="pie-chart-tooltip"
+				style="top: {tooltipPosition.y}px; left: {tooltipPosition.x}px;"
+			>
+				<div class="pie-chart-tooltip-content">
+					<div class="pie-chart-tooltip-title">{tooltipData[labelKey]}</div>
+					<div class="pie-chart-tooltip-row">
+						<div class="pie-chart-tooltip-color is-{tooltipData.color}"></div>
+						<span class="pie-chart-tooltip-value">
+							{tooltipData[valueKey]} ({tooltipData.percentage.toFixed(1)}%)
+						</span>
+					</div>
+				</div>
+			</div>
+		{/if}
+
+		{#if showLegend}
+			<div class="pie-chart-legend">
+				{#each slices as slice}
+					<div class="pie-chart-legend-item">
+						<div class="pie-chart-legend-color is-{slice.color}"></div>
+						<span>{slice[labelKey]}</span>
+						{#if showValues}
+							<span class="pie-chart-legend-value">({slice[valueKey]})</span>
+						{/if}
+					</div>
+				{/each}
+			</div>
+		{/if}
+	{/if}
 </div>

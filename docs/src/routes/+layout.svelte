@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Provider } from 'sappsui';
+	import '@fontsource-variable/montserrat';
 	import '../app.css';
 	import { storeApp } from '$lib/store/store.svelte';
 	let { children } = $props();

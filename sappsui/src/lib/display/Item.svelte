@@ -10,18 +10,18 @@
 		description?: string;
 		icon?: IconName;
 		src?: string;
-		variant?: 'ghost' | 'outline' | 'surface' | 'primary' | 'secondary' | 'muted';
+		variant?: 'ghost' | 'outlined' | 'surface' | 'primary' | 'secondary' | 'muted';
 		size?: 'sm' | 'md' | 'lg';
 		status?: 'online' | 'offline' | 'busy' | 'away';
 		href?: string;
-		disabled?: boolean;
-		active?: boolean;
-		compact?: boolean;
-		divider?: boolean;
-		shadow?: boolean;
+		isDisabled?: boolean;
+		isActive?: boolean;
+		isCompact?: boolean;
+		hasDivider?: boolean;
+		hasShadow?: boolean;
 		onclick?: (id: string | number) => void;
 		actions?: Snippet;
-		solid?: boolean;
+		isSolid?: boolean;
 	};
 
 	let {
@@ -34,19 +34,19 @@
 		size = 'md',
 		status,
 		href,
-		disabled = false,
-		active = false,
-		compact = false,
-		divider = false,
-		shadow = false,
+		isDisabled,
+		isActive,
+		isCompact,
+		hasDivider,
+		hasShadow,
 		onclick,
 		actions,
-		solid
+		isSolid
 	}: Props = $props();
 
 	const variantClasses = {
 		ghost: 'is-ghost',
-		outline: 'is-outline',
+		outlined: 'is-outlined',
 		surface: 'is-surface',
 		primary: 'is-primary',
 		secondary: 'is-secondary',
@@ -72,13 +72,13 @@
 			'item',
 			variantClasses[variant],
 			sizeClasses[size],
-			isInteractive && !disabled && 'is-interactive',
-			active && 'on-active',
-			disabled && 'is-disabled',
-			compact && 'is-compact',
-			divider && 'has-divider',
-			shadow && 'has-shadow',
-			solid && 'is-solid',
+			isInteractive && !isDisabled && 'is-interactive',
+			isActive && 'is-active',
+			isDisabled && 'is-disabled',
+			isCompact && 'is-compact',
+			isSolid && 'is-solid',
+			hasDivider && 'has-divider',
+			hasShadow && 'has-shadow',
 			(icon || src) && !label && !description && 'has-icon-only'
 		)
 	);
@@ -101,16 +101,16 @@
 	{/if}
 {/snippet}
 
-{#if href && !disabled}
-	<a {href} class={itemClasses} aria-disabled={disabled}>
+{#if href && !isDisabled}
+	<a {href} class={itemClasses} aria-disabled={isDisabled}>
 		{@render itemContent()}
 	</a>
-{:else if onclick && id && !disabled}
-	<button type="button" class={itemClasses} onclick={() => onclick(id)} {disabled}>
+{:else if onclick && id && !isDisabled}
+	<button type="button" class={itemClasses} onclick={() => onclick(id)} disabled={isDisabled}>
 		{@render itemContent()}
 	</button>
 {:else}
-	<div class={itemClasses} aria-disabled={disabled} aria-selected={active}>
+	<div class={itemClasses} aria-disabled={isDisabled} aria-selected={isActive}>
 		{@render itemContent()}
 	</div>
 {/if}

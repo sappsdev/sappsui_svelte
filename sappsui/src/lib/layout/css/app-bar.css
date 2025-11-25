@@ -1,6 +1,19 @@
 @layer components {
 	.appbar {
-		@apply w-full top-0 z-30 bg-background;
+		@apply w-full fixed top-0 z-30 bg-background;
+		@apply transition-all duration-300 ease-in-out;
+
+		&.is-blurred {
+			@apply backdrop-blur-lg bg-transparent;
+		}
+
+		&.is-bordered {
+			@apply border-b border-muted;
+		}
+
+		&.is-hidden {
+			@apply -translate-y-full;
+		}
 
 		.appbar-content {
 			@apply flex flex-nowrap items-center justify-between relative;

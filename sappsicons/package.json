@@ -1,0 +1,35 @@
+{
+  "name": "sappsicons",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dist": "bun src/build.ts",
+    "release": "bun run dist && bun publish"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sappsdev/sappsui_svelte.git"
+  },
+  "author": {
+    "name": "SappsDev",
+    "email": "info@sappsdev.com"
+  }
+}

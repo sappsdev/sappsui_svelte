@@ -41,10 +41,10 @@
 	let href = $state('');
 
 	// States
-	let loading = $state(false);
-	let disabled = $state(false);
-	let shadow = $state(false);
-	let solid = $state(true);
+	let isLoading = $state(false);
+	let isDisabled = $state(false);
+	let hasShadow = $state(false);
+	let isSolid = $state(true);
 
 	let hasProps = $derived(
 		[
@@ -53,10 +53,10 @@
 			type !== 'button',
 			icon !== 'fluent:heart-24-regular',
 			href,
-			loading,
-			disabled,
-			shadow,
-			solid
+			isLoading,
+			isDisabled,
+			hasShadow,
+			isSolid
 		].some(Boolean)
 	);
 
@@ -78,10 +78,10 @@
 			type !== 'button' && `\ttype="${type}"`,
 			href && `\thref="/example"`,
 			hasProps && !href && `\tonclick={handleClick}`,
-			loading && `\tloading`,
-			disabled && `\tdisabled`,
-			shadow && `\tshadow`,
-			solid && `\tsolid`,
+			isLoading && `\tisLoading`,
+			isDisabled && `\tisDisabled`,
+			hasShadow && `\thasShadow`,
+			isSolid && `\tisSolid`,
 			hasProps && `/>`,
 			!hasProps && `<IconButton icon="${icon}" onclick={handleClick} />`
 		].filter(Boolean);
@@ -101,15 +101,25 @@
 		},
 		{ prop: 'size', type: 'xs | sm | md | lg', initial: 'md' },
 		{ prop: 'class', type: 'string', initial: '' },
-		{ prop: 'loading', type: 'boolean', initial: 'false' },
-		{ prop: 'disabled', type: 'boolean', initial: 'false' },
-		{ prop: 'shadow', type: 'boolean', initial: 'false' },
+		{ prop: 'isLoading', type: 'boolean', initial: 'false' },
+		{ prop: 'isDisabled', type: 'boolean', initial: 'false' },
+		{ prop: 'hasShadow', type: 'boolean', initial: 'false' },
 		{ prop: 'solid', type: 'boolean', initial: 'false' }
 	];
 </script>
 
 {#snippet preview()}
-	<IconButton {icon} {variant} {size} {type} {href} {loading} {disabled} {shadow} {solid} />
+	<IconButton
+		icon={icon as any}
+		{variant}
+		{size}
+		{type}
+		{href}
+		{isLoading}
+		{isDisabled}
+		{hasShadow}
+		{isSolid}
+	/>
 {/snippet}
 
 {#snippet builder()}
@@ -119,10 +129,10 @@
 
 	<DocOptions title="Props">
 		<Checkbox onchange={(v) => (v ? (href = '/example') : (href = ''))} name="href" label="Link" />
-		<Checkbox bind:checked={loading} name="loading" label="Loading" />
-		<Checkbox bind:checked={disabled} name="disabled" label="Disabled" />
-		<Checkbox bind:checked={shadow} name="shadow" label="Shadow" />
-		<Checkbox bind:checked={solid} name="solid" label="Solid" />
+		<Checkbox bind:checked={isLoading} name="loading" label="Loading" />
+		<Checkbox bind:checked={isDisabled} name="disabled" label="Disabled" />
+		<Checkbox bind:checked={hasShadow} name="shadow" label="Shadow" />
+		<Checkbox bind:checked={isSolid} name="solid" label="Solid" />
 	</DocOptions>
 {/snippet}
 
@@ -130,7 +140,9 @@
 	>Icon buttons allow users to take actions with a single icon tap.</DocHeader
 >
 
-<DocPreview {preview} {builder} />
+<DocPreview {builder}>
+	{@render preview()}
+</DocPreview>
 
 <DocCode code={code()} />
 

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { IconName } from '$lib/assets/icons/index.js';
 	import { Icon } from '$lib/index.js';
+	import type { IconName } from '$lib/types.js';
 	import { cn } from '$lib/utils/class-names.js';
 
 	type Props = {
@@ -12,7 +12,7 @@
 			| 'primary'
 			| 'secondary'
 			| 'muted'
-			| 'outline'
+			| 'outlined'
 			| 'ghost'
 			| 'success'
 			| 'info'
@@ -20,10 +20,10 @@
 			| 'danger';
 		size?: 'xs' | 'sm' | 'md' | 'lg';
 		class?: string;
-		loading?: boolean;
-		disabled?: boolean;
-		shadow?: boolean;
-		solid?: boolean;
+		isLoading?: boolean;
+		isDisabled?: boolean;
+		hasShadow?: boolean;
+		isSolid?: boolean;
 	};
 
 	const {
@@ -34,17 +34,17 @@
 		variant = 'primary',
 		size = 'md',
 		class: className,
-		loading = false,
-		disabled,
-		shadow,
-		solid
+		isLoading = false,
+		isDisabled,
+		hasShadow,
+		isSolid
 	}: Props = $props();
 
 	const variantClasses = {
 		primary: 'is-primary',
 		secondary: 'is-secondary',
 		muted: 'is-muted',
-		outline: 'is-outline',
+		outlined: 'is-outlined',
 		ghost: 'is-ghost',
 		success: 'is-success',
 		info: 'is-info',
@@ -65,12 +65,12 @@
 			'has-icon',
 			variantClasses[variant],
 			sizeClasses[size],
-			solid && 'is-solid',
-			shadow && 'has-shadow',
+			isSolid && 'is-solid',
+			hasShadow && 'has-shadow',
 			className
 		)
 	);
-	let btnClasses = $derived(cn('btn-icon', loading && 'invisible'));
+	let btnClasses = $derived(cn('btn-icon', isLoading && 'invisible'));
 </script>
 
 {#if href}
@@ -78,8 +78,14 @@
 		<Icon class={btnClasses} name={icon} />
 	</a>
 {:else}
-	<button {type} {onclick} disabled={disabled || loading} class={baseClasses} aria-busy={loading}>
-		{#if loading}
+	<button
+		{type}
+		{onclick}
+		disabled={isDisabled || isLoading}
+		class={baseClasses}
+		aria-busy={isLoading}
+	>
+		{#if isLoading}
 			<span class="btn-loading">
 				<Icon name="svg-spinners:gooey-balls-2" class="loading-icon" />
 			</span>
