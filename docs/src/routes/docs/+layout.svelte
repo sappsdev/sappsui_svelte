@@ -1,0 +1,316 @@
+<script lang="ts">
+	import {
+		Form24RegularIcon,
+		HandDraw24RegularIcon,
+		LayoutRowTwoSplitBottom24RegularIcon,
+		LayoutColumnOneThirdRight24RegularIcon,
+		PersonChat24RegularIcon,
+		StarArrowRightStart24RegularIcon,
+		StreetSign24RegularIcon
+	} from '$lib/icons';
+	import {
+		Scaffold,
+		Avatar,
+		Drawer,
+		Dropdown,
+		AppBar,
+		Sidebar,
+		ToggleTheme,
+		SideNav,
+		Card,
+		toast
+	} from 'sappsui';
+
+	let { children } = $props();
+
+	let drawerOpen = $state(false);
+
+	const uiItems: any = [
+		{
+			type: 'header',
+			icon: StarArrowRightStart24RegularIcon,
+			label: 'Getting Started'
+		},
+		{
+			label: 'Installation',
+			href: '/docs/starter/install'
+		},
+		{
+			label: 'Flex & Grid',
+			href: '/docs/starter/flex-utilities'
+		},
+		{
+			label: 'Icons',
+			href: '/docs/starter/icons'
+		},
+		{
+			label: 'LLM',
+			href: '/docs/starter/llm'
+		},
+		{
+			label: 'Typography',
+			href: '/docs/starter/typography'
+		},
+		{
+			label: 'Theme',
+			href: '/docs/starter/theme'
+		},
+		{
+			type: 'header',
+			icon: LayoutRowTwoSplitBottom24RegularIcon,
+			label: 'Layout'
+		},
+		{
+			label: 'AppBar',
+			href: '/docs/layout/app-bar'
+		},
+		{
+			label: 'Scaffold',
+			href: '/docs/layout/scaffold'
+		},
+		{
+			type: 'header',
+			icon: HandDraw24RegularIcon,
+			label: 'Control'
+		},
+		{
+			label: 'Button',
+			href: '/docs/control/button'
+		},
+		{
+			label: 'IconButton',
+			href: '/docs/control/icon-button'
+		},
+		{
+			label: 'Audio',
+			href: '/docs/control/audio'
+		},
+		{
+			label: 'Record',
+			href: '/docs/control/record'
+		},
+		{
+			label: 'Video',
+			href: '/docs/control/video'
+		},
+		{
+			type: 'header',
+			icon: PersonChat24RegularIcon,
+			label: 'Display'
+		},
+		{
+			label: 'Accordion',
+			href: '/docs/display/accordion'
+		},
+		{
+			label: 'Alert',
+			href: '/docs/display/alert'
+		},
+		{
+			label: 'Avatar',
+			href: '/docs/display/avatar'
+		},
+		{
+			label: 'Card',
+			href: '/docs/display/card'
+		},
+		{
+			label: 'Carousel',
+			href: '/docs/display/carousel'
+		},
+		{
+			label: 'ChatBox',
+			href: '/docs/display/chat-box'
+		},
+		{
+			label: 'Collapsible',
+			href: '/docs/display/collapsible'
+		},
+		{
+			label: 'Empty',
+			href: '/docs/display/empty'
+		},
+		{
+			label: 'Icon',
+			href: '/docs/display/icon'
+		},
+		{
+			label: 'Item',
+			href: '/docs/display/item'
+		},
+		{
+			label: 'Marquee',
+			href: '/docs/display/marquee'
+		},
+		{
+			label: 'Section',
+			href: '/docs/display/section'
+		},
+		{
+			label: 'Table',
+			href: '/docs/display/table'
+		},
+		{
+			type: 'header',
+			icon: Form24RegularIcon,
+			label: 'Form'
+		},
+		{
+			label: 'Checkbox',
+			href: '/docs/form/checkbox'
+		},
+		{
+			label: 'ComboBox',
+			href: '/docs/form/combo-box'
+		},
+		{
+			label: 'CsvField',
+			href: '/docs/form/csv-field'
+		},
+		{
+			label: 'DateField',
+			href: '/docs/form/date-field'
+		},
+		{
+			label: 'Dropzone',
+			href: '/docs/form/dropzone'
+		},
+		{
+			label: 'Form',
+			href: '/docs/form/form'
+		},
+		{
+			label: 'ImageCropper',
+			href: '/docs/form/image-cropper'
+		},
+		{
+			label: 'Select',
+			href: '/docs/form/select'
+		},
+		{
+			label: 'Slider',
+			href: '/docs/form/slider'
+		},
+		{
+			label: 'PhoneField',
+			href: '/docs/form/phone-field'
+		},
+		{
+			label: 'RadioGroup',
+			href: '/docs/form/radio-group'
+		},
+		{
+			label: 'TextField',
+			href: '/docs/form/text-field'
+		},
+		{
+			label: 'Toggle',
+			href: '/docs/form/toggle'
+		},
+		{
+			type: 'header',
+			icon: LayoutColumnOneThirdRight24RegularIcon,
+			label: 'Overlay'
+		},
+		{
+			label: 'Drawer',
+			href: '/docs/overlay/drawer'
+		},
+		{
+			label: 'Dropdown',
+			href: '/docs/overlay/dropdown'
+		},
+		{
+			label: 'Modal',
+			href: '/docs/overlay/modal'
+		},
+		{
+			label: 'Toast',
+			href: '/docs/overlay/toast'
+		},
+		{
+			label: 'Tooltip',
+			href: '/docs/overlay/tooltip'
+		},
+		{
+			type: 'header',
+			icon: StreetSign24RegularIcon,
+			label: 'Navigation'
+		},
+		{
+			label: 'Navmenu',
+			href: '/docs/navigation/nav-menu'
+		},
+		{
+			label: 'Tabs',
+			href: '/docs/navigation/tabs'
+		},
+		{
+			label: 'Sidenav',
+			href: '/docs/navigation/sidenav'
+		},
+		{
+			type: 'header',
+			icon: LayoutColumnOneThirdRight24RegularIcon,
+			label: 'Charts'
+		},
+		{
+			label: 'Arc',
+			href: '/docs/charts/arc'
+		},
+		{
+			label: 'Area',
+			href: '/docs/charts/area'
+		},
+		{
+			label: 'Bar',
+			href: '/docs/charts/bar'
+		},
+		{
+			label: 'Candlestick',
+			href: '/docs/charts/candlestick'
+		},
+		{
+			label: 'Line',
+			href: '/docs/charts/line'
+		},
+		{
+			label: 'Pie',
+			href: '/docs/charts/pie'
+		}
+	];
+	const dropdownOptions = [{ label: 'Settings' }, { label: 'My Account' }];
+</script>
+
+<Scaffold
+	mainClass="lg:ml-48 2xl:mr-56 vh-20 lg:p-4 mt-16 pb-16"
+	startClass="invisible lg:visible vh-16 mt-16"
+	endClass="invisible 2xl:visible vh-16 mr-8 my-4 mt-16"
+	bodyClass="boxed"
+>
+	{#snippet appBar()}
+		<AppBar class="h-16" contentClass="boxed" isBlurred>
+			{#snippet start()}
+				<h4>SappsUI</h4>
+			{/snippet}
+			{#snippet end()}
+				<ToggleTheme />
+				<Dropdown options={dropdownOptions}>
+					<Avatar size="sm" src="/images/avatar-1.jpeg" alt="User Avatar" />
+				</Dropdown>
+			{/snippet}
+		</AppBar>
+	{/snippet}
+	{#snippet start()}
+		<Sidebar class="w-48 py-8">
+			<SideNav items={uiItems} />
+		</Sidebar>
+	{/snippet}
+	{@render children()}
+	{#snippet end()}
+		<Card>SappsJs</Card>
+	{/snippet}
+</Scaffold>
+<Drawer bind:open={drawerOpen} onclose={() => (drawerOpen = false)} class="w-56">
+	<SideNav items={uiItems} />
+</Drawer>
