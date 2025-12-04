@@ -4,7 +4,6 @@ let toastPositionValue = $state<ToastPosition>('bottom-left');
 let toastIconValue = $state(false);
 let toastSolidValue = $state(true);
 
-// Theme colors with default values from app.css
 let themeColors = $state({
 	primary: 'oklch(54.6% 0.245 262.881)',
 	onPrimary: 'oklch(93.2% 0.032 255.585)',

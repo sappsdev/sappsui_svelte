@@ -191,10 +191,10 @@
 			label: 'Checkbox',
 			href: '/docs/form/checkbox'
 		},
-		{
-			label: 'ComboBox',
-			href: '/docs/form/combo-box'
-		},
+		// {
+		// 	label: 'ComboBox',
+		// 	href: '/docs/form/combo-box'
+		// },
 		{
 			label: 'CsvField',
 			href: '/docs/form/csv-field'
@@ -319,15 +319,16 @@
 </script>
 
 <Scaffold
-	mainClass="lg:ml-48 2xl:mr-56 vh-20 lg:p-4 mt-16 pb-16"
+	mainClass="lg:ml-48 vh-20 lg:p-4 mt-16 pb-16"
 	startClass="invisible lg:visible vh-16 mt-16"
-	endClass="invisible 2xl:visible vh-16 mr-8 my-4 mt-16"
 	bodyClass="boxed"
 >
 	{#snippet appBar()}
 		<AppBar class="h-16" contentClass="boxed" isBlurred>
 			{#snippet start()}
-				<h4>SappsUI</h4>
+				<a href="/">
+					<h4>SappsUI</h4>
+				</a>
 			{/snippet}
 			{#snippet end()}
 				<ToggleTheme />
@@ -343,9 +344,6 @@
 		</Sidebar>
 	{/snippet}
 	{@render children()}
-	{#snippet end()}
-		<Card>SappsJs</Card>
-	{/snippet}
 </Scaffold>
 <Drawer bind:open={drawerOpen} onclose={() => (drawerOpen = false)} class="w-56">
 	<SideNav items={uiItems} />

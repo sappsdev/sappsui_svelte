@@ -2,7 +2,7 @@
 	import DocHeader from '$lib/components/doc/DocHeader.svelte';
 	import Color from '$lib/components/utils/Color.svelte';
 	import { storeApp } from '$lib/store/store.svelte';
-	import { Button, Card, Modal, Section, Alert, Code } from 'sappsui';
+	import { Button, Card, Modal, Section, Alert, Code, Drawer } from 'sappsui';
 
 	type ThemeColorKey = keyof typeof storeApp.themeColors;
 
@@ -40,6 +40,7 @@
 	let openColorPicker = $state(false);
 	let selectedColorKey = $state<ThemeColorKey>('primary');
 	let selectedColorType = $state<'main' | 'on'>('main');
+	let showCssDrawer = $state(false);
 
 	function openPicker(colorKey: ThemeColorKey, type: 'main' | 'on') {
 		selectedColorKey = colorKey;
@@ -74,6 +75,67 @@
 		storeApp.setThemeColor('surface', 'oklch(96.7% 0.003 264.542)');
 		storeApp.setThemeColor('onSurface', 'oklch(27.9% 0.041 260.031)');
 	}
+
+	function generateAppCss() {
+		const colors = storeApp.themeColors;
+		return `@import 'tailwindcss';
+@import 'sappsui/css';
+
+@custom-variant dark (&:is(.dark *));
+
+body {
+	font-family: 'Montserrat Variable', sans-serif;
+}
+
+:root {
+	--primary: ${colors.primary};
+	--on-primary: ${colors.onPrimary};
+
+	--secondary: ${colors.secondary};
+	--on-secondary: ${colors.onSecondary};
+
+	--muted: ${colors.muted};
+	--on-muted: ${colors.onMuted};
+
+	--background: oklch(98.5% 0.002 247.839);
+	--on-background: oklch(21% 0.034 264.665);
+
+	--surface: ${colors.surface};
+	--on-surface: ${colors.onSurface};
+
+	--outline: oklch(70.7% 0.022 261.325);
+	--on-outline: oklch(21% 0.034 264.665);
+
+	--overlay: oklch(0 0 0 / 60%);
+	--on-overlay: oklch(1 0 0);
+
+	--success: ${colors.success};
+	--on-success: ${colors.onSuccess};
+
+	--info: ${colors.info};
+	--on-info: ${colors.onInfo};
+
+	--warning: ${colors.warning};
+	--on-warning: ${colors.onWarning};
+
+	--danger: ${colors.danger};
+	--on-danger: ${colors.onDanger};
+
+	--radius-ui: 0.75rem;
+	--scrollbar-size: 6px;
+}
+
+.dark {
+	--muted: oklch(37.3% 0.034 259.733);
+	--on-muted: oklch(87.2% 0.01 258.338);
+
+	--background: oklch(13% 0.028 261.692);
+	--on-background: oklch(96.7% 0.003 264.542);
+
+	--surface: oklch(21% 0.034 264.665);
+	--on-surface: oklch(92.8% 0.006 264.531);
+}`;
+	}
 </script>
 
 <DocHeader title="Theme Colors">
@@ -82,13 +144,15 @@
 </DocHeader>
 
 <Section>
-	<Alert status="info" class="mb-6">
+	<Alert status="info">
 		<strong>Interactive Theme Customization:</strong> Click on any color below to open the color picker.
-		Your changes will be applied immediately throughout the entire application. Use the "Reset Colors"
-		button to restore default values.
+		Your changes will be applied immediately throughout the entire application. Use the "Generate CSS"
+		button to export your customized theme, or "Reset Colors" to restore default values.
 	</Alert>
 
-	<div class="flex justify-end mb-4">
+	<div class="flex justify-end gap-2 mb-4">
+		<Button variant="outlined" size="sm" onclick={() => (showCssDrawer = true)}>Generate CSS</Button
+		>
 		<Button variant="outlined" size="sm" onclick={resetColors}>Reset Colors</Button>
 	</div>
 
@@ -100,10 +164,9 @@
 			<Card>
 				<div class="p-6">
 					<h3 class="text-lg font-semibold mb-2">{colorPair.label}</h3>
-					<p class="text-sm text-muted mb-4">{colorPair.description}</p>
+					<p class="text-sm text-on-muted mb-4">{colorPair.description}</p>
 
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-						<!-- Main Color -->
 						<div>
 							<div class="flex items-center justify-between mb-2">
 								<span class="text-sm font-medium">{colorPair.label}</span>
@@ -127,7 +190,6 @@
 							</div>
 						</div>
 
-						<!-- On Color -->
 						<div>
 							<div class="flex items-center justify-between mb-2">
 								<span class="text-sm font-medium">On {colorPair.label}</span>
@@ -152,7 +214,6 @@
 						</div>
 					</div>
 
-					<!-- Example Usage -->
 					<div
 						class="mt-4 p-4 rounded-lg"
 						style="background-color: {storeApp.themeColors[mainKey]}; color: {storeApp.themeColors[
@@ -214,3 +275,14 @@
 <Modal bind:open={openColorPicker}>
 	<Color onColorSelect={handleColorSelect} />
 </Modal>
+
+<Drawer bind:open={showCssDrawer} position="end" onclose={() => (showCssDrawer = false)}>
+	{#snippet header()}
+		<h3 class="text-lg font-semibold">Generated app.css</h3>
+		<p class="text-sm text-on-muted mt-1">
+			Copy this CSS file to your <code>src/app.css</code> to apply your custom theme colors
+		</p>
+	{/snippet}
+
+	<Code code={generateAppCss()} lang="css" showCopy />
+</Drawer>
