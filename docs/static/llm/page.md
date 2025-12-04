@@ -29,6 +29,23 @@
 - [Empty](https://svelte.sappsdev.com/llm/empty.md) - Display empty states with optional actions when no content is available
 - [Marquee](https://svelte.sappsdev.com/llm/marquee.md) - Scrolling content widget for horizontal or vertical overflow
 
+### Form Components
+- [Checkbox](https://svelte.sappsdev.com/llm/checkbox.md) - Binary selection input for options
+- [Toggle](https://svelte.sappsdev.com/llm/toggle.md) - Switch-style on/off input for settings
+- [RadioGroup](https://svelte.sappsdev.com/llm/radio-group.md) - Mutually exclusive option selection
+- [TextField](https://svelte.sappsdev.com/llm/text-field.md) - Single-line text input with validation
+- [Textarea](https://svelte.sappsdev.com/llm/textarea.md) - Multi-line text input for longer content
+- [Select](https://svelte.sappsdev.com/llm/select.md) - Dropdown selection from options list
+- [ComboBox](https://svelte.sappsdev.com/llm/combo-box.md) - Searchable dropdown with async data loading
+- [DateField](https://svelte.sappsdev.com/llm/date-field.md) - Date picker with calendar interface
+- [PhoneField](https://svelte.sappsdev.com/llm/phone-field.md) - International phone number input with country selector
+- [Slider](https://svelte.sappsdev.com/llm/slider.md) - Range input for numeric values
+- [PasswordField](https://svelte.sappsdev.com/llm/password-field.md) - Password input with strength indicator
+- [PinField](https://svelte.sappsdev.com/llm/pin-field.md) - Multi-digit PIN/OTP input with auto-focus
+- [Dropzone](https://svelte.sappsdev.com/llm/dropzone.md) - File upload with drag-and-drop support
+- [ImageCropper](https://svelte.sappsdev.com/llm/image-cropper.md) - Interactive image cropping tool
+- [CsvField](https://svelte.sappsdev.com/llm/csv-field.md) - CSV file import with column mapping
+
 ### Advanced Components
 - [Table](https://svelte.sappsdev.com/llm/table.md) - Data table with pagination, sorting, filtering, and server-side support
 - [ChatBox](https://svelte.sappsdev.com/llm/chat-box.md) - Complete chat interface with real-time messaging and WebSocket support
