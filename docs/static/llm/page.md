@@ -46,6 +46,13 @@
 - [ImageCropper](https://svelte.sappsdev.com/llm/image-cropper.md) - Interactive image cropping tool
 - [CsvField](https://svelte.sappsdev.com/llm/csv-field.md) - CSV file import with column mapping
 
+### Overlay Components
+- [Drawer](https://svelte.sappsdev.com/llm/drawer.md) - Panel that slides in from screen edges (start, end, top, bottom)
+- [Dropdown](https://svelte.sappsdev.com/llm/dropdown.md) - Menu of options triggered by button or element
+- [Modal](https://svelte.sappsdev.com/llm/modal.md) - Dialog window that overlays main content
+- [Toast](https://svelte.sappsdev.com/llm/toast.md) - Lightweight auto-dismissing notifications
+- [Tooltip](https://svelte.sappsdev.com/llm/tooltip.md) - Informative text displayed on hover or focus
+
 ### Advanced Components
 - [Table](https://svelte.sappsdev.com/llm/table.md) - Data table with pagination, sorting, filtering, and server-side support
 - [ChatBox](https://svelte.sappsdev.com/llm/chat-box.md) - Complete chat interface with real-time messaging and WebSocket support
