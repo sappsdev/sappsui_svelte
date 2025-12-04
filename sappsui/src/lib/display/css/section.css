@@ -3,7 +3,7 @@
 		@apply w-full flex flex-col relative;
 
 		&:has(> .section-cover) {
-			@apply overflow-hidden bg-transparent! text-white! text-shadow-lg! z-0;
+			@apply overflow-hidden bg-transparent! text-white! text-shadow-sm! z-0;
 		}
 
 		.section-cover {

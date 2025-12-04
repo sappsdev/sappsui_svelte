@@ -4,7 +4,7 @@
 		@apply transition-colors duration-300 ease-in-out;
 
 		&:has(> .card-cover) {
-			@apply bg-transparent! text-white! text-shadow-lg! z-0;
+			@apply bg-transparent! text-white! text-shadow-sm! z-0;
 		}
 	}
 
@@ -18,7 +18,7 @@
 	}
 
 	.card.has-shadow {
-		@apply shadow-lg shadow-muted;
+		@apply shadow-sm shadow-muted;
 	}
 
 	.card.is-primary {

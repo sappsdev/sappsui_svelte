@@ -6,7 +6,8 @@
 		LayoutColumnOneThirdRight24RegularIcon,
 		PersonChat24RegularIcon,
 		StarArrowRightStart24RegularIcon,
-		StreetSign24RegularIcon
+		StreetSign24RegularIcon,
+		LineHorizontal324RegularIcon
 	} from '$lib/icons';
 	import {
 		Scaffold,
@@ -18,7 +19,9 @@
 		ToggleTheme,
 		SideNav,
 		Card,
-		toast
+		toast,
+		IconButton,
+		NavMenu
 	} from 'sappsui';
 	import { storeApp } from '$lib/store/store.svelte';
 
@@ -26,7 +29,6 @@
 
 	let drawerOpen = $state(false);
 
-	// Apply theme colors to CSS custom properties
 	$effect(() => {
 		const root = document.documentElement;
 		const colors = storeApp.themeColors;
@@ -191,10 +193,6 @@
 			label: 'Checkbox',
 			href: '/docs/form/checkbox'
 		},
-		// {
-		// 	label: 'ComboBox',
-		// 	href: '/docs/form/combo-box'
-		// },
 		{
 			label: 'CsvField',
 			href: '/docs/form/csv-field'
@@ -315,7 +313,19 @@
 			href: '/docs/charts/pie'
 		}
 	];
-	const dropdownOptions = [{ label: 'Settings' }, { label: 'My Account' }];
+
+	const menuItems = [
+		{
+			label: 'Home',
+			icon: 'fluent:home-24-regular',
+			href: '/'
+		},
+		{
+			label: 'About',
+			icon: 'fluent:info-24-regular',
+			href: '/about'
+		}
+	];
 </script>
 
 <Scaffold
@@ -326,15 +336,22 @@
 	{#snippet appBar()}
 		<AppBar class="h-16" contentClass="boxed" isBlurred>
 			{#snippet start()}
+				<IconButton
+					icon={LineHorizontal324RegularIcon}
+					onclick={() => (drawerOpen = !drawerOpen)}
+					variant="ghost"
+					size="sm"
+					class="lg:hidden"
+				/>
 				<a href="/">
 					<h4>SappsUI</h4>
 				</a>
 			{/snippet}
+			{#snippet center()}
+				<NavMenu items={menuItems} />
+			{/snippet}
 			{#snippet end()}
 				<ToggleTheme />
-				<Dropdown options={dropdownOptions}>
-					<Avatar size="sm" src="/images/avatar-1.jpeg" alt="User Avatar" />
-				</Dropdown>
 			{/snippet}
 		</AppBar>
 	{/snippet}
@@ -344,6 +361,7 @@
 		</Sidebar>
 	{/snippet}
 	{@render children()}
+	<footer class="mt-auto">footer</footer>
 </Scaffold>
 <Drawer bind:open={drawerOpen} onclose={() => (drawerOpen = false)} class="w-56">
 	<SideNav items={uiItems} />

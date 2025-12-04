@@ -26,6 +26,7 @@
 @import './display/css/chip.css';
 @import './display/css/code.css';
 @import './display/css/collapsible.css';
+@import './display/css/divider.css';
 @import './display/css/empty.css';
 @import './display/css/item.css';
 @import './display/css/marquee.css';
@@ -49,7 +50,6 @@
 
 @import './layout/css/app-bar.css';
 @import './layout/css/bottom-bar.css';
-@import './layout/css/divider.css';
 @import './layout/css/scaffold.css';
 @import './layout/css/sidebar.css';
 

@@ -1,6 +1,6 @@
 @layer components {
 	.date-popover {
-		@apply h-auto overflow-y-auto drop-shadow-lg flex flex-col gap-1 p-2 my-1 scrollbar-hide w-72;
+		@apply h-auto overflow-y-auto drop-shadow-sm flex flex-col gap-1 p-2 my-1 scrollbar-hide w-72;
 		@apply bg-background text-on-background rounded-ui;
 		@apply invisible opacity-0 transition-opacity duration-300 ease-in-out;
 		position: fixed;

@@ -30,7 +30,7 @@
 	}
 
 	.chip.has-shadow {
-		@apply shadow-lg;
+		@apply shadow-sm;
 	}
 
 	.chip.is-solid.is-primary {

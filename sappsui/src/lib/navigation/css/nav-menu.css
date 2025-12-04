@@ -112,7 +112,7 @@
 		@apply flex flex-col gap-2 p-2 my-1;
 		@apply bg-background text-on-background rounded-ui;
 		@apply invisible opacity-0 transition-opacity duration-300 ease-in-out;
-		@apply shadow-lg shadow-muted border border-muted;
+		@apply shadow-sm shadow-muted border border-muted;
 		position: fixed;
 		z-index: 9999;
 		max-height: 80vh;

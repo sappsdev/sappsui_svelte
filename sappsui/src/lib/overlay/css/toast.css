@@ -24,7 +24,7 @@
 
 	.toast {
 		@apply absolute inset-x-0 flex items-center gap-3 p-4 pointer-events-auto rounded-ui;
-		@apply transition-all duration-300 ease-out shadow-lg;
+		@apply transition-all duration-300 ease-out shadow-sm;
 
 		transform: translateY(calc((var(--toast-total) - var(--toast-index) - 1) * -8px))
 			scale(calc(1 - (var(--toast-total) - var(--toast-index) - 1) * 0.05));

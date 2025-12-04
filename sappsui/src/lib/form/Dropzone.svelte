@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { IconData } from '$lib/display/Icon.svelte';
+	import { Attach24RegularIcon, Dismiss24RegularIcon } from '$lib/icons/index.js';
 	import { Icon } from '$lib/index.js';
 	import { cn } from '$lib/utils/class-names.js';
 
@@ -38,14 +39,14 @@
 		maxSize,
 		class: className,
 		controlClass,
-		icon = 'upload',
+		icon,
 		variant = 'outlined',
 		size = 'md',
 		name,
 		label,
 		helpText,
 		errorText,
-		placeholder = 'Arrastra archivos aquí o haz clic para seleccionar',
+		placeholder = 'Drag & drop files here or click to select',
 		disabled = false,
 		onchange,
 		isSolid
@@ -163,7 +164,7 @@
 								<img {src} alt={fileItem.name} class="dropzone-file-image" />
 							{:else}
 								<div class="dropzone-file-icon">
-									<Icon icon="file" />
+									<Icon icon={Attach24RegularIcon} />
 								</div>
 							{/if}
 						{/await}
@@ -180,7 +181,7 @@
 						onclick={() => removeFile(i)}
 						aria-label="Eliminar archivo"
 					>
-						<Icon name="x" />
+						<Icon icon={Dismiss24RegularIcon} />
 					</button>
 				</div>
 			{/each}

@@ -126,7 +126,7 @@
 	}
 
 	.btn.has-shadow {
-		@apply shadow-lg shadow-muted;
+		@apply shadow-sm shadow-muted;
 	}
 
 	.btn:disabled {

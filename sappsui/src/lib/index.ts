@@ -22,6 +22,7 @@ import ChatBox from '$lib/display/ChatBox.svelte';
 import Chip from '$lib/display/Chip.svelte';
 import Code from '$lib/display/Code.svelte';
 import Collapsible from '$lib/display/Collapsible.svelte';
+import Divider from '$lib/display/Divider.svelte';
 import Empty from '$lib/display/Empty.svelte';
 import Icon from '$lib/display/Icon.svelte';
 import Item from '$lib/display/Item.svelte';
@@ -46,7 +47,6 @@ import Textarea from '$lib/form/Textarea.svelte';
 import Toggle from '$lib/form/Toggle.svelte';
 
 import AppBar from '$lib/layout/AppBar.svelte';
-import Divider from '$lib/layout/Divider.svelte';
 import Provider from '$lib/layout/Provider.svelte';
 import Scaffold from '$lib/layout/Scaffold.svelte';
 import Sidebar from '$lib/layout/Sidebar.svelte';

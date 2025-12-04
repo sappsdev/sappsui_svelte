@@ -117,14 +117,12 @@
 {#snippet preview()}
 	<Dropzone
 		name="dropzone"
-		placeholder={placeholder || 'Arrastra archivos aquí o haz clic para seleccionar'}
 		{variant}
 		{size}
 		{multiple}
 		{disabled}
 		{isSolid}
 		accept={withAccept ? 'image/*' : undefined}
-		icon={withIcon ? 'upload' : undefined}
 		label={label || undefined}
 		helpText={helpText || undefined}
 		errorText={errorText || undefined}
