@@ -48,6 +48,8 @@ import Toggle from '$lib/form/Toggle.svelte';
 
 import AppBar from '$lib/layout/AppBar.svelte';
 import Provider from '$lib/layout/Provider.svelte';
+import Footer from '$lib/layout/Footer.svelte';
+import FooterLinks from '$lib/layout/FooterLinks.svelte';
 import Scaffold from '$lib/layout/Scaffold.svelte';
 import Sidebar from '$lib/layout/Sidebar.svelte';
 
@@ -123,6 +125,8 @@ export {
 	Divider,
 	Dropdown,
 	Empty,
+	Footer,
+	FooterLinks,
 	formatCurrency,
 	formatDate,
 	formatNumber,

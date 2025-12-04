@@ -50,6 +50,8 @@
 
 @import './layout/css/app-bar.css';
 @import './layout/css/bottom-bar.css';
+@import './layout/css/footer.css';
+@import './layout/css/footer-links.css';
 @import './layout/css/scaffold.css';
 @import './layout/css/sidebar.css';
 

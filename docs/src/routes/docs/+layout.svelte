@@ -11,15 +11,11 @@
 	} from '$lib/icons';
 	import {
 		Scaffold,
-		Avatar,
 		Drawer,
-		Dropdown,
 		AppBar,
 		Sidebar,
 		ToggleTheme,
 		SideNav,
-		Card,
-		toast,
 		IconButton,
 		NavMenu
 	} from 'sappsui';
@@ -89,6 +85,10 @@
 		{
 			label: 'AppBar',
 			href: '/docs/layout/app-bar'
+		},
+		{
+			label: 'Footer',
+			href: '/docs/layout/footer'
 		},
 		{
 			label: 'Scaffold',
