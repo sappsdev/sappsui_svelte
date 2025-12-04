@@ -20,10 +20,34 @@
 		Card,
 		toast
 	} from 'sappsui';
+	import { storeApp } from '$lib/store/store.svelte';
 
 	let { children } = $props();
 
 	let drawerOpen = $state(false);
+
+	// Apply theme colors to CSS custom properties
+	$effect(() => {
+		const root = document.documentElement;
+		const colors = storeApp.themeColors;
+
+		root.style.setProperty('--primary', colors.primary);
+		root.style.setProperty('--on-primary', colors.onPrimary);
+		root.style.setProperty('--secondary', colors.secondary);
+		root.style.setProperty('--on-secondary', colors.onSecondary);
+		root.style.setProperty('--muted', colors.muted);
+		root.style.setProperty('--on-muted', colors.onMuted);
+		root.style.setProperty('--success', colors.success);
+		root.style.setProperty('--on-success', colors.onSuccess);
+		root.style.setProperty('--info', colors.info);
+		root.style.setProperty('--on-info', colors.onInfo);
+		root.style.setProperty('--warning', colors.warning);
+		root.style.setProperty('--on-warning', colors.onWarning);
+		root.style.setProperty('--danger', colors.danger);
+		root.style.setProperty('--on-danger', colors.onDanger);
+		root.style.setProperty('--surface', colors.surface);
+		root.style.setProperty('--on-surface', colors.onSurface);
+	});
 
 	const uiItems: any = [
 		{

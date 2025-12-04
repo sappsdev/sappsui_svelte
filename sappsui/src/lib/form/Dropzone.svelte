@@ -1,6 +1,6 @@
 <script lang="ts">
+	import type { IconData } from '$lib/display/Icon.svelte';
 	import { Icon } from '$lib/index.js';
-	import type { IconName } from '$lib/types.js';
 	import { cn } from '$lib/utils/class-names.js';
 
 	type FileWithUrl = {
@@ -18,7 +18,7 @@
 		maxSize?: number;
 		class?: string;
 		controlClass?: string;
-		icon?: IconName;
+		icon?: IconData;
 		variant?: 'primary' | 'secondary' | 'muted' | 'outlined' | 'line';
 		size?: 'sm' | 'md' | 'lg';
 		name?: string;
@@ -147,7 +147,7 @@
 
 		<div class="dropzone-content">
 			{#if icon}
-				<Icon name={icon} class="dropzone-icon" />
+				<Icon {icon} class="dropzone-icon" />
 			{/if}
 			<span class="dropzone-placeholder">{placeholder}</span>
 		</div>
@@ -163,7 +163,7 @@
 								<img {src} alt={fileItem.name} class="dropzone-file-image" />
 							{:else}
 								<div class="dropzone-file-icon">
-									<Icon name="file" />
+									<Icon icon="file" />
 								</div>
 							{/if}
 						{/await}

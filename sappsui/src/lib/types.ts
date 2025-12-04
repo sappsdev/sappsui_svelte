@@ -1,5 +1,3 @@
-import type { IconName } from './display/Icon.svelte';
-
 export interface DatePosition {
 	top: number;
 	left: number;
@@ -88,5 +86,3 @@ export interface DoughnutChartProps extends ChartProps {
 	showLabels?: boolean;
 	innerRadius?: number;
 }
-
-export type { IconName };

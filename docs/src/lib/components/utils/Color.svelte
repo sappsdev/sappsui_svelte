@@ -1,4 +1,10 @@
 <script lang="ts">
+	type Props = {
+		onColorSelect?: (colorName: string, shade: number, colorValue: string) => void;
+	};
+
+	let { onColorSelect }: Props = $props();
+
 	const colors: any = {
 		Red: {
 			50: 'oklch(0.971 0.013 17.38)',
@@ -291,7 +297,12 @@
 	const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 
 	function handleClick(colorName: string, shade: number) {
-		console.log(colors[colorName][shade]);
+		const colorValue = colors[colorName][shade];
+		if (onColorSelect) {
+			onColorSelect(colorName, shade, colorValue);
+		} else {
+			console.log(colorValue);
+		}
 	}
 </script>
 

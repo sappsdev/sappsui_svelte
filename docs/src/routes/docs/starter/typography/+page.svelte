@@ -235,7 +235,7 @@
 
 <DocCode code={code()} />
 
-<div class="mt-8 space-y-8">
+<Section bodyClass="mt-8 space-y-8">
 	<div>
 		<h3 class="text-lg font-semibold mb-4">Prose Class Styles</h3>
 		<p class="text-sm text-muted-600 mb-4">
@@ -297,70 +297,9 @@
 			</table>
 		</div>
 	</div>
-</div>
+</Section>
 
-<div class="mt-8 space-y-4">
-	<h3 class="text-lg font-semibold">Usage Examples</h3>
-
-	<div class="space-y-6">
-		<div>
-			<h4 class="font-medium mb-2">Blog Post with Section</h4>
-			<pre class="bg-muted-100 p-4 rounded-lg overflow-x-auto"><code
-					>&lt;Section class="prose"&gt;
-  &lt;h1&gt;My Blog Post Title&lt;/h1&gt;
-  &lt;p&gt;Introduction paragraph with &lt;strong&gt;emphasis&lt;/strong&gt;.&lt;/p&gt;
-  &lt;h2&gt;Section Heading&lt;/h2&gt;
-  &lt;p&gt;More content here.&lt;/p&gt;
-&lt;/Section&gt;</code
-				></pre>
-		</div>
-
-		<div>
-			<h4 class="font-medium mb-2">Article Card</h4>
-			<pre class="bg-muted-100 p-4 rounded-lg overflow-x-auto"><code
-					>&lt;Card class="prose"&gt;
-  &lt;h2&gt;Article Title&lt;/h2&gt;
-  &lt;p&gt;Article content with automatic spacing and styling.&lt;/p&gt;
-  &lt;a href="#"&gt;Read more&lt;/a&gt;
-&lt;/Card&gt;</code
-				></pre>
-		</div>
-
-		<div>
-			<h4 class="font-medium mb-2">Using Utility Classes</h4>
-			<pre class="bg-muted-100 p-4 rounded-lg overflow-x-auto"><code
-					>&lt;div&gt;
-  &lt;p class="lead"&gt;This is a lead paragraph with larger text.&lt;/p&gt;
-  &lt;p class="tiny"&gt;Small descriptive text.&lt;/p&gt;
-  &lt;a class="link"&gt;Standalone link&lt;/a&gt;
-  &lt;label class="label"&gt;Form Label&lt;/label&gt;
-&lt;/div&gt;</code
-				></pre>
-		</div>
-
-		<div>
-			<h4 class="font-medium mb-2">Documentation Page</h4>
-			<pre class="bg-muted-100 p-4 rounded-lg overflow-x-auto"><code
-					>&lt;article class="prose max-w-none"&gt;
-  &lt;h1&gt;API Documentation&lt;/h1&gt;
-  &lt;p&gt;Complete guide to using our API.&lt;/p&gt;
-
-  &lt;h2&gt;Getting Started&lt;/h2&gt;
-  &lt;p&gt;First, install the package:&lt;/p&gt;
-  &lt;code&gt;npm install package-name&lt;/code&gt;
-
-  &lt;h3&gt;Authentication&lt;/h3&gt;
-  &lt;ul&gt;
-    &lt;li&gt;API keys are required&lt;/li&gt;
-    &lt;li&gt;Tokens expire after 24 hours&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/article&gt;</code
-				></pre>
-		</div>
-	</div>
-</div>
-
-<div class="mt-8 grid gap-4 md:grid-cols-2">
+<Section bodyClass="mt-8 grid gap-4 md:grid-cols-2 pb-8">
 	<div class="p-4 bg-blue-50 border border-blue-200 rounded-lg">
 		<h4 class="font-semibold text-blue-900 mb-2">💡 When to use Prose</h4>
 		<p class="text-blue-800 text-sm">
@@ -379,4 +318,4 @@
 			custom styling outside of prose containers.
 		</p>
 	</div>
-</div>
+</Section>
