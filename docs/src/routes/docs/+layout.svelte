@@ -69,6 +69,10 @@
 			href: '/docs/layout/scaffold'
 		},
 		{
+			label: 'Sidebar',
+			href: '/docs/layout/sidebar'
+		},
+		{
 			type: 'header',
 			icon: HandDraw24RegularIcon,
 			label: 'Control'
