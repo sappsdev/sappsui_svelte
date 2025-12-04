@@ -211,5 +211,5 @@
 		{/if}
 	{/snippet}
 
-	<Code code={code()} lang="svelte" />
+	<Code code={code()} lang="svelte" showCopy />
 </Drawer>

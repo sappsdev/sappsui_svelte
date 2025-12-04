@@ -42,9 +42,10 @@
 @import './form/css/image-cropper.css';
 @import './form/css/password.css';
 @import './form/css/radio-group.css';
-@import './form/css/toggle.css';
 @import './form/css/slider.css';
 @import './form/css/select.css';
+@import './form/css/textarea.css';
+@import './form/css/toggle.css';
 
 @import './layout/css/app-bar.css';
 @import './layout/css/bottom-bar.css';

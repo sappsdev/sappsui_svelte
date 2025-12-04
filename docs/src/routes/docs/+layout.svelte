@@ -123,6 +123,10 @@
 			href: '/docs/display/chat-box'
 		},
 		{
+			label: 'Code',
+			href: '/docs/display/code'
+		},
+		{
 			label: 'Collapsible',
 			href: '/docs/display/collapsible'
 		},
@@ -198,6 +202,10 @@
 		{
 			label: 'RadioGroup',
 			href: '/docs/form/radio-group'
+		},
+		{
+			label: 'Textarea',
+			href: '/docs/form/textarea'
 		},
 		{
 			label: 'TextField',

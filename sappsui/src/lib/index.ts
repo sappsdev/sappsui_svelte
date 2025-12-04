@@ -42,6 +42,7 @@ import RadioGroup from '$lib/form/RadioGroup.svelte';
 import PhoneField from '$lib/form/PhoneField.svelte';
 import Select from '$lib/form/Select.svelte';
 import Slider from '$lib/form/Slider.svelte';
+import Textarea from '$lib/form/Textarea.svelte';
 import Toggle from '$lib/form/Toggle.svelte';
 
 import AppBar from '$lib/layout/AppBar.svelte';
@@ -154,6 +155,7 @@ export {
 	Table,
 	Tabs,
 	TextField,
+	Textarea,
 	theme,
 	Toast,
 	toast,
